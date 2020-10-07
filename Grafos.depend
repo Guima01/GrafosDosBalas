@@ -1,0 +1,74 @@
+# depslib dependency file v1.0
+1514140574 source:c:\users\principal\desktop\grafos\main.cpp
+	<iostream>
+
+1602081704 source:c:\users\principal\desktop\grafos\edge.cpp
+	"Edge.h"
+	<iostream>
+
+1554728931 c:\users\principal\desktop\grafos\edge.h
+
+1566861428 source:c:\users\principal\desktop\grafos\graph.cpp
+	"Graph.h"
+	"Node.h"
+	"Edge.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+
+1566861315 c:\users\principal\desktop\grafos\graph.h
+	"Node.h"
+	<fstream>
+	<stack>
+	<list>
+
+1566861308 c:\users\principal\desktop\grafos\node.h
+	"Edge.h"
+
+1566861311 source:c:\users\principal\desktop\grafos\node.cpp
+	"Node.h"
+	"Edge.h"
+	<iostream>
+
+1602094103 source:c:\users\principal\desktop\grafos\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1602084042 c:\users\principal\desktop\grafos\aresta.h
+
+1602095136 source:c:\users\principal\desktop\grafos\no.cpp
+	"No.h"
+	"Aresta.h"
+	<iostream>
+
+1602088549 c:\users\principal\desktop\grafos\no.h
+	"Aresta.h"
+
+1602095228 source:c:\users\principal\desktop\grafos\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+
+1602095177 c:\users\principal\desktop\grafos\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+
