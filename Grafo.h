@@ -17,15 +17,15 @@ class Grafo{
     private:
         int ordem;
         int numero_arestas;
-        bool direcao;
-        bool aresta_ponderada;
-        bool no_ponderado;
+//        bool direcao;
+//        bool aresta_ponderada;
+//        bool no_ponderado;
         No* primeiro_no;
         No* ultimo_no;
 
     public:
         //Constructor
-        Grafo(int ordem, bool direcao, bool aresta_ponderada, bool no_ponderado);
+        Grafo(int ordem);
         //Destructor
         ~Grafo();
         //Getters

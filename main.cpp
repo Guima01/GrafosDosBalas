@@ -12,7 +12,8 @@
 
 using namespace std;
 
-Grafo* leitura(ifstream& arquivo_entrada, int direcao, int aresta_ponderada, int no_ponderado){
+Grafo* leitura(ifstream& arquivo_entrada)
+{
 
     //Variáveis para auxiliar na criação dos nós no Grafo
     int idNoFonte;
@@ -23,58 +24,70 @@ Grafo* leitura(ifstream& arquivo_entrada, int direcao, int aresta_ponderada, int
     arquivo_entrada >> ordem;
 
     //Criando objeto grafo
-    Grafo* grafo = new Grafo(ordem, direcao, aresta_ponderada, no_ponderado);
+    Grafo* grafo = new Grafo(ordem);
 
     //Leitura de arquivo
 
-    if(!grafo->getArestaPonderada() && !grafo->getNoPonderado()){
-
-        while(arquivo_entrada >> idNoFonte >> idNoAlvo) {
-
-            grafo->insereAresta(idNoFonte, idNoAlvo, 0);
-
-        }
-
-    }else if(grafo->getArestaPonderada() && !grafo->getNoPonderado() ){
-
-        float pesoAresta;
-
-        while(arquivo_entrada >> idNoFonte >> idNoAlvo >> pesoAresta) {
-
-            grafo->insereAresta(idNoFonte, idNoAlvo, pesoAresta);
-
-        }
-
-    }else if(grafo->getNoPonderado() && !grafo->getArestaPonderada()){
-
-        float pesoNoFonte, pesoNoAlvo;
-
-        while(arquivo_entrada >> idNoFonte >> pesoNoFonte >> idNoAlvo >> pesoNoAlvo) {
-
-            grafo->insereAresta(idNoFonte, idNoAlvo, 0);
-            grafo->getNo(idNoFonte)->setPeso(pesoNoFonte);
-            grafo->getNo(idNoAlvo)->setPeso(pesoNoAlvo);
-
-        }
-
-    }else if(grafo->getNoPonderado() && grafo->getArestaPonderada()){
-
-        float pesoNoFonte, pesoNoAlvo, pesoAresta;
-
-        while(arquivo_entrada >> idNoFonte >> pesoNoFonte >> idNoAlvo >> pesoNoAlvo) {
-
-            grafo->insereAresta(idNoFonte, idNoAlvo, pesoAresta);
-            grafo->getNo(idNoFonte)->setPeso(pesoNoFonte);
-            grafo->getNo(idNoAlvo)->setPeso(pesoNoAlvo);
-
-        }
-
-    }
+//    if(!grafo->getArestaPonderada() && !grafo->getNoPonderado())
+//    {
+//
+//        while(arquivo_entrada >> idNoFonte >> idNoAlvo)
+//        {
+//
+//            grafo->insereAresta(idNoFonte, idNoAlvo, 0);
+//
+//        }
+//
+//    }
+//    else if(grafo->getArestaPonderada() && !grafo->getNoPonderado() )
+//    {
+//
+//        float pesoAresta;
+//
+//        while(arquivo_entrada >> idNoFonte >> idNoAlvo >> pesoAresta)
+//        {
+//
+//            grafo->insereAresta(idNoFonte, idNoAlvo, pesoAresta);
+//
+//        }
+//
+//    }
+//    else if(grafo->getNoPonderado() && !grafo->getArestaPonderada())
+//    {
+//
+//        float pesoNoFonte, pesoNoAlvo;
+//
+//        while(arquivo_entrada >> idNoFonte >> pesoNoFonte >> idNoAlvo >> pesoNoAlvo)
+//        {
+//
+//            grafo->insereAresta(idNoFonte, idNoAlvo, 0);
+//            grafo->getNo(idNoFonte)->setPeso(pesoNoFonte);
+//            grafo->getNo(idNoAlvo)->setPeso(pesoNoAlvo);
+//
+//        }
+//
+//    }
+//    else if(grafo->getNoPonderado() && grafo->getArestaPonderada())
+//    {
+//
+//        float pesoNoFonte, pesoNoAlvo, pesoAresta;
+//
+//        while(arquivo_entrada >> idNoFonte >> pesoNoFonte >> idNoAlvo >> pesoNoAlvo)
+//        {
+//
+//            grafo->insereAresta(idNoFonte, idNoAlvo, pesoAresta);
+//            grafo->getNo(idNoFonte)->setPeso(pesoNoFonte);
+//            grafo->getNo(idNoAlvo)->setPeso(pesoNoAlvo);
+//
+//        }
+//
+//    }
 
     return grafo;
 }
 
-Grafo* leituraInstancia(ifstream& arquivo_entrada, int direcao, int aresta_ponderada, int no_ponderado){
+Grafo* leituraInstancia(ifstream& arquivo_entrada)
+{
 
     //Variáveis para auxiliar na criação dos nós no Grafo
     int idNoFonte;
@@ -85,11 +98,14 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada, int direcao, int aresta_ponde
     //Pegando a ordem do grafo
     arquivo_entrada >> ordem >> numeroArestas;
 
+    cout<<ordem<<endl;
+
     //Criando objeto grafo
-    Grafo* grafo = new Grafo(ordem, direcao, aresta_ponderada, no_ponderado);
+    Grafo* grafo = new Grafo(ordem);
 
     //Leitura de arquivo
-    while(arquivo_entrada >> idNoFonte >> idNoAlvo) {
+    while(arquivo_entrada >> idNoFonte >> idNoAlvo)
+    {
 
         grafo->insereAresta(idNoFonte, idNoAlvo, 0);
 
@@ -98,7 +114,8 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada, int direcao, int aresta_ponde
     return grafo;
 }
 
-int menu(){
+int menu()
+{
 
     int selecao;
 
@@ -122,84 +139,95 @@ int menu(){
 
 }
 
-void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida){
+void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
+{
 
-    switch (selecao) {
+    switch (selecao)
+    {
 
-        //Complementar
-        case 1:{
+    //Complementar
+    case 1:
+    {
 
-            break;
-        }
+        break;
+    }
 
-        //BFS
-        case 2:{
+    //BFS
+    case 2:
+    {
 
-            break;
-        }
+        break;
+    }
 
-        //DFS
-        case 3:{
+    //DFS
+    case 3:
+    {
 
-            break;
-        }
+        break;
+    }
 
-        //Componentes Conexas
-        case 4:{
-
-
-
-            break;
-        }
-
-        //Componentes Fortementes Conexas
-        case 5:{
-
-            break;
-        }
-
-        //Ordenação Topológica
-        case 6:{
-
-            break;
-        }
-
-        case 7:{
+    //Componentes Conexas
+    case 4:
+    {
 
 
-            break;
-        }
 
-        //Algoritmo de Prim
-        case 8:
-        {
+        break;
+    }
 
-            break;
-        }
+    //Componentes Fortementes Conexas
+    case 5:
+    {
 
-        //Algoritmo de Dijkstra
-        case 9:
-        {
+        break;
+    }
 
-            break;
-        }
+    //Ordenação Topológica
+    case 6:
+    {
 
-        //Algoritmo de Floyd
-        case 10:
-        {
+        break;
+    }
 
-            break;
+    case 7:
+    {
+
+
+        break;
+    }
+
+    //Algoritmo de Prim
+    case 8:
+    {
+
+        break;
+    }
+
+    //Algoritmo de Dijkstra
+    case 9:
+    {
+
+        break;
+    }
+
+    //Algoritmo de Floyd
+    case 10:
+    {
+
+        break;
 
     }
 
-  }
+    }
 }
 
-int mainMenu(ofstream& arquivo_saida, Grafo* grafo){
+int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
+{
 
     int selecao = 1;
 
-    while(selecao != 0){
+    while(selecao != 0)
+    {
         system("clear");
         selecao = menu();
 
@@ -218,12 +246,14 @@ int mainMenu(ofstream& arquivo_saida, Grafo* grafo){
 
 
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[])
+{
 
     //Verificação se todos os parâmetros do programa foram entrados
-    if (argc != 6) {
+    if (argc != 3)
+    {
 
-        cout << "ERROR: Esperado: ./<nome_programa> <arquivo_entrada> <arquivo_saida> <direcao> <aresta_ponderada> <no_ponderado> " << endl;
+        cout << "ERROR: Esperado: ./<nome_programa> <arquivo_entrada> <arquivo_saida>" << endl;
         return 1;
 
     }
@@ -232,7 +262,8 @@ int main(int argc, char const *argv[]) {
     string nome_arquivo_entrada(argv[1]);
 
     string instancia;
-    if(nome_arquivo_entrada.find("v") <= nome_arquivo_entrada.size()){
+    if(nome_arquivo_entrada.find("v") <= nome_arquivo_entrada.size())
+    {
         instancia = nome_arquivo_entrada.substr(nome_arquivo_entrada.find("v"));
         cout << "Running " << nome_programa << " with instance " << instancia << " ... " << endl;
     }
@@ -247,11 +278,14 @@ int main(int argc, char const *argv[]) {
 
     Grafo* grafo;
 
-    if(arquivo_entrada.is_open()){
+    if(arquivo_entrada.is_open())
+    {
 
-        grafo = leituraInstancia(arquivo_entrada, atoi(argv[3]), atoi(argv[4]), atoi(argv[5]));
+        grafo = leituraInstancia(arquivo_entrada);
 
-    }else
+
+    }
+    else
         cout << "Unable to open " << argv[1];
 
 

@@ -19,13 +19,13 @@ using namespace std;
 **************************************************************************************************/
 
 // Constructor
-Grafo::Grafo(int ordem, bool direcao, bool aresta_ponderada, bool no_ponderado)
+Grafo::Grafo(int ordem)
 {
 
     this->ordem = ordem;
-    this->direcao = direcao;
-    this->aresta_ponderada = aresta_ponderada;
-    this->no_ponderado = no_ponderado;
+//    this->direcao = direcao;
+//    this->aresta_ponderada = aresta_ponderada;
+//    this->no_ponderado = no_ponderado;
     this->primeiro_no = this->ultimo_no = nullptr;
     this->numero_arestas = 0;
 }
@@ -58,23 +58,23 @@ int Grafo::getNumeroArestas()
     return this->numero_arestas;
 }
 
-bool Grafo::getDirecao()
-{
+//bool Grafo::getDirecao()
+//{
+//
+//    return this->direcao;
+//}
 
-    return this->direcao;
-}
+//bool Grafo::getArestaPonderada()
+//{
+//
+//    return this->aresta_ponderada;
+//}
 
-bool Grafo::getArestaPonderada()
-{
-
-    return this->aresta_ponderada;
-}
-
-bool Grafo::getNoPonderado()
-{
-
-    return this->no_ponderado;
-}
+//bool Grafo::getNoPonderado()
+//{
+//
+//    return this->no_ponderado;
+//}
 
 No *Grafo::getPrimeiroNo()
 {
