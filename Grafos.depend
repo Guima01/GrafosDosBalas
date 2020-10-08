@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1602186469 source:c:\users\principal\desktop\grafos\main.cpp
+1602191153 source:c:\users\principal\desktop\grafos\main.cpp
 	<iostream>
 	<fstream>
 	<string>
@@ -53,7 +53,7 @@
 
 1602084042 c:\users\principal\desktop\grafos\aresta.h
 
-1602095136 source:c:\users\principal\desktop\grafos\no.cpp
+1602187907 source:c:\users\principal\desktop\grafos\no.cpp
 	"No.h"
 	"Aresta.h"
 	<iostream>

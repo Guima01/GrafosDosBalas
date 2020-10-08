@@ -12,9 +12,9 @@ using namespace std;
 No::No(int id){
 
     this->id = id;
-    this->grau_entrada = 0;
-    this->grau_saida = 0;
-    this->peso = 0;
+//    this->grau_entrada = 0;
+//    this->grau_saida = 0;
+//    this->peso = 0;
     this->primeira_aresta = nullptr;
     this->ultima_aresta = nullptr;
     this->proximo_no = nullptr;
