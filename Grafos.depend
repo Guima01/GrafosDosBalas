@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1602202366 source:c:\users\principal\desktop\grafos\main.cpp
+1602284514 source:c:\users\principal\desktop\grafos\main.cpp
 	<iostream>
 	<fstream>
 	<string>
 	<math.h>
+	<list>
 	<utility>
 	<tuple>
 	<iomanip>
@@ -53,15 +54,15 @@
 
 1602084042 c:\users\principal\desktop\grafos\aresta.h
 
-1602193802 source:c:\users\principal\desktop\grafos\no.cpp
+1602273734 source:c:\users\principal\desktop\grafos\no.cpp
 	"No.h"
 	"Aresta.h"
 	<iostream>
 
-1602193516 c:\users\principal\desktop\grafos\no.h
+1602261457 c:\users\principal\desktop\grafos\no.h
 	"Aresta.h"
 
-1602202438 source:c:\users\principal\desktop\grafos\grafo.cpp
+1602285226 source:c:\users\principal\desktop\grafos\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
@@ -77,7 +78,7 @@
 	<float.h>
 	<iomanip>
 
-1602202499 c:\users\principal\desktop\grafos\grafo.h
+1602278317 c:\users\principal\desktop\grafos\grafo.h
 	"No.h"
 	<fstream>
 	<stack>

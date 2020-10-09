@@ -54,10 +54,15 @@ No::~No()
 //
 //}
 
+void No::setId(int id)
+{
+    this->id = id;
+}
+
 int No::getId()
 {
 
-    return this->id;
+    return id;
 
 }
 
@@ -84,7 +89,8 @@ int No::getId()
 
 No* No::getProximoNo()
 {
-
+//    cout<<this->proximo_no<<endl;
+//    cout<<&this->proximo_no<<endl;
     return this->proximo_no;
 
 }

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <math.h>
+#include <list>
 #include <utility>
 #include <tuple>
 #include <iomanip>
@@ -23,13 +24,15 @@ Grafo* leitura(ifstream& arquivo_entrada)
     //Pegando a ordem do grafo
     arquivo_entrada >> ordem;
 
+    //criando grafo
+    Grafo* grafo = new Grafo(ordem);
+
     while(arquivo_entrada >> idNoFonte >> idNoAlvo)
     {
 
     }
 
     //Criando objeto grafo
-    Grafo* grafo = new Grafo(ordem);
 
     //Leitura de arquivo
 
@@ -104,9 +107,6 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
     //Pegando a ordem do grafo
     arquivo_entrada >> ordem;
 
-    cout<<"teste"<<endl;
-    cout<<ordem<<endl;
-
     //Criando objeto grafo
     Grafo* grafo = new Grafo(ordem);
 
@@ -117,10 +117,26 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
     //Leitura de arquivo
     while(arquivo_entrada >> idNoFonte >> idNoAlvo >> peso)
     {
-        cout<<idNoFonte;
-        cout<< " ";
-        cout<<idNoAlvo<<endl;
 
+        grafo->insereNo(idNoFonte,idNoAlvo);
+
+    }
+
+    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
+    {
+        No *aux = new No(it->getId());
+        aux->setProximoNo(it->getProximoNo());
+        cout<<aux->getId();
+        cout<<" ";
+        while(aux->getProximoNo()){
+            aux->setId(aux->getProximoNo()->getId());
+            aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
+            cout<<aux->getId();
+            cout<<" ";
+
+        }
+        cout<<endl;
+        cout<<endl;
 
     }
 

@@ -29,6 +29,7 @@ class No{
         // Getters
         Aresta* getPrimeiraAresta();
         Aresta* getUltimaAresta();
+        void setId(int id);
         int getId();
         int getGrauEntrada();
         int getGrauSaida();

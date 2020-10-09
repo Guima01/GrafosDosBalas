@@ -16,7 +16,7 @@ class Grafo{
 
     //Atributes
     private:
-        list<No> *vertices;
+//        list<No> *vertices;
         int ordem;
         int numero_arestas;
 //        bool direcao;
@@ -26,6 +26,7 @@ class Grafo{
         No* ultimo_no;
 
     public:
+        list<No> *vertices;
         //Constructor
         Grafo(int ordem);
         //Destructor
@@ -40,7 +41,7 @@ class Grafo{
         No* getUltimoNo();
         //Other methods
         void criaLista(int ordem);
-        void insereNo(int id);
+        void insereNo(int idNoFonte, int idNoAlvo);
         void insereAresta(int id, int id_alvo, float peso);
         void removeNo(int id);
         bool buscaNo(int id);

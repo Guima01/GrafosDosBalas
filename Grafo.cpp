@@ -94,26 +94,89 @@ No *Grafo::getUltimoNo()
     This allows the correct updating of the numbers of edges in the Grafo being directed or not.
 */
 
-void Grafo::criaLista(int ordem){
-
-for(int vertice = 0;  vertice < ordem; vertice ++)
-    {
-        int x = vertice;
-        No *teste = new No(vertice + 1);
-        this->vertices->push_back(*teste);
-    }
-
-
-    cout<<vertices->size()<<endl;
-    cout << "mylist contains:";
-    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it){
-    cout << ' ' << it->getId();
-    }
-}
-
-void Grafo::insereNo(int id)
+void Grafo::criaLista(int ordem)
 {
 
+    for(int vertice = 0;  vertice < ordem; vertice ++)
+    {
+        int x = vertice;
+        No *no = new No(vertice);
+        this->vertices->push_back(*no);
+    }
+
+    cout<<endl;
+    cout<<vertices->size()<<endl;
+
+
+
+}
+
+void Grafo::insereNo(int idNoFonte, int idNoAlvo)
+{
+    int checkNo = 0;
+    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+//        cout<<it->getId();
+//        cout<<" ";
+//        cout<<idNoFonte;
+//        cout<<" ";
+//        cout<<idNoAlvo<<endl;
+        if(idNoFonte == it->getId())
+        {
+            if(!it->getProximoNo())
+            {
+                No *proximoNo = new No(idNoAlvo);
+                it->setProximoNo(proximoNo);
+            }
+            else if(it->getProximoNo())
+            {
+                No *proximoNo = new No(idNoAlvo);
+                No *aux = new No(it->getId());
+                aux->setProximoNo(it->getProximoNo());
+                while(aux->getProximoNo()->getProximoNo())
+                {
+                    aux->setId(aux->getProximoNo()->getId());
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+
+                }
+                aux->getProximoNo()->setProximoNo(proximoNo);
+                checkNo = checkNo + 1;
+                delete aux;
+            }
+        }
+        else if(idNoAlvo == it->getId())
+        {
+//            cout<<it->getId();
+//            cout<<" ";
+//            cout<<idNoAlvo;
+//            cout<<" ";
+//            cout<<idNoFonte<<endl;
+
+            if(!it->getProximoNo())
+            {
+                No *proximoNo = new No(idNoFonte);
+                it->setProximoNo(proximoNo);
+            }
+            else if(it->getProximoNo())
+            {
+                No *proximoNo = new No(idNoFonte);
+                No *aux = new No(it->getId());
+                aux->setProximoNo(it->getProximoNo());
+                while(aux->getProximoNo()->getProximoNo())
+                {
+                    aux->setId(aux->getProximoNo()->getId());
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
+                aux->getProximoNo()->setProximoNo(proximoNo);
+                checkNo = checkNo + 1;
+                delete aux;
+            }
+        }
+        else if(checkNo == 2)
+        {
+            break;
+        }
+    }
 }
 
 
