@@ -13,12 +13,12 @@ class No{
 
     // Attributes
     private:
-        Aresta* primeira_aresta;
-        Aresta* ultima_aresta;
+        /*Aresta* primeira_aresta;
+        Aresta* ultima_aresta;*/
         int id;
-        unsigned int grau_entrada;
+        /*unsigned int grau_entrada;
         unsigned int grau_saida;
-        float peso;
+        float peso;*/
         No* proximo_no;
 
     public:

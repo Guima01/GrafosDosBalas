@@ -110,6 +110,10 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
     //Criando objeto grafo
     Grafo* grafo = new Grafo(ordem);
 
+    grafo->criaLista(ordem);
+
+    cout<<endl;
+
     //Leitura de arquivo
     while(arquivo_entrada >> idNoFonte >> idNoAlvo >> peso)
     {
@@ -119,6 +123,8 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
 
 
     }
+
+    cout<<endl;
 
     return grafo;
 }
@@ -291,9 +297,6 @@ int main(int argc, char const *argv[])
     {
 
         grafo = leituraInstancia(arquivo_entrada);
-        cout<<grafo->getOrdem()<<endl;
-        cout<<grafo->getNumeroArestas()<<endl;
-
 
     }
     else

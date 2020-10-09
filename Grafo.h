@@ -8,6 +8,7 @@
 #include <fstream>
 #include <stack>
 #include <list>
+#include <vector>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ class Grafo{
 
     //Atributes
     private:
+        list<No> *vertices;
         int ordem;
         int numero_arestas;
 //        bool direcao;
@@ -37,6 +39,7 @@ class Grafo{
         No* getPrimeiroNo();
         No* getUltimoNo();
         //Other methods
+        void criaLista(int ordem);
         void insereNo(int id);
         void insereAresta(int id, int id_alvo, float peso);
         void removeNo(int id);

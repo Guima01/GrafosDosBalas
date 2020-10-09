@@ -6,6 +6,7 @@
 #include <stack>
 #include <queue>
 #include <list>
+#include <vector>
 #include <math.h>
 #include <cstdlib>
 #include <ctime>
@@ -22,6 +23,7 @@ using namespace std;
 Grafo::Grafo(int ordem)
 {
 
+    this->vertices = new list<No>[ordem];
     this->ordem = ordem;
 //    this->direcao = direcao;
 //    this->aresta_ponderada = aresta_ponderada;
@@ -34,16 +36,14 @@ Grafo::Grafo(int ordem)
 Grafo::~Grafo()
 {
 
-    No *proximo_no = this->primeiro_no;
-
-    while (proximo_no != nullptr)
-    {
-
-        proximo_no->removeTodasArestas();
-        No *no_aux = proximo_no->getProximoNo();
-        delete proximo_no;
-        proximo_no = no_aux;
-    }
+//    while (proximo_no != nullptr)
+//    {
+//
+//        proximo_no->removeTodasArestas();
+//        No *no_aux = proximo_no->getProximoNo();
+//        delete proximo_no;
+//        proximo_no = no_aux;
+//    }
 }
 
 // Getters
@@ -93,10 +93,29 @@ No *Grafo::getUltimoNo()
     The outdegree attribute of nodes is used as a counter for the number of edges in the Grafo.
     This allows the correct updating of the numbers of edges in the Grafo being directed or not.
 */
+
+void Grafo::criaLista(int ordem){
+
+for(int vertice = 0;  vertice < ordem; vertice ++)
+    {
+        int x = vertice;
+        No *teste = new No(vertice + 1);
+        this->vertices->push_back(*teste);
+    }
+
+
+    cout<<vertices->size()<<endl;
+    cout << "mylist contains:";
+    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it){
+    cout << ' ' << it->getId();
+    }
+}
+
 void Grafo::insereNo(int id)
 {
 
 }
+
 
 void Grafo::insereAresta(int id, int id_alvo, float peso)
 {
@@ -104,7 +123,8 @@ void Grafo::insereAresta(int id, int id_alvo, float peso)
 
 }
 
-void Grafo::removeNo(int id){
+void Grafo::removeNo(int id)
+{
 
 }
 
@@ -121,44 +141,52 @@ No *Grafo::getNo(int id)
 
 
 //Function that verifies if there is a path between two nodes
-bool Grafo::profundidadePrimeiraBusca(int initialId, int targetId){
+bool Grafo::profundidadePrimeiraBusca(int initialId, int targetId)
+{
 
 }
 
 
-void Grafo::amplitudePrimeiraBusca(ofstream &output_file){
+void Grafo::amplitudePrimeiraBusca(ofstream &output_file)
+{
 
 }
 
 
-Grafo *Grafo::getComplemento(){
+Grafo *Grafo::getComplemento()
+{
 
 }
 
 
 //A function that returns a subjacent of a directed Grafo, which is a Grafo which the arcs have opposite directions to the original Grafo
-Grafo* Grafo::getSubjacente(){
+Grafo* Grafo::getSubjacente()
+{
 
 }
 
-bool Grafo::GrafoConectado(){
-
-}
-
-
-
-bool Grafo::PossuiCiclo(){
+bool Grafo::GrafoConectado()
+{
 
 }
 
 
 
-float** Grafo::floydMarshall(){
+bool Grafo::PossuiCiclo()
+{
 
 }
 
 
 
-float* Grafo::dijkstra(int id){
+float** Grafo::floydMarshall()
+{
+
+}
+
+
+
+float* Grafo::dijkstra(int id)
+{
 
 }
