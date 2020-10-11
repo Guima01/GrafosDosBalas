@@ -1,3 +1,4 @@
+
 #include "Aresta.h"
 #include <iostream>
 
@@ -8,12 +9,13 @@ using namespace std;
 **************************************************************************************************/
 
 // Constructor
-Aresta::Aresta(int target_id){
+Aresta::Aresta(int id_origem,int id_alvo){
 
+    this->id_origem = id_origem;
     this->id_alvo = id_alvo;
     this->proxima_aresta = nullptr;
     this->peso = 0;
-
+    this->verificaA=false;
 }
 
 // Destructor
@@ -56,4 +58,11 @@ void Aresta::setPeso(float peso){
 
     this->peso = peso;
 
+}
+bool Aresta::getVerificaAresta(){
+    return this->verificaA;
+}
+
+bool Aresta::setVerificaAresta(){
+    this->verificaA = true;
 }

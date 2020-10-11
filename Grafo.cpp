@@ -123,10 +123,16 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
 //        cout<<idNoAlvo<<endl;
         if(idNoFonte == it->getId())
         {
+            Aresta *aresta = new Aresta(idNoFonte,idNoAlvo);
+            aresta->setVerificaAresta();
+
+
             if(!it->getProximoNo())
             {
+
                 No *proximoNo = new No(idNoAlvo);
                 it->setProximoNo(proximoNo);
+                it->insereAresta(aresta);
             }
             else if(it->getProximoNo())
             {
@@ -140,6 +146,7 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
 
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
+                aux->getProximoNo()->insereAresta(aresta);
                 checkNo = checkNo + 1;
                 delete aux;
             }
@@ -151,11 +158,14 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
 //            cout<<idNoAlvo;
 //            cout<<" ";
 //            cout<<idNoFonte<<endl;
-
+            Aresta *aresta = new Aresta(idNoAlvo,idNoFonte);
+            aresta->setVerificaAresta();
             if(!it->getProximoNo())
             {
                 No *proximoNo = new No(idNoFonte);
                 it->setProximoNo(proximoNo);
+                it->insereAresta(aresta);
+
             }
             else if(it->getProximoNo())
             {
@@ -168,6 +178,7 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                     aux->setProximoNo(aux->getProximoNo()->getProximoNo());
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
+                aux->getProximoNo()->insereAresta(aresta);
                 checkNo = checkNo + 1;
                 delete aux;
             }
@@ -204,10 +215,54 @@ No *Grafo::getNo(int id)
 
 
 //Function that verifies if there is a path between two nodes
-bool Grafo::profundidadePrimeiraBusca(int initialId, int targetId)
+bool Grafo::profundidadePrimeiraBusca(int targetId)
 {
+    No *aux = new No(vertices->begin()->getId());
+    //cout<<"Caminho Percorrido:"<<endl;
 
+    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        cout<<it->getId()<<endl;
+        aux->setId(it->getProximoNo()->getId());
+        aux->setProximoNo(it->getProximoNo());
+        cout<<aux->getId()<<endl;
+       // cout<<it->getId()<<endl;
+
+        while(aux->getProximoNo()->getProximoNo() ){
+            //cout<<"AAAA"<<aux->getId()<<endl;
+            aux->setId(aux->getProximoNo()->getId());
+            aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+            cout<<aux->getProximoNo()->getId()<<endl;
+        }
+
+       /* if(it->getId() == targetId)
+        {
+            cout<<"No encontrado"<<endl;
+            //delete aux;
+            //return true;
+        }
+        else
+        {
+            aux = it->getProximoNo();
+            while( aux )
+            {
+                /*if(aux->getId() == targetId)
+                {
+                    cout<<"No encontrado"<<endl;
+                    //delete aux;
+                    //return true;
+                }
+                else{/
+                    cout<<aux->getId()<<endl;
+                    aux = aux->getProximoNo();
+                }
+
+            }*/
+        }
+    delete aux;
+    return true;
 }
+
 
 
 void Grafo::amplitudePrimeiraBusca(ofstream &output_file)

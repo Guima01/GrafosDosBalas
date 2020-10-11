@@ -127,8 +127,13 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
         No *aux = new No(it->getId());
         aux->setProximoNo(it->getProximoNo());
         cout<<aux->getId();
-        cout<<" ";
+        cout<<" "<<endl;
+
+        aux->insereAresta(it->getAresta());
+
+
         while(aux->getProximoNo()){
+
             aux->setId(aux->getProximoNo()->getId());
             aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
             cout<<aux->getId();
@@ -193,6 +198,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //DFS
     case 3:
     {
+        grafo->profundidadePrimeiraBusca(grafo->getOrdem()-1);
 
         break;
     }
@@ -259,7 +265,7 @@ int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
 
     while(selecao != 0)
     {
-        system("clear");
+        //system("cls");
         selecao = menu();
 
         if(arquivo_saida.is_open())

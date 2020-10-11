@@ -1,5 +1,6 @@
 #include "No.h"
 #include "Aresta.h"
+#include "Grafo.h"
 #include <iostream>
 
 using namespace std;
@@ -19,6 +20,7 @@ No::No(int id)
     this->primeira_aresta = nullptr;
     this->ultima_aresta = nullptr;*/
     this->proximo_no = nullptr;
+    this->aresta = nullptr;
 
 };
 
@@ -112,102 +114,14 @@ void No::setProximoNo(No* proximo_no)
 //}
 
 // Other methods
-//void No::insereAresta(int id_alvo, float peso)
-//{
-//    // Verifies whether there are at least one Aresta in the No
-//    if(this->primeira_aresta != nullptr)
-//    {
-//        // Allocating the new Aresta and keeping the integrity of the Aresta list
-//        Aresta* aresta = new Aresta(id_alvo);
-//        aresta->setPeso(peso);
-//        this->ultima_aresta->setProximaAresta(aresta);
-//        this->ultima_aresta = aresta;
-//
-//    }
-//    else
-//    {
-//        // Allocating the new Aresta and keeping the integrity of the Aresta list
-//        this->primeira_aresta = new Aresta(id_alvo);
-//        this->primeira_aresta->setPeso(peso);
-//        this->ultima_aresta = this->primeira_aresta;
-//
-//    }
-//
-//}
+void No::insereAresta(Aresta *aresta)
+{
+        this->aresta = aresta;
+}
 
-//void No::removeTodasArestas()
-//{
-//    // Verifies whether there are at least one Aresta in the No
-//    if(this->primeira_aresta != nullptr)
-//    {
-//
-//        Aresta* proximo = nullptr;
-//        Aresta* aux = this->primeira_aresta;
-//        // Removing all Arestas of the No
-//        while(aux != nullptr)
-//        {
-//
-//            proximo = aux->getProximaAresta();
-//            delete aux;
-//
-//        }
-//
-//    }
-//
-//    this->primeira_aresta = this->ultima_aresta = nullptr;
-//
-//}
-
-//int No::removeAresta(int id, bool direcao, No* no_alvo)
-//{
-//    // Verifies whether the Aresta to remove is in the No
-//    if(this->buscarAresta(id))
-//    {
-//
-//        Aresta* aux = this->primeira_aresta;
-//        Aresta* anterior = nullptr;
-//        // Searching for the Aresta to be removed
-//        while(aux->getIdAlvo() != id)
-//        {
-//
-//            anterior = aux;
-//            aux = aux->getProximaAresta();
-//
-//        }
-//        // Keeping the integrity of the Aresta list
-//        if(anterior != nullptr)
-//            anterior->setProximaAresta(aux->getProximaAresta());
-//
-//        else
-//            this->primeira_aresta = aux->getProximaAresta();
-//
-//        if(aux == this->ultima_aresta)
-//            this->ultima_aresta = anterior;
-//
-//        if(aux->getProximaAresta() == this->ultima_aresta)
-//            this->ultima_aresta= aux->getProximaAresta();
-//
-//        delete aux;
-//        // Verifies whether the graph is directed
-//        if(direcao)
-//            this->decrementaGrauSaida();
-//
-//        else
-//        {
-//
-//            this->decrementaGrauEntrada();
-//            no_alvo->decrementaGrauEntrada();
-//
-//        }
-//
-//        return 1;
-//
-//    }
-//
-//    return 0;
-//
-//}
-
+Aresta* No::getAresta(){
+    return this->aresta;
+}
 //bool No::buscarAresta(int id_alvo)
 //{
 //    // Verifies whether there are at least one Aresta in the No

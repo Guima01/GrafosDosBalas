@@ -25,6 +25,7 @@ class Grafo{
         No* primeiro_no;
         No* ultimo_no;
 
+
     public:
         list<No> *vertices;
         //Constructor
@@ -46,7 +47,9 @@ class Grafo{
         void removeNo(int id);
         bool buscaNo(int id);
         No* getNo(int id);
-        bool profundidadePrimeiraBusca(int idInicial,int idAlvo);
+
+        bool profundidadePrimeiraBusca(int targetId);
+
         void amplitudePrimeiraBusca(ofstream& arquivo_saida);
         Grafo* getComplemento();
         Grafo* getSubjacente();
