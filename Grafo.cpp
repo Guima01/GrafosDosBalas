@@ -104,62 +104,58 @@ void Grafo::criaLista(int ordem)
         this->vertices->push_back(*no);
     }
 
-    cout<<endl;
-    cout<<vertices->size()<<endl;
-
-
-
 }
 
 void Grafo::insereNo(int idNoFonte, int idNoAlvo)
 {
+    Aresta *aresta = new Aresta(idNoAlvo,idNoFonte);
     int checkNo = 0;
+    bool checkNoRepetido = false;
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-//        cout<<it->getId();
-//        cout<<" ";
-//        cout<<idNoFonte;
-//        cout<<" ";
-//        cout<<idNoAlvo<<endl;
         if(idNoFonte == it->getId())
         {
-            Aresta *aresta = new Aresta(idNoFonte,idNoAlvo);
-            aresta->setVerificaAresta();
-
-
             if(!it->getProximoNo())
             {
 
                 No *proximoNo = new No(idNoAlvo);
                 it->setProximoNo(proximoNo);
                 it->insereAresta(aresta);
+                numero_arestas = numero_arestas + 1;
             }
             else if(it->getProximoNo())
             {
+                if(it->getProximoNo()->getId() == idNoAlvo)
+                {
+                    break;
+                }
                 No *proximoNo = new No(idNoAlvo);
                 No *aux = new No(it->getId());
                 aux->setProximoNo(it->getProximoNo());
                 while(aux->getProximoNo()->getProximoNo())
                 {
+                    if(aux->getProximoNo()->getProximoNo()->getId() == idNoAlvo)
+                    {
+                        checkNoRepetido = true;
+                        break;
+                    }
                     aux->setId(aux->getProximoNo()->getId());
                     aux->setProximoNo(aux->getProximoNo()->getProximoNo());
 
                 }
+                if(checkNoRepetido == true)
+                {
+                    break;
+                }
                 aux->getProximoNo()->setProximoNo(proximoNo);
                 aux->getProximoNo()->insereAresta(aresta);
                 checkNo = checkNo + 1;
+                numero_arestas = numero_arestas + 1;
                 delete aux;
             }
         }
         else if(idNoAlvo == it->getId())
         {
-//            cout<<it->getId();
-//            cout<<" ";
-//            cout<<idNoAlvo;
-//            cout<<" ";
-//            cout<<idNoFonte<<endl;
-            Aresta *aresta = new Aresta(idNoAlvo,idNoFonte);
-            aresta->setVerificaAresta();
             if(!it->getProximoNo())
             {
                 No *proximoNo = new No(idNoFonte);
@@ -169,13 +165,24 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
             }
             else if(it->getProximoNo())
             {
+                if(it->getProximoNo()->getId() == idNoFonte)
+                {
+                    break;
+                }
                 No *proximoNo = new No(idNoFonte);
                 No *aux = new No(it->getId());
                 aux->setProximoNo(it->getProximoNo());
                 while(aux->getProximoNo()->getProximoNo())
                 {
+                    if(aux->getProximoNo()->getProximoNo()->getId() == idNoFonte){
+                        checkNoRepetido = true;
+                        break;
+                    }
                     aux->setId(aux->getProximoNo()->getId());
                     aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
+                if(checkNoRepetido == true){
+                    break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
                 aux->getProximoNo()->insereAresta(aresta);
@@ -226,39 +233,40 @@ bool Grafo::profundidadePrimeiraBusca(int targetId)
         aux->setId(it->getProximoNo()->getId());
         aux->setProximoNo(it->getProximoNo());
         cout<<aux->getId()<<endl;
-       // cout<<it->getId()<<endl;
+        // cout<<it->getId()<<endl;
 
-        while(aux->getProximoNo()->getProximoNo() ){
+        while(aux->getProximoNo()->getProximoNo() )
+        {
             //cout<<"AAAA"<<aux->getId()<<endl;
             aux->setId(aux->getProximoNo()->getId());
             aux->setProximoNo(aux->getProximoNo()->getProximoNo());
             cout<<aux->getProximoNo()->getId()<<endl;
         }
 
-       /* if(it->getId() == targetId)
-        {
-            cout<<"No encontrado"<<endl;
-            //delete aux;
-            //return true;
-        }
-        else
-        {
-            aux = it->getProximoNo();
-            while( aux )
-            {
-                /*if(aux->getId() == targetId)
-                {
-                    cout<<"No encontrado"<<endl;
-                    //delete aux;
-                    //return true;
-                }
-                else{/
-                    cout<<aux->getId()<<endl;
-                    aux = aux->getProximoNo();
-                }
+        /* if(it->getId() == targetId)
+         {
+             cout<<"No encontrado"<<endl;
+             //delete aux;
+             //return true;
+         }
+         else
+         {
+             aux = it->getProximoNo();
+             while( aux )
+             {
+                 /*if(aux->getId() == targetId)
+                 {
+                     cout<<"No encontrado"<<endl;
+                     //delete aux;
+                     //return true;
+                 }
+                 else{/
+                     cout<<aux->getId()<<endl;
+                     aux = aux->getProximoNo();
+                 }
 
-            }*/
-        }
+             }*/
+    }
     delete aux;
     return true;
 }

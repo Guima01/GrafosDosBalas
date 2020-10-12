@@ -13,87 +13,6 @@
 
 using namespace std;
 
-Grafo* leitura(ifstream& arquivo_entrada)
-{
-
-    //Variáveis para auxiliar na criação dos nós no Grafo
-    int idNoFonte;
-    int idNoAlvo;
-    int ordem;
-
-    //Pegando a ordem do grafo
-    arquivo_entrada >> ordem;
-
-    //criando grafo
-    Grafo* grafo = new Grafo(ordem);
-
-    while(arquivo_entrada >> idNoFonte >> idNoAlvo)
-    {
-
-    }
-
-    //Criando objeto grafo
-
-    //Leitura de arquivo
-
-//    if(!grafo->getArestaPonderada() && !grafo->getNoPonderado())
-//    {
-//
-//        while(arquivo_entrada >> idNoFonte >> idNoAlvo)
-//        {
-//
-//            grafo->insereAresta(idNoFonte, idNoAlvo, 0);
-//
-//        }
-//
-//    }
-//    else if(grafo->getArestaPonderada() && !grafo->getNoPonderado() )
-//    {
-//
-//        float pesoAresta;
-//
-//        while(arquivo_entrada >> idNoFonte >> idNoAlvo >> pesoAresta)
-//        {
-//
-//            grafo->insereAresta(idNoFonte, idNoAlvo, pesoAresta);
-//
-//        }
-//
-//    }
-//    else if(grafo->getNoPonderado() && !grafo->getArestaPonderada())
-//    {
-//
-//        float pesoNoFonte, pesoNoAlvo;
-//
-//        while(arquivo_entrada >> idNoFonte >> pesoNoFonte >> idNoAlvo >> pesoNoAlvo)
-//        {
-//
-//            grafo->insereAresta(idNoFonte, idNoAlvo, 0);
-//            grafo->getNo(idNoFonte)->setPeso(pesoNoFonte);
-//            grafo->getNo(idNoAlvo)->setPeso(pesoNoAlvo);
-//
-//        }
-//
-//    }
-//    else if(grafo->getNoPonderado() && grafo->getArestaPonderada())
-//    {
-//
-//        float pesoNoFonte, pesoNoAlvo, pesoAresta;
-//
-//        while(arquivo_entrada >> idNoFonte >> pesoNoFonte >> idNoAlvo >> pesoNoAlvo)
-//        {
-//
-//            grafo->insereAresta(idNoFonte, idNoAlvo, pesoAresta);
-//            grafo->getNo(idNoFonte)->setPeso(pesoNoFonte);
-//            grafo->getNo(idNoAlvo)->setPeso(pesoNoAlvo);
-//
-//        }
-//
-//    }
-
-    return grafo;
-}
-
 Grafo* leituraInstancia(ifstream& arquivo_entrada)
 {
 
@@ -122,29 +41,29 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
 
     }
 
-    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
-    {
-        No *aux = new No(it->getId());
-        aux->setProximoNo(it->getProximoNo());
-        cout<<aux->getId();
-        cout<<" "<<endl;
+//    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
+//    {
+//        No *aux = new No(it->getId());
+//        aux->setProximoNo(it->getProximoNo());
+//        cout<<aux->getId();
+//        cout<<" "<<endl;
+//
+//        while(aux->getProximoNo()){
+//
+//            aux->setId(aux->getProximoNo()->getId());
+//            aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
+//            cout<<aux->getId();
+//            cout<<" ";
+//
+//        }
+//        cout<<endl;
+//        cout<<endl;
+//
+//    }
 
-        aux->insereAresta(it->getAresta());
-
-
-        while(aux->getProximoNo()){
-
-            aux->setId(aux->getProximoNo()->getId());
-            aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
-            cout<<aux->getId();
-            cout<<" ";
-
-        }
-        cout<<endl;
-        cout<<endl;
-
-    }
-
+    cout<<endl;
+    cout<<"Numero de Arestas: ";
+    cout<<grafo->getNumeroArestas();
     cout<<endl;
 
     return grafo;
