@@ -239,57 +239,58 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordem
             if(it->getProximoNo() != 0)  //existe o no;
             {
                 aux = new No(it->getProximoNo()->getId());
-                if(it->getProximoNo()->getProximoNo() != 0){
+                if(it->getProximoNo()->getProximoNo() != 0)
+                {
                     aux->setProximoNo(it->getProximoNo()->getProximoNo());
-                }
-                cout<<"AA"<<aux->getId()<<endl;
-                if(aux->getProximoNo() != 0){
-                cout<<"BB"<<aux->getProximoNo()->getId()<<endl;
                 }
             }
             if(*cont == ordemGrafo)
             {
-                break;
+                delete aux;
+                return listaVertices;
             }
             while(true)
             {
                 int i=0;
                 for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
                 {
-                    cout<<i<<endl;
-                    if(aux->getId()==it[i])
+
+                    if(aux->getId()==listaVertices[i])
                     {
                         if(aux->getProximoNo()==0)
                         {
                             return listaVertices;
                         }
                         aux->setId(aux->getProximoNo()->getId());
-                        cout<<"CC"<<aux->getId()<<endl;
-                        if(aux->getProximoNo()->getProximoNo() != 0){
+
+                        if(aux->getProximoNo()->getProximoNo() != 0)
+                        {
                             aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-                            cout<<"DD"<<aux->getProximoNo()->getId()<<endl;
                         }
-                        else{
+                        else
+                        {
                             aux->setProximoNo(nullptr);
                         }
                         break;
                     }
                     i++;
 
-                    if(i == listaVertices.size()-1)
+                    if(i == listaVertices.size())
                     {
                         listaVertices = profundidadePrimeiraBusca(listaVertices,ordemGrafo,aux->getId(),cont);
+
+                        if(*cont == ordemGrafo)
+                        {
+                            delete aux;
+                            return listaVertices;
+                        }
                         break;
                     }
                 }
             }
-            //cout<<"A"<<aux->getId()<<endl;
-         //   listaVertices = profundidadePrimeiraBusca(listaVertices,ordemGrafo,aux->getId(),cont);
+
         }
     }
-
-
-    return listaVertices;
 }
 
 
@@ -300,60 +301,16 @@ vector<int> Grafo::auxProfundidade(vector<int>listaVertices,int idNo,int *cont)
 
     for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
     {
-        if(idNo == it[i])
+        if(idNo == listaVertices[i])
         {
             return listaVertices;
         }
         i++;
     }
-    //cout<<idNo<<endl;
-
     listaVertices[*cont]=idNo;
     *cont = *cont +1;
     return listaVertices;
 }
-/*        cout<<it->getId()<<endl;
-        aux->setId(it->getProximoNo()->getId());
-        aux->setProximoNo(it->getProximoNo());
-        cout<<aux->getId()<<endl;
-        // cout<<it->getId()<<endl;
-
-        while(aux->getProximoNo()->getProximoNo() )
-        {
-            //cout<<"AAAA"<<aux->getId()<<endl;
-            aux->setId(aux->getProximoNo()->getId());
-            aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-            cout<<aux->getProximoNo()->getId()<<endl;
-        }
-
-        /* if(it->getId() == targetId)
-         {
-             cout<<"No encontrado"<<endl;
-             //delete aux;
-             //return true;
-         }
-         else
-         {
-             aux = it->getProximoNo();
-             while( aux )
-             {
-                 /*if(aux->getId() == targetId)
-                 {
-                     cout<<"No encontrado"<<endl;
-                     //delete aux;
-                     //return true;
-                 }
-                 else{/
-                     cout<<aux->getId()<<endl;
-                     aux = aux->getProximoNo();
-                 }
-
-             }
-    }
-    delete aux;
-    return true;*/
-
-
 
 
 void Grafo::amplitudePrimeiraBusca(ofstream &output_file)

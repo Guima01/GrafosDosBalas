@@ -116,11 +116,20 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //DFS
     case 3:
     {
-        //cout<<grafo->getOrdem()<<endl;
         vector<int>listaVertices(grafo->getOrdem());
-        //listaVertices[0]=(grafo->getPrimeiroNo()->getId());
-        int cont=0;
-        grafo->profundidadePrimeiraBusca(listaVertices,grafo->getOrdem(),0,&cont);
+        int cont=1;
+        listaVertices = grafo->profundidadePrimeiraBusca(listaVertices,grafo->getOrdem(),0,&cont);
+
+        int i = 0;
+
+       /*  for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
+        {
+            cout<<"imprimindo IT: "<<listaVertices[i]<<endl;
+
+            i++;
+
+        }
+        */
 
         break;
     }
