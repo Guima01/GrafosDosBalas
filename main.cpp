@@ -41,25 +41,24 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
 
     }
 
-//    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
-//    {
-//        No *aux = new No(it->getId());
-//        aux->setProximoNo(it->getProximoNo());
-//        cout<<aux->getId();
-//        cout<<" "<<endl;
-//
-//        while(aux->getProximoNo()){
-//
-//            aux->setId(aux->getProximoNo()->getId());
-//            aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
-//            cout<<aux->getId();
-//            cout<<" ";
-//
-//        }
-//        cout<<endl;
-//        cout<<endl;
-//
-//    }
+    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
+    {
+        No *aux = new No(it->getId());
+        aux->setProximoNo(it->getProximoNo());
+        cout<<aux->getId();
+        cout<<" "<<endl;
+
+        while(aux->getProximoNo())
+        {
+            aux->setId(aux->getProximoNo()->getId());
+            aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
+            cout<<aux->getId();
+            cout<<" ";
+        }
+        cout<<endl;
+        cout<<endl;
+
+    }
 
     cout<<endl;
     cout<<"Numero de Arestas: ";
@@ -117,7 +116,11 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //DFS
     case 3:
     {
-        grafo->profundidadePrimeiraBusca(grafo->getOrdem()-1);
+        //cout<<grafo->getOrdem()<<endl;
+        vector<int>listaVertices(grafo->getOrdem());
+        //listaVertices[0]=(grafo->getPrimeiroNo()->getId());
+        int cont=0;
+        grafo->profundidadePrimeiraBusca(listaVertices,grafo->getOrdem(),0,&cont);
 
         break;
     }

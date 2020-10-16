@@ -48,7 +48,8 @@ class Grafo{
         bool buscaNo(int id);
         No* getNo(int id);
 
-        bool profundidadePrimeiraBusca(int targetId);
+        vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
+        vector<int> auxProfundidade(vector<int> listaVertices,int idNo,int *cont);
 
         void amplitudePrimeiraBusca(ofstream& arquivo_saida);
         Grafo* getComplemento();

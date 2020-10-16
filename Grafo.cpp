@@ -102,6 +102,10 @@ void Grafo::criaLista(int ordem)
         int x = vertice;
         No *no = new No(vertice);
         this->vertices->push_back(*no);
+        if(vertice == 0)
+        {
+            primeiro_no = no;
+        }
     }
 
 }
@@ -174,14 +178,16 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                 aux->setProximoNo(it->getProximoNo());
                 while(aux->getProximoNo()->getProximoNo())
                 {
-                    if(aux->getProximoNo()->getProximoNo()->getId() == idNoFonte){
+                    if(aux->getProximoNo()->getProximoNo()->getId() == idNoFonte)
+                    {
                         checkNoRepetido = true;
                         break;
                     }
                     aux->setId(aux->getProximoNo()->getId());
                     aux->setProximoNo(aux->getProximoNo()->getProximoNo());
                 }
-                if(checkNoRepetido == true){
+                if(checkNoRepetido == true)
+                {
                     break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
@@ -222,14 +228,91 @@ No *Grafo::getNo(int id)
 
 
 //Function that verifies if there is a path between two nodes
-bool Grafo::profundidadePrimeiraBusca(int targetId)
+vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordemGrafo, int posicao,int *cont)
 {
-    No *aux = new No(vertices->begin()->getId());
-    //cout<<"Caminho Percorrido:"<<endl;
-
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        cout<<it->getId()<<endl;
+        if(it->getId()==posicao)
+        {
+            listaVertices = auxProfundidade(listaVertices,it->getId(),cont);
+            No *aux;
+            if(it->getProximoNo() != 0)  //existe o no;
+            {
+                aux = new No(it->getProximoNo()->getId());
+                if(it->getProximoNo()->getProximoNo() != 0){
+                    aux->setProximoNo(it->getProximoNo()->getProximoNo());
+                }
+                cout<<"AA"<<aux->getId()<<endl;
+                if(aux->getProximoNo() != 0){
+                cout<<"BB"<<aux->getProximoNo()->getId()<<endl;
+                }
+            }
+            if(*cont == ordemGrafo)
+            {
+                break;
+            }
+            while(true)
+            {
+                int i=0;
+                for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
+                {
+                    cout<<i<<endl;
+                    if(aux->getId()==it[i])
+                    {
+                        if(aux->getProximoNo()==0)
+                        {
+                            return listaVertices;
+                        }
+                        aux->setId(aux->getProximoNo()->getId());
+                        cout<<"CC"<<aux->getId()<<endl;
+                        if(aux->getProximoNo()->getProximoNo() != 0){
+                            aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                            cout<<"DD"<<aux->getProximoNo()->getId()<<endl;
+                        }
+                        else{
+                            aux->setProximoNo(nullptr);
+                        }
+                        break;
+                    }
+                    i++;
+
+                    if(i == listaVertices.size()-1)
+                    {
+                        listaVertices = profundidadePrimeiraBusca(listaVertices,ordemGrafo,aux->getId(),cont);
+                        break;
+                    }
+                }
+            }
+            //cout<<"A"<<aux->getId()<<endl;
+         //   listaVertices = profundidadePrimeiraBusca(listaVertices,ordemGrafo,aux->getId(),cont);
+        }
+    }
+
+
+    return listaVertices;
+}
+
+
+vector<int> Grafo::auxProfundidade(vector<int>listaVertices,int idNo,int *cont)
+{
+
+    int i=0;
+
+    for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
+    {
+        if(idNo == it[i])
+        {
+            return listaVertices;
+        }
+        i++;
+    }
+    //cout<<idNo<<endl;
+
+    listaVertices[*cont]=idNo;
+    *cont = *cont +1;
+    return listaVertices;
+}
+/*        cout<<it->getId()<<endl;
         aux->setId(it->getProximoNo()->getId());
         aux->setProximoNo(it->getProximoNo());
         cout<<aux->getId()<<endl;
@@ -265,11 +348,11 @@ bool Grafo::profundidadePrimeiraBusca(int targetId)
                      aux = aux->getProximoNo();
                  }
 
-             }*/
+             }
     }
     delete aux;
-    return true;
-}
+    return true;*/
+
 
 
 

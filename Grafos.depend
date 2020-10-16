@@ -86,13 +86,13 @@
 	<list>
 	<vector>
 
-1602438507 source:c:\users\gabriel\grafosdosbalas\aresta.cpp
+1602716082 source:c:\users\gabriel\grafosdosbalas\aresta.cpp
 	"Aresta.h"
 	<iostream>
 
-1602435007 c:\users\gabriel\grafosdosbalas\aresta.h
+1602716082 c:\users\gabriel\grafosdosbalas\aresta.h
 
-1602439202 source:c:\users\gabriel\grafosdosbalas\grafo.cpp
+1602807485 source:c:\users\gabriel\grafosdosbalas\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
@@ -108,7 +108,7 @@
 	<float.h>
 	<iomanip>
 
-1602436969 c:\users\gabriel\grafosdosbalas\grafo.h
+1602802835 c:\users\gabriel\grafosdosbalas\grafo.h
 	"No.h"
 	<fstream>
 	<stack>
@@ -118,7 +118,7 @@
 1602438229 c:\users\gabriel\grafosdosbalas\no.h
 	"Aresta.h"
 
-1602439355 source:c:\users\gabriel\grafosdosbalas\main.cpp
+1602809599 source:c:\users\gabriel\grafosdosbalas\main.cpp
 	<iostream>
 	<fstream>
 	<string>
@@ -132,7 +132,7 @@
 	"Grafo.h"
 	"No.h"
 
-1602438507 source:c:\users\gabriel\grafosdosbalas\no.cpp
+1602439470 source:c:\users\gabriel\grafosdosbalas\no.cpp
 	"No.h"
 	"Aresta.h"
 	"Grafo.h"
