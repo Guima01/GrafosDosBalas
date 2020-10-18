@@ -9,6 +9,7 @@
 #include <stack>
 #include <list>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -49,9 +50,8 @@ class Grafo{
         No* getNo(int id);
 
         vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
-        vector<int> auxProfundidade(vector<int> listaVertices,int idNo,int *cont);
-
-        void amplitudePrimeiraBusca(ofstream& arquivo_saida);
+        vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
+        vector<int> amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int>verticesVisitados,int *cont);
         Grafo* getComplemento();
         Grafo* getSubjacente();
         bool PossuiCiclo();

@@ -12,6 +12,7 @@
 #include <ctime>
 #include <float.h>
 #include <iomanip>
+#include <queue>
 
 using namespace std;
 
@@ -234,7 +235,7 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordem
     {
         if(it->getId()==posicao)
         {
-            listaVertices = auxProfundidade(listaVertices,it->getId(),cont);
+            listaVertices = auxBusca(listaVertices,it->getId(),cont);
             No *aux;
             if(it->getProximoNo() != 0)  //existe o no;
             {
@@ -294,7 +295,7 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordem
 }
 
 
-vector<int> Grafo::auxProfundidade(vector<int>listaVertices,int idNo,int *cont)
+vector<int> Grafo::auxBusca(vector<int>listaVertices,int idNo,int *cont)
 {
 
     int i=0;
@@ -303,6 +304,10 @@ vector<int> Grafo::auxProfundidade(vector<int>listaVertices,int idNo,int *cont)
     {
         if(idNo == listaVertices[i])
         {
+            if(*cont == 0)
+            {
+                *cont = *cont + 1;
+            }
             return listaVertices;
         }
         i++;
@@ -313,8 +318,76 @@ vector<int> Grafo::auxProfundidade(vector<int>listaVertices,int idNo,int *cont)
 }
 
 
-void Grafo::amplitudePrimeiraBusca(ofstream &output_file)
+vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vector<int>verticesVisitados, int *cont)
 {
+    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        if(it->getId() == idNo)
+        {
+            filaVertices->pop();
+
+            verticesVisitados = auxBusca(verticesVisitados,it->getId(),cont);
+            No *aux;
+            if(it->getProximoNo() != 0)  //existe o no;
+            {
+                aux = new No(it->getProximoNo()->getId());
+                if(it->getProximoNo()->getProximoNo() != 0)
+                {
+                    aux->setProximoNo(it->getProximoNo()->getProximoNo());
+                }
+            }
+            if(*cont == ordem)
+            {
+                delete aux;
+                return verticesVisitados;
+            }
+
+            do
+            {
+                int i = 0;
+                for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
+                {
+
+                    if(aux->getId() == verticesVisitados[i])
+                    {
+                        break;
+                    }
+                    i++;
+                    if(i == verticesVisitados.size())
+                    {
+                        filaVertices->push(aux->getId());
+                        verticesVisitados = auxBusca(verticesVisitados,aux->getId(),cont);
+                        break;
+                    }
+                }
+                if(aux->getProximoNo() == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    aux->setId(aux->getProximoNo()->getId());
+                    if(aux->getProximoNo()->getProximoNo() != 0)
+                    {
+                        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                    }
+                    else
+                    {
+                        aux->setProximoNo(nullptr);
+                    }
+                }
+            }
+            while(true);
+
+            while(!filaVertices->empty()){
+                verticesVisitados = amplitudePrimeiraBusca(filaVertices, filaVertices->front(), verticesVisitados, cont);
+            }
+            delete aux;
+            return verticesVisitados;
+        }
+}
+
+return verticesVisitados;
 
 }
 

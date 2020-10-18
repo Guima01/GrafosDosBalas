@@ -3,6 +3,7 @@
 #include <string>
 #include <math.h>
 #include <list>
+#include <queue>
 #include <utility>
 #include <tuple>
 #include <iomanip>
@@ -10,6 +11,7 @@
 #include <chrono>
 #include "Grafo.h"
 #include "No.h"
+
 
 using namespace std;
 
@@ -41,7 +43,7 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
 
     }
 
-    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
+    /*for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
     {
         No *aux = new No(it->getId());
         aux->setProximoNo(it->getProximoNo());
@@ -58,7 +60,7 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
         cout<<endl;
         cout<<endl;
 
-    }
+    }*/
 
     cout<<endl;
     cout<<"Numero de Arestas: ";
@@ -110,6 +112,26 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     case 2:
     {
 
+        queue<int>filaVertices;
+        filaVertices.push(0);
+        vector<int>verticesVisitados(grafo->getOrdem());
+        int i = 0;
+        for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
+        {
+            verticesVisitados[i] = -1;
+            i++;
+        }
+        int cont = 0;
+        verticesVisitados = grafo->amplitudePrimeiraBusca(&filaVertices, 4, verticesVisitados, &cont);
+        i = 0;
+        /*for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
+        {
+            cout<<"imprimindo vertices visitados na busca por amplitude: "<<verticesVisitados[i]<<endl;
+
+            i++;
+
+        }*/
+
         break;
     }
 
@@ -117,19 +139,19 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     case 3:
     {
         vector<int>listaVertices(grafo->getOrdem());
-        int cont=1;
+        int cont=0;
         listaVertices = grafo->profundidadePrimeiraBusca(listaVertices,grafo->getOrdem(),0,&cont);
 
         int i = 0;
 
-       /*  for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
+        for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
         {
-            cout<<"imprimindo IT: "<<listaVertices[i]<<endl;
+            cout<<"imprimindo vertices visitados na busca por profundidade: "<<listaVertices[i]<<endl;
 
             i++;
 
         }
-        */
+
 
         break;
     }
