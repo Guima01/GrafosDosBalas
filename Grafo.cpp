@@ -231,10 +231,17 @@ No *Grafo::getNo(int id)
 //Function that verifies if there is a path between two nodes
 vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordemGrafo, int posicao,int *cont)
 {
+    if(posicao >= ordemGrafo)
+    {
+        cout<<endl;
+        cout<<"No invalido"<<endl<<endl;
+        return listaVertices;
+    }
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         if(it->getId()==posicao)
         {
+            cout<<"Vertice atual "<<it->getId()<<endl;
             listaVertices = auxBusca(listaVertices,it->getId(),cont);
             No *aux;
             if(it->getProximoNo() != 0)  //existe o no;
@@ -250,6 +257,7 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordem
                 delete aux;
                 return listaVertices;
             }
+            int verticeAtual = it->getId();
             while(true)
             {
                 int i=0;
@@ -279,6 +287,7 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordem
                     if(i == listaVertices.size())
                     {
                         listaVertices = profundidadePrimeiraBusca(listaVertices,ordemGrafo,aux->getId(),cont);
+                        cout<<"retornou para o vertice: "<<verticeAtual<<endl;
 
                         if(*cont == ordemGrafo)
                         {
@@ -320,12 +329,18 @@ vector<int> Grafo::auxBusca(vector<int>listaVertices,int idNo,int *cont)
 
 vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vector<int>verticesVisitados, int *cont)
 {
+    if(idNo >= ordem)
+    {
+        cout<<endl;
+        cout<<"No invalido"<<endl<<endl;
+        return verticesVisitados;
+    }
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         if(it->getId() == idNo)
         {
+            //cout<<"Visitando vertice"<<it->getId()<<endl;
             filaVertices->pop();
-
             verticesVisitados = auxBusca(verticesVisitados,it->getId(),cont);
             No *aux;
             if(it->getProximoNo() != 0)  //existe o no;
@@ -342,6 +357,8 @@ vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vect
                 return verticesVisitados;
             }
 
+            int verticeAtual = it->getId();
+
             do
             {
                 int i = 0;
@@ -357,6 +374,7 @@ vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vect
                     {
                         filaVertices->push(aux->getId());
                         verticesVisitados = auxBusca(verticesVisitados,aux->getId(),cont);
+                        cout<<"Visitando vertice "<<aux->getId()<<endl;
                         break;
                     }
                 }
@@ -379,15 +397,16 @@ vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vect
             }
             while(true);
 
-            while(!filaVertices->empty()){
+            bool check = false;
+            while(!filaVertices->empty())
+            {
+                int atual = filaVertices->front();
                 verticesVisitados = amplitudePrimeiraBusca(filaVertices, filaVertices->front(), verticesVisitados, cont);
             }
             delete aux;
             return verticesVisitados;
         }
-}
-
-return verticesVisitados;
+    }
 
 }
 

@@ -122,9 +122,12 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
             i++;
         }
         int cont = 0;
-        verticesVisitados = grafo->amplitudePrimeiraBusca(&filaVertices, 4, verticesVisitados, &cont);
+        int No = 0;
+        cout<<"digite o No origem: ";
+        cin>>No;
+        verticesVisitados = grafo->amplitudePrimeiraBusca(&filaVertices, No, verticesVisitados, &cont);
         i = 0;
-        /*for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
+        /*==for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
         {
             cout<<"imprimindo vertices visitados na busca por amplitude: "<<verticesVisitados[i]<<endl;
 
@@ -140,17 +143,26 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     {
         vector<int>listaVertices(grafo->getOrdem());
         int cont=0;
-        listaVertices = grafo->profundidadePrimeiraBusca(listaVertices,grafo->getOrdem(),0,&cont);
-
+        int No = 0;
         int i = 0;
-
         for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
+        {
+            listaVertices[i] = -1;
+            i++;
+        }
+        cout<<"digite o No origem: ";
+        cin>>No;
+        listaVertices = grafo->profundidadePrimeiraBusca(listaVertices,grafo->getOrdem(),No,&cont);
+
+        i = 0;
+
+        /*for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
         {
             cout<<"imprimindo vertices visitados na busca por profundidade: "<<listaVertices[i]<<endl;
 
             i++;
 
-        }
+        }*/
 
 
         break;
