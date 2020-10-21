@@ -20,6 +20,7 @@ class Grafo{
 //        list<No> *vertices;
         int ordem;
         int numero_arestas;
+        float grau_medio_grafo;
 //        bool direcao;
 //        bool aresta_ponderada;
 //        bool no_ponderado;
@@ -36,6 +37,7 @@ class Grafo{
         //Getters
         int getOrdem();
         int getNumeroArestas();
+        float getGrauMedioGrafo();
         bool getDirecao();
         bool getArestaPonderada();
         bool getNoPonderado();

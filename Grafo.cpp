@@ -31,20 +31,28 @@ Grafo::Grafo(int ordem)
 //    this->no_ponderado = no_ponderado;
     this->primeiro_no = this->ultimo_no = nullptr;
     this->numero_arestas = 0;
+    this->grau_medio_grafo = 0;
 }
 
 // Destructor
 Grafo::~Grafo()
 {
-
-//    while (proximo_no != nullptr)
-//    {
-//
-//        proximo_no->removeTodasArestas();
-//        No *no_aux = proximo_no->getProximoNo();
-//        delete proximo_no;
-//        proximo_no = no_aux;
-//    }
+    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        No* aux;
+        No* auxDelete;
+        aux->setProximoNo(it->getProximoNo());
+        auxDelete->setProximoNo(it->getProximoNo());
+        while (aux->getProximoNo()->getProximoNo() != 0)
+        {
+            aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+            delete auxDelete->getProximoNo();
+            auxDelete->setProximoNo(aux->getProximoNo());
+        }
+        delete aux->getProximoNo();
+        delete aux;
+        delete auxDelete;
+    }
 }
 
 // Getters
@@ -57,6 +65,32 @@ int Grafo::getNumeroArestas()
 {
 
     return this->numero_arestas;
+}
+
+float Grafo::getGrauMedioGrafo()
+{
+
+    float grau = 0;
+    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        No *aux = new No(it->getId());
+        aux->setProximoNo(it->getProximoNo());
+        while(aux->getProximoNo() != 0)
+        {
+            aux->setId(aux->getProximoNo()->getId());
+            if(aux->getProximoNo()->getProximoNo()!=0)
+            {
+                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+            }
+            else
+            {
+                aux->setProximoNo(nullptr);
+            }
+            grau = grau + 1;
+        }
+    }
+    this->grau_medio_grafo = grau/this->getOrdem();
+    return this->grau_medio_grafo;
 }
 
 //bool Grafo::getDirecao()
@@ -113,6 +147,7 @@ void Grafo::criaLista(int ordem)
 
 void Grafo::insereNo(int idNoFonte, int idNoAlvo)
 {
+    bool checkAresta = false;
     Aresta *aresta = new Aresta(idNoAlvo,idNoFonte);
     int checkNo = 0;
     bool checkNoRepetido = false;
@@ -122,11 +157,14 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
         {
             if(!it->getProximoNo())
             {
-
                 No *proximoNo = new No(idNoAlvo);
                 it->setProximoNo(proximoNo);
                 it->insereAresta(aresta);
-                numero_arestas = numero_arestas + 1;
+                if(checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
             }
             else if(it->getProximoNo())
             {
@@ -155,7 +193,11 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                 aux->getProximoNo()->setProximoNo(proximoNo);
                 aux->getProximoNo()->insereAresta(aresta);
                 checkNo = checkNo + 1;
-                numero_arestas = numero_arestas + 1;
+                if(checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
                 delete aux;
             }
         }
@@ -166,6 +208,11 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                 No *proximoNo = new No(idNoFonte);
                 it->setProximoNo(proximoNo);
                 it->insereAresta(aresta);
+                if(checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
 
             }
             else if(it->getProximoNo())
@@ -194,6 +241,11 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                 aux->getProximoNo()->setProximoNo(proximoNo);
                 aux->getProximoNo()->insereAresta(aresta);
                 checkNo = checkNo + 1;
+                if(checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
                 delete aux;
             }
         }

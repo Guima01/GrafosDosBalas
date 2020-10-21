@@ -9,13 +9,15 @@
 #include <iomanip>
 #include <stdlib.h>
 #include <chrono>
+#include <string>
 #include "Grafo.h"
 #include "No.h"
 
 
+
 using namespace std;
 
-Grafo* leituraInstancia(ifstream& arquivo_entrada)
+Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
 {
 
     //Variáveis para auxiliar na criação dos nós no Grafo
@@ -38,8 +40,10 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
     //Leitura de arquivo
     while(arquivo_entrada >> idNoFonte >> idNoAlvo >> peso)
     {
-
-        grafo->insereNo(idNoFonte,idNoAlvo);
+        if(idNoFonte != idNoAlvo)
+        {
+            grafo->insereNo(idNoFonte,idNoAlvo);
+        }
 
     }
 
@@ -50,7 +54,7 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
         cout<<aux->getId();
         cout<<" "<<endl;
 
-        while(aux->getProximoNo())
+        while(aux->getProximoNo() !=0)
         {
             aux->setId(aux->getProximoNo()->getId());
             aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
@@ -66,6 +70,10 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada)
     cout<<"Numero de Arestas: ";
     cout<<grafo->getNumeroArestas();
     cout<<endl;
+    cout<<"Grau medio Grafo: ";
+    cout<<grafo->getGrauMedioGrafo();
+    cout<<endl;
+
 
     return grafo;
 }
@@ -214,13 +222,11 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
 
     //Algoritmo de Floyd
     case 10:
-    {
 
         break;
 
     }
 
-    }
 }
 
 int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
@@ -283,11 +289,17 @@ int main(int argc, char const *argv[])
     if(arquivo_entrada.is_open())
     {
 
-        grafo = leituraInstancia(arquivo_entrada);
+        grafo = leituraInstancia(arquivo_entrada, &arquivo_saida);
 
     }
     else
         cout << "Unable to open " << argv[1];
+
+    cout<<arquivo_saida.is_open()<<endl;
+
+    arquivo_saida << grafo->getOrdem()<<"\n";
+    arquivo_saida << grafo->getNumeroArestas()<<"\n";
+    arquivo_saida << grafo->getGrauMedioGrafo()<<"\n";
 
 
     mainMenu(arquivo_saida, grafo);
