@@ -300,9 +300,10 @@ int main(int argc, char const *argv[])
     arquivo_saida << grafo->getOrdem()<<"\n";
     arquivo_saida << grafo->getNumeroArestas()<<"\n";
     arquivo_saida << grafo->getGrauMedioGrafo()<<"\n";
+    grafo->getFrequenciaRelativa(arquivo_saida);
 
 
-    mainMenu(arquivo_saida, grafo);
+    //mainMenu(arquivo_saida, grafo);
 
 
 

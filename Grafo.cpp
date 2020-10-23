@@ -93,6 +93,40 @@ float Grafo::getGrauMedioGrafo()
     return this->grau_medio_grafo;
 }
 
+void Grafo::getFrequenciaRelativa(ofstream &arquivo_saida)
+{
+    int grau = 0;
+    while(grau < this->getOrdem())
+    {
+        float freqRel = 0;
+        for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+        {
+            int cont = 0;
+            No *aux = new No(it->getId());
+            aux->setProximoNo(it->getProximoNo());
+            while(aux->getProximoNo() != 0)
+            {
+                aux->setId(aux->getProximoNo()->getId());
+                if(aux->getProximoNo()->getProximoNo()!=0)
+                {
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
+                else
+                {
+                    aux->setProximoNo(nullptr);
+                }
+                cont = cont + 1;
+            }
+            if(cont == grau){
+                freqRel = freqRel + 1;
+            }
+            delete aux;
+        }
+        arquivo_saida<<"Frequencia Relativa do grau "<<grau<<" : "<<freqRel/this->getOrdem()<<"\n";
+        grau = grau + 1;
+    }
+}
+
 //bool Grafo::getDirecao()
 //{
 //
