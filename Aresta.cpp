@@ -5,26 +5,26 @@
 using namespace std;
 
 /**************************************************************************************************
- * Defining the Aresta's methods
+ * Definindo métodos de Aresta
 **************************************************************************************************/
 
-// Constructor
+// Construtor
 Aresta::Aresta(int id_origem,int id_alvo){
 
     this->id_origem = id_origem;
     this->id_alvo = id_alvo;
-    this->proxima_aresta = nullptr;
+    //this->proxima_aresta = nullptr;
     this->peso = 0;
     this->verificaA=false;
 }
 
-// Destructor
+// Destrutor
 Aresta::~Aresta(){
 
-    if (this->proxima_aresta != nullptr){
+    /*if (this->proxima_aresta != nullptr){
         delete this->proxima_aresta;
         this->proxima_aresta = nullptr;
-    }
+    }*/
 
 }
 
@@ -35,11 +35,11 @@ int Aresta::getIdAlvo(){
 
 }
 
-Aresta* Aresta::getProximaAresta(){
+/*Aresta* Aresta::getProximaAresta(){
 
     return this->proxima_aresta;
 
-}
+}*/
 
 float Aresta::getPeso(){
 
@@ -48,11 +48,11 @@ float Aresta::getPeso(){
 }
 
 // Setters
-void Aresta::setProximaAresta(Aresta* aresta){
+/*void Aresta::setProximaAresta(Aresta* aresta){
 
     this->proxima_aresta = aresta;
 
-}
+}*/
 
 void Aresta::setPeso(float peso){
 
@@ -63,6 +63,6 @@ bool Aresta::getVerificaAresta(){
     return this->verificaA;
 }
 
-bool Aresta::setVerificaAresta(){
+void Aresta::setVerificaAresta(){
     this->verificaA = true;
 }

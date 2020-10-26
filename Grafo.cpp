@@ -17,30 +17,30 @@
 using namespace std;
 
 /**************************************************************************************************
- * Defining the Grafo's methods
+ * Definindo os métodos do Grafo
 **************************************************************************************************/
 
-// Constructor
+// Construtor
 Grafo::Grafo(int ordem)
 {
 
     this->vertices = new list<No>[ordem];
     this->ordem = ordem;
-//    this->direcao = direcao;
-//    this->aresta_ponderada = aresta_ponderada;
-//    this->no_ponderado = no_ponderado;
+    //    this->direcao = direcao;
+    //    this->aresta_ponderada = aresta_ponderada;
+    //    this->no_ponderado = no_ponderado;
     this->primeiro_no = this->ultimo_no = nullptr;
     this->numero_arestas = 0;
     this->grau_medio_grafo = 0;
 }
 
-// Destructor
+// Destrutor
 Grafo::~Grafo()
 {
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        No* aux;
-        No* auxDelete;
+        No *aux;
+        No *auxDelete;
         aux->setProximoNo(it->getProximoNo());
         auxDelete->setProximoNo(it->getProximoNo());
         while (aux->getProximoNo()->getProximoNo() != 0)
@@ -56,16 +56,22 @@ Grafo::~Grafo()
 }
 
 // Getters
+
+//retorna a ordem do Grafo
 int Grafo::getOrdem()
 {
 
     return this->ordem;
 }
+
+//retorna o número de arestas no Grafo
 int Grafo::getNumeroArestas()
 {
 
     return this->numero_arestas;
 }
+
+//retorna o Grau médio do Grafo
 
 float Grafo::getGrauMedioGrafo()
 {
@@ -73,57 +79,32 @@ float Grafo::getGrauMedioGrafo()
     float grau = 0;
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        No *aux = new No(it->getId());
-        aux->setProximoNo(it->getProximoNo());
-        while(aux->getProximoNo() != 0)
-        {
-            aux->setId(aux->getProximoNo()->getId());
-            if(aux->getProximoNo()->getProximoNo()!=0)
-            {
-                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-            }
-            else
-            {
-                aux->setProximoNo(nullptr);
-            }
-            grau = grau + 1;
-        }
+        grau = grau + it->getGrau();
     }
-    this->grau_medio_grafo = grau/this->getOrdem();
+    this->grau_medio_grafo = grau / this->getOrdem();
     return this->grau_medio_grafo;
 }
 
-void Grafo::getFrequenciaRelativa(ofstream &arquivo_saida)
+//calcula a frequência relativa para os graus presentes no grafo
+
+void Grafo::getFrequenciaRelativa(ofstream &arquivo_saida, int ordem)
 {
+    int *vetorGraus;
+    vetorGraus = (int *)malloc(ordem * sizeof(int));
     int grau = 0;
-    while(grau < this->getOrdem())
+    float freqRel = 0;
+    for (int i = 0; i < ordem; i++)
     {
-        float freqRel = 0;
-        for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
-        {
-            int cont = 0;
-            No *aux = new No(it->getId());
-            aux->setProximoNo(it->getProximoNo());
-            while(aux->getProximoNo() != 0)
-            {
-                aux->setId(aux->getProximoNo()->getId());
-                if(aux->getProximoNo()->getProximoNo()!=0)
-                {
-                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-                }
-                else
-                {
-                    aux->setProximoNo(nullptr);
-                }
-                cont = cont + 1;
-            }
-            if(cont == grau){
-                freqRel = freqRel + 1;
-            }
-            delete aux;
+        vetorGraus[i] = 0;
+    }
+    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        vetorGraus[it->getGrau()] = vetorGraus[it->getGrau()] + 1;
+    }
+    for(int i = 0; i < ordem; i++){
+        if(vetorGraus[i] != 0){
+            arquivo_saida << "Frequencia Relativa de grau " << i << " : " << (float)vetorGraus[i]/this->getOrdem() << "\n";
         }
-        arquivo_saida<<"Frequencia Relativa do grau "<<grau<<" : "<<freqRel/this->getOrdem()<<"\n";
-        grau = grau + 1;
     }
 }
 
@@ -145,7 +126,7 @@ void Grafo::getFrequenciaRelativa(ofstream &arquivo_saida)
 //    return this->no_ponderado;
 //}
 
-No *Grafo::getPrimeiroNo()
+/*No *Grafo::getPrimeiroNo()
 {
 
     return this->primeiro_no;
@@ -155,112 +136,60 @@ No *Grafo::getUltimoNo()
 {
 
     return this->ultimo_no;
-}
+}*/
 
-// Other methods
-/*
-    The outdegree attribute of nodes is used as a counter for the number of edges in the Grafo.
-    This allows the correct updating of the numbers of edges in the Grafo being directed or not.
-*/
 
+//cria a lista com o tamanho de vértices do grafo
 void Grafo::criaLista(int ordem)
 {
 
-    for(int vertice = 0;  vertice < ordem; vertice ++)
+    for (int vertice = 0; vertice < ordem; vertice++)
     {
         int x = vertice;
         No *no = new No(vertice);
         this->vertices->push_back(*no);
-        if(vertice == 0)
+        if (vertice == 0)
         {
             primeiro_no = no;
         }
     }
-
 }
 
+// insere os nós adjacentes a lista de vértice
 void Grafo::insereNo(int idNoFonte, int idNoAlvo)
 {
     bool checkAresta = false;
-    Aresta *aresta = new Aresta(idNoAlvo,idNoFonte);
+    Aresta *aresta = new Aresta(idNoAlvo, idNoFonte);
     int checkNo = 0;
     bool checkNoRepetido = false;
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        if(idNoFonte == it->getId())
+        if (idNoFonte == it->getId())
         {
-            if(!it->getProximoNo())
+            if (!it->getProximoNo())
             {
                 No *proximoNo = new No(idNoAlvo);
                 it->setProximoNo(proximoNo);
                 it->insereAresta(aresta);
-                if(checkAresta == false)
+                it->setGrau();
+                if (checkAresta == false)
                 {
                     numero_arestas = numero_arestas + 1;
                     checkAresta = true;
                 }
             }
-            else if(it->getProximoNo())
+            else if (it->getProximoNo())
             {
-                if(it->getProximoNo()->getId() == idNoAlvo)
+                if (it->getProximoNo()->getId() == idNoAlvo)
                 {
                     break;
                 }
                 No *proximoNo = new No(idNoAlvo);
                 No *aux = new No(it->getId());
                 aux->setProximoNo(it->getProximoNo());
-                while(aux->getProximoNo()->getProximoNo())
+                while (aux->getProximoNo()->getProximoNo())
                 {
-                    if(aux->getProximoNo()->getProximoNo()->getId() == idNoAlvo)
-                    {
-                        checkNoRepetido = true;
-                        break;
-                    }
-                    aux->setId(aux->getProximoNo()->getId());
-                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-
-                }
-                if(checkNoRepetido == true)
-                {
-                    break;
-                }
-                aux->getProximoNo()->setProximoNo(proximoNo);
-                aux->getProximoNo()->insereAresta(aresta);
-                checkNo = checkNo + 1;
-                if(checkAresta == false)
-                {
-                    numero_arestas = numero_arestas + 1;
-                    checkAresta = true;
-                }
-                delete aux;
-            }
-        }
-        else if(idNoAlvo == it->getId())
-        {
-            if(!it->getProximoNo())
-            {
-                No *proximoNo = new No(idNoFonte);
-                it->setProximoNo(proximoNo);
-                it->insereAresta(aresta);
-                if(checkAresta == false)
-                {
-                    numero_arestas = numero_arestas + 1;
-                    checkAresta = true;
-                }
-
-            }
-            else if(it->getProximoNo())
-            {
-                if(it->getProximoNo()->getId() == idNoFonte)
-                {
-                    break;
-                }
-                No *proximoNo = new No(idNoFonte);
-                No *aux = new No(it->getId());
-                aux->setProximoNo(it->getProximoNo());
-                while(aux->getProximoNo()->getProximoNo())
-                {
-                    if(aux->getProximoNo()->getProximoNo()->getId() == idNoFonte)
+                    if (aux->getProximoNo()->getProximoNo()->getId() == idNoAlvo)
                     {
                         checkNoRepetido = true;
                         break;
@@ -268,14 +197,15 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                     aux->setId(aux->getProximoNo()->getId());
                     aux->setProximoNo(aux->getProximoNo()->getProximoNo());
                 }
-                if(checkNoRepetido == true)
+                if (checkNoRepetido == true)
                 {
                     break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
                 aux->getProximoNo()->insereAresta(aresta);
                 checkNo = checkNo + 1;
-                if(checkAresta == false)
+                it->setGrau();
+                if (checkAresta == false)
                 {
                     numero_arestas = numero_arestas + 1;
                     checkAresta = true;
@@ -283,82 +213,124 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                 delete aux;
             }
         }
-        else if(checkNo == 2)
+        else if (idNoAlvo == it->getId())
+        {
+            if (!it->getProximoNo())
+            {
+                No *proximoNo = new No(idNoFonte);
+                it->setProximoNo(proximoNo);
+                it->insereAresta(aresta);
+                it->setGrau();
+                if (checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
+            }
+            else if (it->getProximoNo())
+            {
+                if (it->getProximoNo()->getId() == idNoFonte)
+                {
+                    break;
+                }
+                No *proximoNo = new No(idNoFonte);
+                No *aux = new No(it->getId());
+                aux->setProximoNo(it->getProximoNo());
+                while (aux->getProximoNo()->getProximoNo())
+                {
+                    if (aux->getProximoNo()->getProximoNo()->getId() == idNoFonte)
+                    {
+                        checkNoRepetido = true;
+                        break;
+                    }
+                    aux->setId(aux->getProximoNo()->getId());
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
+                if (checkNoRepetido == true)
+                {
+                    break;
+                }
+                aux->getProximoNo()->setProximoNo(proximoNo);
+                aux->getProximoNo()->insereAresta(aresta);
+                checkNo = checkNo + 1;
+                it->setGrau();
+                if (checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
+                delete aux;
+            }
+        }
+        else if (checkNo == 2)
         {
             break;
         }
     }
 }
 
-
-void Grafo::insereAresta(int id, int id_alvo, float peso)
+/*void Grafo::insereAresta(int id, int id_alvo, float peso)
 {
-
-
 }
 
 void Grafo::removeNo(int id)
 {
-
 }
 
 bool Grafo::buscaNo(int id)
 {
-
 }
 
 No *Grafo::getNo(int id)
 {
-
-
 }
 
-
 //Function that verifies if there is a path between two nodes
-vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordemGrafo, int posicao,int *cont)
+vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices, int ordemGrafo, int posicao, int *cont)
 {
-    if(posicao >= ordemGrafo)
+    if (posicao >= ordemGrafo)
     {
-        cout<<endl;
-        cout<<"No invalido"<<endl<<endl;
+        cout << endl;
+        cout << "No invalido" << endl
+             << endl;
         return listaVertices;
     }
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        if(it->getId()==posicao)
+        if (it->getId() == posicao)
         {
-            cout<<"Vertice atual "<<it->getId()<<endl;
-            listaVertices = auxBusca(listaVertices,it->getId(),cont);
+            cout << "Vertice atual " << it->getId() << endl;
+            listaVertices = auxBusca(listaVertices, it->getId(), cont);
             No *aux;
-            if(it->getProximoNo() != 0)  //existe o no;
+            if (it->getProximoNo() != 0) //existe o no;
             {
                 aux = new No(it->getProximoNo()->getId());
-                if(it->getProximoNo()->getProximoNo() != 0)
+                if (it->getProximoNo()->getProximoNo() != 0)
                 {
                     aux->setProximoNo(it->getProximoNo()->getProximoNo());
                 }
             }
-            if(*cont == ordemGrafo)
+            if (*cont == ordemGrafo)
             {
                 delete aux;
                 return listaVertices;
             }
             int verticeAtual = it->getId();
-            while(true)
+            while (true)
             {
-                int i=0;
+                int i = 0;
                 for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
                 {
 
-                    if(aux->getId()==listaVertices[i])
+                    if (aux->getId() == listaVertices[i])
                     {
-                        if(aux->getProximoNo()==0)
+                        if (aux->getProximoNo() == 0)
                         {
                             return listaVertices;
                         }
                         aux->setId(aux->getProximoNo()->getId());
 
-                        if(aux->getProximoNo()->getProximoNo() != 0)
+                        if (aux->getProximoNo()->getProximoNo() != 0)
                         {
                             aux->setProximoNo(aux->getProximoNo()->getProximoNo());
                         }
@@ -370,12 +342,12 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordem
                     }
                     i++;
 
-                    if(i == listaVertices.size())
+                    if (i == listaVertices.size())
                     {
-                        listaVertices = profundidadePrimeiraBusca(listaVertices,ordemGrafo,aux->getId(),cont);
-                        cout<<"retornou para o vertice: "<<verticeAtual<<endl;
+                        listaVertices = profundidadePrimeiraBusca(listaVertices, ordemGrafo, aux->getId(), cont);
+                        cout << "retornou para o vertice: " << verticeAtual << endl;
 
-                        if(*cont == ordemGrafo)
+                        if (*cont == ordemGrafo)
                         {
                             delete aux;
                             return listaVertices;
@@ -384,22 +356,20 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices,int ordem
                     }
                 }
             }
-
         }
     }
 }
 
-
-vector<int> Grafo::auxBusca(vector<int>listaVertices,int idNo,int *cont)
+vector<int> Grafo::auxBusca(vector<int> listaVertices, int idNo, int *cont)
 {
 
-    int i=0;
+    int i = 0;
 
     for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
     {
-        if(idNo == listaVertices[i])
+        if (idNo == listaVertices[i])
         {
-            if(*cont == 0)
+            if (*cont == 0)
             {
                 *cont = *cont + 1;
             }
@@ -407,37 +377,37 @@ vector<int> Grafo::auxBusca(vector<int>listaVertices,int idNo,int *cont)
         }
         i++;
     }
-    listaVertices[*cont]=idNo;
-    *cont = *cont +1;
+    listaVertices[*cont] = idNo;
+    *cont = *cont + 1;
     return listaVertices;
 }
 
-
-vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vector<int>verticesVisitados, int *cont)
+vector<int> Grafo::amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int> verticesVisitados, int *cont)
 {
-    if(idNo >= ordem)
+    if (idNo >= ordem)
     {
-        cout<<endl;
-        cout<<"No invalido"<<endl<<endl;
+        cout << endl;
+        cout << "No invalido" << endl
+             << endl;
         return verticesVisitados;
     }
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        if(it->getId() == idNo)
+        if (it->getId() == idNo)
         {
             //cout<<"Visitando vertice"<<it->getId()<<endl;
             filaVertices->pop();
-            verticesVisitados = auxBusca(verticesVisitados,it->getId(),cont);
+            verticesVisitados = auxBusca(verticesVisitados, it->getId(), cont);
             No *aux;
-            if(it->getProximoNo() != 0)  //existe o no;
+            if (it->getProximoNo() != 0) //existe o no;
             {
                 aux = new No(it->getProximoNo()->getId());
-                if(it->getProximoNo()->getProximoNo() != 0)
+                if (it->getProximoNo()->getProximoNo() != 0)
                 {
                     aux->setProximoNo(it->getProximoNo()->getProximoNo());
                 }
             }
-            if(*cont == ordem)
+            if (*cont == ordem)
             {
                 delete aux;
                 return verticesVisitados;
@@ -451,27 +421,27 @@ vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vect
                 for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
                 {
 
-                    if(aux->getId() == verticesVisitados[i])
+                    if (aux->getId() == verticesVisitados[i])
                     {
                         break;
                     }
                     i++;
-                    if(i == verticesVisitados.size())
+                    if (i == verticesVisitados.size())
                     {
                         filaVertices->push(aux->getId());
-                        verticesVisitados = auxBusca(verticesVisitados,aux->getId(),cont);
-                        cout<<"Visitando vertice "<<aux->getId()<<endl;
+                        verticesVisitados = auxBusca(verticesVisitados, aux->getId(), cont);
+                        cout << "Visitando vertice " << aux->getId() << endl;
                         break;
                     }
                 }
-                if(aux->getProximoNo() == 0)
+                if (aux->getProximoNo() == 0)
                 {
                     break;
                 }
                 else
                 {
                     aux->setId(aux->getProximoNo()->getId());
-                    if(aux->getProximoNo()->getProximoNo() != 0)
+                    if (aux->getProximoNo()->getProximoNo() != 0)
                     {
                         aux->setProximoNo(aux->getProximoNo()->getProximoNo());
                     }
@@ -480,11 +450,10 @@ vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vect
                         aux->setProximoNo(nullptr);
                     }
                 }
-            }
-            while(true);
+            } while (true);
 
             bool check = false;
-            while(!filaVertices->empty())
+            while (!filaVertices->empty())
             {
                 int atual = filaVertices->front();
                 verticesVisitados = amplitudePrimeiraBusca(filaVertices, filaVertices->front(), verticesVisitados, cont);
@@ -493,44 +462,29 @@ vector<int> Grafo::amplitudePrimeiraBusca(queue<int>*filaVertices,int idNo, vect
             return verticesVisitados;
         }
     }
-
 }
-
 
 Grafo *Grafo::getComplemento()
 {
-
 }
 
-
 //A function that returns a subjacent of a directed Grafo, which is a Grafo which the arcs have opposite directions to the original Grafo
-Grafo* Grafo::getSubjacente()
+Grafo *Grafo::getSubjacente()
 {
-
 }
 
 bool Grafo::GrafoConectado()
 {
-
 }
-
-
 
 bool Grafo::PossuiCiclo()
 {
-
 }
 
-
-
-float** Grafo::floydMarshall()
+float **Grafo::floydMarshall()
 {
-
 }
 
-
-
-float* Grafo::dijkstra(int id)
+float *Grafo::dijkstra(int id)
 {
-
-}
+}*/

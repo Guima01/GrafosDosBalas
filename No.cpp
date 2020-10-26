@@ -14,8 +14,8 @@ No::No(int id)
 {
 
     this->id = id;
-    /*this->grau_entrada = 0;
-    this->grau_saida = 0;
+    this->grau = 0;
+    /*this->grau_saida = 0;
     this->peso = 0;
     this->primeira_aresta = nullptr;
     this->ultima_aresta = nullptr;*/
@@ -68,6 +68,13 @@ int No::getId()
 
 }
 
+void No::setGrau(){
+    this->grau = grau + 1;
+}
+
+int No::getGrau(){
+    return this->grau;
+}
 //int No::getGrauEntrada()
 //{
 //

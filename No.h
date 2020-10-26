@@ -16,6 +16,7 @@ class No{
         //Aresta* primeira_aresta;
         //Aresta* ultima_aresta;*/
         int id;
+        int grau;
         /*unsigned int grau_entrada;
         unsigned int grau_saida;
         float peso;*/
@@ -23,9 +24,9 @@ class No{
         Aresta *aresta;
 
     public:
-        // Constructor
+        // Construtor
         No(int id);
-        // Destructor
+        // Destrutor
         ~No();
         // Getters
         Aresta* getPrimeiraAresta();
@@ -41,6 +42,8 @@ class No{
         // Setters
         void setProximoNo(No* no);
         void setPeso(float peso);
+        void setGrau();
+        int getGrau();
         // Other methods
         bool buscarAresta(int id_alvo);
         Aresta *getAresta();

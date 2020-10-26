@@ -20,11 +20,10 @@ using namespace std;
 Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
 {
 
-    //Variáveis para auxiliar na criação dos nós no Grafo
+    //Variaveis para auxiliar na criaÃ§Ã£o dos nÃ³s no Grafo
     int idNoFonte;
     int idNoAlvo;
     int ordem;
-    int numeroArestas;
     int peso;
 
     //Pegando a ordem do grafo
@@ -37,7 +36,7 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
 
     cout<<endl;
 
-    //Leitura de arquivo
+    //Leitura dos nÃ³s
     while(arquivo_entrada >> idNoFonte >> idNoAlvo >> peso)
     {
         if(idNoFonte != idNoAlvo)
@@ -46,6 +45,8 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
         }
 
     }
+
+    //impressÃ£o do grafo
 
     /*for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
     {
@@ -66,18 +67,10 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
 
     }*/
 
-    cout<<endl;
-    cout<<"Numero de Arestas: ";
-    cout<<grafo->getNumeroArestas();
-    cout<<endl;
-    cout<<"Grau medio Grafo: ";
-    cout<<grafo->getGrauMedioGrafo();
-    cout<<endl;
-
-
     return grafo;
 }
 
+/*
 int menu()
 {
 
@@ -90,11 +83,11 @@ int menu()
     cout << "[3] Busca em profundidade" << endl;
     cout << "[4] Imprimir componentes conexas" << endl;
     cout << "[5] Imprimir componentes fortemente conexas" << endl;
-    cout << "[6] Imprimir ordenacao topológica" << endl;
+    cout << "[6] Imprimir ordenacao topolï¿½gica" << endl;
     cout << "[7] Guloso Randomizado Reativo" << endl;
-    cout << "[8] Árvore Geradora Mínima de Prim" << endl;
-    cout << "[9] Caminho Mínimo Dijkstra" << endl;
-    cout << "[10] Caminho Mínimo Floyd" << endl;
+    cout << "[8] ï¿½rvore Geradora Mï¿½nima de Prim" << endl;
+    cout << "[9] Caminho Mï¿½nimo Dijkstra" << endl;
+    cout << "[10] Caminho Mï¿½nimo Floyd" << endl;
     cout << "[0] Sair" << endl;
 
     cin >> selecao;
@@ -135,13 +128,13 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         cin>>No;
         verticesVisitados = grafo->amplitudePrimeiraBusca(&filaVertices, No, verticesVisitados, &cont);
         i = 0;
-        /*==for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
+        ==for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
         {
             cout<<"imprimindo vertices visitados na busca por amplitude: "<<verticesVisitados[i]<<endl;
 
             i++;
 
-        }*/
+        }
 
         break;
     }
@@ -164,13 +157,13 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
 
         i = 0;
 
-        /*for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
+        for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
         {
             cout<<"imprimindo vertices visitados na busca por profundidade: "<<listaVertices[i]<<endl;
 
             i++;
 
-        }*/
+        }
 
 
         break;
@@ -192,7 +185,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         break;
     }
 
-    //Ordenação Topológica
+    //Ordenaï¿½ï¿½o Topolï¿½gica
     case 6:
     {
 
@@ -226,10 +219,9 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         break;
 
     }
+}*/
 
-}
-
-int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
+/*int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
 {
 
     int selecao = 1;
@@ -250,14 +242,24 @@ int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
     }
 
     return 0;
-}
+}*/
 
+
+/*
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+X                                                                                                                                                               X
+X   Alunos: Guilherme Marques, Gabriel Bronte, Daniel Machado, Giovane Nilmer, Marcos Mateus, Anthony Lima                                                      X                                                                                                     X                                                                                                                                                              X
+X                                                                                                                                                               X
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ */
 
 
 int main(int argc, char const *argv[])
 {
 
-    //Verificação se todos os parâmetros do programa foram entrados
+
+
+    //Verificando se todos os parametros do programa foram inseridos
     if (argc != 3)
     {
 
@@ -283,7 +285,7 @@ int main(int argc, char const *argv[])
     arquivo_saida.open(argv[2], ios::out | ios::trunc);
 
 
-
+    //criando grafo
     Grafo* grafo;
 
     if(arquivo_entrada.is_open())
@@ -292,15 +294,16 @@ int main(int argc, char const *argv[])
         grafo = leituraInstancia(arquivo_entrada, &arquivo_saida);
 
     }
-    else
+    else{
         cout << "Unable to open " << argv[1];
+        return 0;
+    }
 
-    cout<<arquivo_saida.is_open()<<endl;
-
+    //chamando funÃ§Ãµes para escrever no arquivo de texto
     arquivo_saida << grafo->getOrdem()<<"\n";
     arquivo_saida << grafo->getNumeroArestas()<<"\n";
     arquivo_saida << grafo->getGrauMedioGrafo()<<"\n";
-    grafo->getFrequenciaRelativa(arquivo_saida);
+    grafo->getFrequenciaRelativa(arquivo_saida, grafo->getOrdem());
 
 
     //mainMenu(arquivo_saida, grafo);
@@ -310,7 +313,7 @@ int main(int argc, char const *argv[])
     //Fechando arquivo de entrada
     arquivo_entrada.close();
 
-    //Fechando arquivo de saída
+    //Fechando arquivo de saï¿½da
     arquivo_saida.close();
 
     return 0;

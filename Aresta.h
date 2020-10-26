@@ -6,7 +6,7 @@
 #define ARESTA_H_INCLUDED
 using namespace std;
 
-// Definition of the Edge class
+// Definição da classe Aresta
 class Aresta{
 
     // Attributes
@@ -18,9 +18,9 @@ class Aresta{
         bool verificaA;
 
     public:
-        // Constructor
+        // Construtor
         Aresta(int id_origem, int id_alvo);
-        // Destructor
+        // Destrutor
         ~Aresta();
         // Getters
         int getIdAlvo();
@@ -30,7 +30,7 @@ class Aresta{
         void setProximaAresta(Aresta* aresta);
         void setPeso(float peso);
         bool getVerificaAresta();
-        bool setVerificaAresta();
+        void setVerificaAresta();
 };
 
 #endif // EDGE_H_INCLUDED

@@ -43,7 +43,7 @@ class Grafo{
         bool getNoPonderado();
         No* getPrimeiroNo();
         No* getUltimoNo();
-        void getFrequenciaRelativa(ofstream &arquivo_saida);
+        void getFrequenciaRelativa(ofstream &arquivo_saida, int ordem);
         //Other methods
         void criaLista(int ordem);
         void insereNo(int idNoFonte, int idNoAlvo);
