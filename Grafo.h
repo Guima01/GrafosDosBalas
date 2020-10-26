@@ -8,6 +8,8 @@
 #include <fstream>
 #include <stack>
 #include <list>
+#include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -15,35 +17,44 @@ class Grafo{
 
     //Atributes
     private:
+//        list<No> *vertices;
         int ordem;
         int numero_arestas;
-        bool direcao;
-        bool aresta_ponderada;
-        bool no_ponderado;
+        float grau_medio_grafo;
+//        bool direcao;
+//        bool aresta_ponderada;
+//        bool no_ponderado;
         No* primeiro_no;
         No* ultimo_no;
 
+
     public:
+        list<No> *vertices;
         //Constructor
-        Grafo(int ordem, bool direcao, bool aresta_ponderada, bool no_ponderado);
+        Grafo(int ordem);
         //Destructor
         ~Grafo();
         //Getters
         int getOrdem();
         int getNumeroArestas();
+        float getGrauMedioGrafo();
         bool getDirecao();
         bool getArestaPonderada();
         bool getNoPonderado();
         No* getPrimeiroNo();
         No* getUltimoNo();
+        void getFrequenciaRelativa(ofstream &arquivo_saida, int ordem);
         //Other methods
-        void insereNo(int id);
+        void criaLista(int ordem);
+        void insereNo(int idNoFonte, int idNoAlvo);
         void insereAresta(int id, int id_alvo, float peso);
         void removeNo(int id);
         bool buscaNo(int id);
         No* getNo(int id);
-        bool profundidadePrimeiraBusca(int idInicial,int idAlvo);
-        void amplitudePrimeiraBusca(ofstream& arquivo_saida);
+
+        vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
+        vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
+        vector<int> amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int>verticesVisitados,int *cont);
         Grafo* getComplemento();
         Grafo* getSubjacente();
         bool PossuiCiclo();

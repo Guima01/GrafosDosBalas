@@ -1,0 +1,13 @@
+10
+16
+3.2
+Frequencia Relativa do grau 0 : 0
+Frequencia Relativa do grau 1 : 0.1
+Frequencia Relativa do grau 2 : 0.2
+Frequencia Relativa do grau 3 : 0.4
+Frequencia Relativa do grau 4 : 0.1
+Frequencia Relativa do grau 5 : 0.1
+Frequencia Relativa do grau 6 : 0.1
+Frequencia Relativa do grau 7 : 0
+Frequencia Relativa do grau 8 : 0
+Frequencia Relativa do grau 9 : 0

@@ -13,34 +13,44 @@ class No{
 
     // Attributes
     private:
-        Aresta* primeira_aresta;
-        Aresta* ultima_aresta;
+        //Aresta* primeira_aresta;
+        //Aresta* ultima_aresta;*/
         int id;
-        unsigned int grau_entrada;
+        int grau;
+        /*unsigned int grau_entrada;
         unsigned int grau_saida;
-        float peso;
+        float peso;*/
         No* proximo_no;
+        Aresta *aresta;
 
     public:
-        // Constructor
+        // Construtor
         No(int id);
-        // Destructor
+        // Destrutor
         ~No();
         // Getters
         Aresta* getPrimeiraAresta();
         Aresta* getUltimaAresta();
+        void setId(int id);
         int getId();
         int getGrauEntrada();
         int getGrauSaida();
+
+
         float getPeso();
         No* getProximoNo();
         // Setters
         void setProximoNo(No* no);
         void setPeso(float peso);
+        void setGrau();
+        int getGrau();
         // Other methods
         bool buscarAresta(int id_alvo);
-        void insereAresta(int id_alvo, float peso);
+        Aresta *getAresta();
+
+        void insereAresta(Aresta *aresta);
         void removeTodasArestas();
+
         int  removeAresta(int id, bool direcao, No* no_alvo);
         void incrementaGrauSaida();
         void decrementaGrauSaida();
