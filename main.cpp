@@ -41,14 +41,14 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
     {
         if(idNoFonte != idNoAlvo)
         {
-            grafo->insereNo(idNoFonte,idNoAlvo);
+            grafo->insereNo(idNoFonte,idNoAlvo,peso);
         }
 
     }
 
     //impressão do grafo
 
-    /*for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
+    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
     {
         No *aux = new No(it->getId());
         aux->setProximoNo(it->getProximoNo());
@@ -65,12 +65,12 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
         cout<<endl;
         cout<<endl;
 
-    }*/
+    }
 
     return grafo;
 }
 
-/*
+
 int menu()
 {
 
@@ -128,7 +128,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         cin>>No;
         verticesVisitados = grafo->amplitudePrimeiraBusca(&filaVertices, No, verticesVisitados, &cont);
         i = 0;
-        ==for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
+        for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
         {
             cout<<"imprimindo vertices visitados na busca por amplitude: "<<verticesVisitados[i]<<endl;
 
@@ -202,7 +202,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo de Prim
     case 8:
     {
-
+        grafo->retornaListaOrdenada();
         break;
     }
 
@@ -219,9 +219,9 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         break;
 
     }
-}*/
+}
 
-/*int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
+int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
 {
 
     int selecao = 1;
@@ -242,7 +242,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     }
 
     return 0;
-}*/
+}
 
 
 /*
@@ -306,7 +306,7 @@ int main(int argc, char const *argv[])
     grafo->getFrequenciaRelativa(arquivo_saida, grafo->getOrdem());
 
 
-    //mainMenu(arquivo_saida, grafo);
+    mainMenu(arquivo_saida, grafo);
 
 
 

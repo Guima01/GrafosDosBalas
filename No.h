@@ -48,7 +48,7 @@ class No{
         bool buscarAresta(int id_alvo);
         Aresta *getAresta();
 
-        void insereAresta(Aresta *aresta);
+        void setAresta(Aresta *aresta);
         void removeTodasArestas();
 
         int  removeAresta(int id, bool direcao, No* no_alvo);

@@ -46,7 +46,7 @@ class Grafo{
         void getFrequenciaRelativa(ofstream &arquivo_saida, int ordem);
         //Other methods
         void criaLista(int ordem);
-        void insereNo(int idNoFonte, int idNoAlvo);
+        void insereNo(int idNoFonte, int idNoAlvo, float peso);
         void insereAresta(int id, int id_alvo, float peso);
         void removeNo(int id);
         bool buscaNo(int id);
@@ -55,7 +55,8 @@ class Grafo{
         vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
         vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
         vector<int> amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int>verticesVisitados,int *cont);
-        Grafo* getComplemento();
+        vector<No> retornaListaOrdenada();
+         Grafo* getComplemento();
         Grafo* getSubjacente();
         bool PossuiCiclo();
         bool GrafoConectado();

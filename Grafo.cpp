@@ -156,7 +156,7 @@ void Grafo::criaLista(int ordem)
 }
 
 // insere os nós adjacentes a lista de vértice
-void Grafo::insereNo(int idNoFonte, int idNoAlvo)
+void Grafo::insereNo(int idNoFonte, int idNoAlvo,float peso)
 {
     bool checkAresta = false;
     Aresta *aresta = new Aresta(idNoAlvo, idNoFonte);
@@ -170,7 +170,8 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
             {
                 No *proximoNo = new No(idNoAlvo);
                 it->setProximoNo(proximoNo);
-                it->insereAresta(aresta);
+                it->setAresta(aresta);
+                it->getAresta()->setPeso(peso);
                 it->setGrau();
                 if (checkAresta == false)
                 {
@@ -202,7 +203,8 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                     break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
-                aux->getProximoNo()->insereAresta(aresta);
+                aux->getProximoNo()->setAresta(aresta);
+                aux->getProximoNo()->getAresta()->setPeso(peso);
                 checkNo = checkNo + 1;
                 it->setGrau();
                 if (checkAresta == false)
@@ -219,8 +221,10 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
             {
                 No *proximoNo = new No(idNoFonte);
                 it->setProximoNo(proximoNo);
-                it->insereAresta(aresta);
+                it->setAresta(aresta);
+                it->getAresta()->setPeso(peso);
                 it->setGrau();
+
                 if (checkAresta == false)
                 {
                     numero_arestas = numero_arestas + 1;
@@ -251,7 +255,8 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                     break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
-                aux->getProximoNo()->insereAresta(aresta);
+                aux->getProximoNo()->setAresta(aresta);
+                aux->getProximoNo()->getAresta()->setPeso(peso);
                 checkNo = checkNo + 1;
                 it->setGrau();
                 if (checkAresta == false)
@@ -268,11 +273,11 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
         }
     }
 }
-
-/*void Grafo::insereAresta(int id, int id_alvo, float peso)
+/*
+void Grafo::insereAresta(int id, int id_alvo, float peso)
 {
 }
-
+*/
 void Grafo::removeNo(int id)
 {
 }
@@ -487,4 +492,83 @@ float **Grafo::floydMarshall()
 
 float *Grafo::dijkstra(int id)
 {
-}*/
+}
+
+
+vector<No>Grafo::retornaListaOrdenada(){
+
+    vector<No> vetorOrdenado;
+    No *aux;
+
+
+     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+     {
+        if(it->getProximoNo()!=0){
+
+            if(it->getAresta()->getVerificaAresta()!=true){
+
+                vetorOrdenado.push_back(*it);
+                it->getAresta()->setVerificaAresta();
+
+
+            }
+            aux = new No(it->getProximoNo()->getId());
+            aux->setAresta(it->getAresta());
+            aux->setProximoNo(it->getProximoNo()->getProximoNo());
+
+
+
+            while(aux->getProximoNo()!= 0){
+
+
+                if(aux->getAresta()->getVerificaAresta()!=true){
+
+                    aux->getAresta()->setVerificaAresta();
+                    vetorOrdenado.push_back(*aux);
+
+                }
+
+                    aux->setId(aux->getProximoNo()->getId());
+                    aux->setAresta(aux->getProximoNo()->getAresta());
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+
+
+
+
+
+
+
+            }
+
+        }
+
+    }
+    No ordenar = 0;
+
+    for(int i = 0 ; i< vetorOrdenado.size()-1; i++){
+        for(int j = i + 1; j < vetorOrdenado.size(); j++){
+
+            if(vetorOrdenado[i].getAresta()->getPeso() > vetorOrdenado[j].getAresta()->getPeso()){
+
+                ordenar = vetorOrdenado[i];
+                vetorOrdenado[i] = vetorOrdenado[j];
+                vetorOrdenado[j] = ordenar;
+
+            }
+
+
+
+
+        }
+
+
+
+    }
+
+
+    for(int i=0; i<vetorOrdenado.size() ; i++){
+
+        cout<< vetorOrdenado[i].getAresta()->getPeso()<<endl;
+    }
+
+}

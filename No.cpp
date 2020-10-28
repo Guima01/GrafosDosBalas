@@ -121,7 +121,7 @@ void No::setProximoNo(No* proximo_no)
 //}
 
 // Other methods
-void No::insereAresta(Aresta *aresta)
+void No::setAresta(Aresta *aresta)
 {
         this->aresta = aresta;
 }

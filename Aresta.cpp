@@ -35,6 +35,12 @@ int Aresta::getIdAlvo(){
 
 }
 
+int Aresta::getIdOrigem(){
+
+    return this->id_origem;
+
+}
+
 /*Aresta* Aresta::getProximaAresta(){
 
     return this->proxima_aresta;
@@ -66,3 +72,4 @@ bool Aresta::getVerificaAresta(){
 void Aresta::setVerificaAresta(){
     this->verificaA = true;
 }
+
