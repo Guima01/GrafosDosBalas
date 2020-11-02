@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1603667503 source:c:\users\principal\desktop\grafos\main.cpp
+1604358942 source:c:\users\principal\desktop\grafos\main.cpp
 	<iostream>
 	<fstream>
 	<string>
@@ -50,22 +50,22 @@
 	"Edge.h"
 	<iostream>
 
-1602463779 source:c:\users\principal\desktop\grafos\aresta.cpp
+1604353543 source:c:\users\principal\desktop\grafos\aresta.cpp
 	"Aresta.h"
 	<iostream>
 
-1602463779 c:\users\principal\desktop\grafos\aresta.h
+1604352461 c:\users\principal\desktop\grafos\aresta.h
 
-1602440193 source:c:\users\principal\desktop\grafos\no.cpp
+1604352784 source:c:\users\principal\desktop\grafos\no.cpp
 	"No.h"
 	"Aresta.h"
 	"Grafo.h"
 	<iostream>
 
-1602440193 c:\users\principal\desktop\grafos\no.h
+1604352461 c:\users\principal\desktop\grafos\no.h
 	"Aresta.h"
 
-1603474111 source:c:\users\principal\desktop\grafos\grafo.cpp
+1604359234 source:c:\users\principal\desktop\grafos\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
@@ -82,7 +82,7 @@
 	<iomanip>
 	<queue>
 
-1603470525 c:\users\principal\desktop\grafos\grafo.h
+1604352461 c:\users\principal\desktop\grafos\grafo.h
 	"No.h"
 	<fstream>
 	<stack>

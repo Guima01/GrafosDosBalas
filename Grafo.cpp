@@ -174,8 +174,8 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo,float peso)
             {
                 No *proximoNo = new No(idNoAlvo);
                 it->setProximoNo(proximoNo);
-                it->setAresta(aresta);
-                it->getAresta()->setPeso(peso);
+                it->getProximoNo()->setAresta(aresta);
+                it->getProximoNo()->getAresta()->setPeso(peso);
                 it->setGrau();
                 if (checkAresta == false)
                 {
@@ -207,8 +207,8 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo,float peso)
                     break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
-                aux->getProximoNo()->setAresta(aresta);
-                aux->getProximoNo()->getAresta()->setPeso(peso);
+                aux->getProximoNo()->getProximoNo()->setAresta(aresta);
+                aux->getProximoNo()->getProximoNo()->getAresta()->setPeso(peso);
                 checkNo = checkNo + 1;
                 it->setGrau();
                 if (checkAresta == false)
@@ -228,8 +228,8 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo,float peso)
             {
                 No *proximoNo = new No(idNoFonte);
                 it->setProximoNo(proximoNo);
-                it->setAresta(aresta);
-                it->getAresta()->setPeso(peso);
+                it->getProximoNo()->setAresta(aresta);
+                it->getProximoNo()->getAresta()->setPeso(peso);
                 it->setGrau();
 
                 if (checkAresta == false)
@@ -262,8 +262,8 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo,float peso)
                     break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
-                aux->getProximoNo()->setAresta(aresta);
-                aux->getProximoNo()->getAresta()->setPeso(peso);
+                aux->getProximoNo()->getProximoNo()->setAresta(aresta);
+                aux->getProximoNo()->getProximoNo()->getAresta()->setPeso(peso);
                 checkNo = checkNo + 1;
                 it->setGrau();
                 if (checkAresta == false)

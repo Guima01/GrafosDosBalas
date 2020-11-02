@@ -59,9 +59,11 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
         while(aux->getProximoNo() !=0)
         {
             aux->setId(aux->getProximoNo()->getId());
+            aux->setAresta(aux->getProximoNo()->getAresta());
             aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
             cout<<aux->getId();
             cout<<" ";
+
         }
         cout<<endl;
         cout<<endl;
