@@ -86,6 +86,7 @@ float Grafo::getGrauMedioGrafo()
 }
 
 //calcula a frequência relativa para os graus presentes no grafo
+//parâmetros: arquivo de saída e ordem do Grafo
 
 void Grafo::getFrequenciaRelativa(ofstream &arquivo_saida, int ordem)
 {
@@ -140,6 +141,7 @@ No *Grafo::getUltimoNo()
 
 
 //cria a lista com o tamanho de vértices do grafo
+//parâmetro: ordem do Grafo
 void Grafo::criaLista(int ordem)
 {
 
@@ -156,6 +158,7 @@ void Grafo::criaLista(int ordem)
 }
 
 // insere os nós adjacentes a lista de vértice
+//parâmetro: 2 IDs dos nós
 void Grafo::insereNo(int idNoFonte, int idNoAlvo)
 {
     bool checkAresta = false;
@@ -164,6 +167,8 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
     bool checkNoRepetido = false;
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
+
+        // insere o nó na lista de adjacência
         if (idNoFonte == it->getId())
         {
             if (!it->getProximoNo())
@@ -213,6 +218,9 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo)
                 delete aux;
             }
         }
+
+        //também insere o nó na lista de adjacência, porém na posição do outro ID
+
         else if (idNoAlvo == it->getId())
         {
             if (!it->getProximoNo())

@@ -39,6 +39,7 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
     //Leitura dos nós
     while(arquivo_entrada >> idNoFonte >> idNoAlvo >> peso)
     {
+        //verifica se é um self-loop
         if(idNoFonte != idNoAlvo)
         {
             grafo->insereNo(idNoFonte,idNoAlvo);
