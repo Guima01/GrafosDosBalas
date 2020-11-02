@@ -35,8 +35,6 @@ int Aresta::getIdAlvo(){
 
 }
 
-<<<<<<< HEAD
-=======
 int Aresta::getIdOrigem(){
 
     return this->id_origem;
@@ -49,7 +47,6 @@ int Aresta::getIdOrigem(){
 
 }*/
 
->>>>>>> c10c15b326210e5ecee24c26ffb9bbdc2c481bdb
 float Aresta::getPeso(){
 
     return this->peso;
