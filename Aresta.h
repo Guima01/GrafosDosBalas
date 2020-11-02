@@ -24,13 +24,16 @@ class Aresta{
         ~Aresta();
         // Getters
         int getIdAlvo();
+        int getIdOrigem();
         Aresta* getProximaAresta();
+
         float getPeso();
         // Setters
         void setProximaAresta(Aresta* aresta);
         void setPeso(float peso);
         bool getVerificaAresta();
         void setVerificaAresta();
+
 };
 
 #endif // EDGE_H_INCLUDED

@@ -69,11 +69,6 @@ void No::setProximoNo(No *proximo_no)
 
     this->proximo_no = proximo_no;
 }
-
-void No::insereAresta(Aresta *aresta)
-{
-    this->aresta = aresta;
-}
 //Aresta* No::getPrimeiraAresta()
 //{
 //
@@ -117,6 +112,10 @@ void No::insereAresta(Aresta *aresta)
 //}
 
 // Other methods
+void No::setAresta(Aresta *aresta)
+{
+        this->aresta = aresta;
+}
 
 //void No::incrementaGrauEntrada()
 //{

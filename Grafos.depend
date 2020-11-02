@@ -142,3 +142,59 @@
 	"Grafo.h"
 	<iostream>
 
+1603892227 source:c:\users\marcos\c++\grafos\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1603892209 c:\users\marcos\c++\grafos\grafosdosbalas\aresta.h
+
+1603897215 source:c:\users\marcos\c++\grafos\grafosdosbalas\no.cpp
+	"No.h"
+	"Aresta.h"
+	"Grafo.h"
+	<iostream>
+
+1603897204 c:\users\marcos\c++\grafos\grafosdosbalas\no.h
+	"Aresta.h"
+
+1603894038 c:\users\marcos\c++\grafos\grafosdosbalas\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1603895694 source:c:\users\marcos\c++\grafos\grafosdosbalas\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+
+1603894764 source:c:\users\marcos\c++\grafos\grafosdosbalas\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<math.h>
+	<list>
+	<queue>
+	<utility>
+	<tuple>
+	<iomanip>
+	<stdlib.h>
+	<chrono>
+	<string>
+	"Grafo.h"
+	"No.h"
+
