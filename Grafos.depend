@@ -90,13 +90,13 @@
 	<vector>
 	<queue>
 
-1602716082 source:c:\users\gabriel\grafosdosbalas\aresta.cpp
+1604367477 source:c:\users\gabriel\grafosdosbalas\aresta.cpp
 	"Aresta.h"
 	<iostream>
 
-1602716082 c:\users\gabriel\grafosdosbalas\aresta.h
+1604063514 c:\users\gabriel\grafosdosbalas\aresta.h
 
-1602807485 source:c:\users\gabriel\grafosdosbalas\grafo.cpp
+1604370080 source:c:\users\gabriel\grafosdosbalas\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
@@ -111,32 +111,36 @@
 	<ctime>
 	<float.h>
 	<iomanip>
+	<queue>
 
-1602802835 c:\users\gabriel\grafosdosbalas\grafo.h
+1604367710 c:\users\gabriel\grafosdosbalas\grafo.h
 	"No.h"
 	<fstream>
 	<stack>
 	<list>
 	<vector>
+	<queue>
 
-1602438229 c:\users\gabriel\grafosdosbalas\no.h
+1604063514 c:\users\gabriel\grafosdosbalas\no.h
 	"Aresta.h"
 
-1602809599 source:c:\users\gabriel\grafosdosbalas\main.cpp
+1604370080 source:c:\users\gabriel\grafosdosbalas\main.cpp
 	<iostream>
 	<fstream>
 	<string>
 	<math.h>
 	<list>
+	<queue>
 	<utility>
 	<tuple>
 	<iomanip>
 	<stdlib.h>
 	<chrono>
+	<string>
 	"Grafo.h"
 	"No.h"
 
-1602439470 source:c:\users\gabriel\grafosdosbalas\no.cpp
+1604367477 source:c:\users\gabriel\grafosdosbalas\no.cpp
 	"No.h"
 	"Aresta.h"
 	"Grafo.h"

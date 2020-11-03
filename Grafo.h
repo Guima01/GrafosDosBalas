@@ -56,6 +56,9 @@ class Grafo{
         vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
         vector<int> amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int>verticesVisitados,int *cont);
         vector<No> retornaListaOrdenada();
+        vector<No>algoritmoPrim();
+        vector<No>auxAlgoritmoPrim(vector<No>Prim,No noAtual,No noAlvo);
+        int ehAdjacente(int idOrigem,int idAlvo);
          Grafo* getComplemento();
         Grafo* getSubjacente();
         bool PossuiCiclo();
