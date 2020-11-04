@@ -64,6 +64,7 @@ class Grafo{
         bool PossuiCiclo();
         bool GrafoConectado();
         float** floydMarshall();
+        void kruskal();
         void dijkstra(int id);
 
     private:

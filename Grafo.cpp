@@ -543,6 +543,7 @@ void Grafo::dijkstra(int id)
                 }
                 custoVertices[aux->getId()] = aux->getAresta()->getPeso();
             }
+            delete aux;
         }
     }
 
@@ -605,6 +606,7 @@ void Grafo::dijkstra(int id)
                         }
                     }
                 }
+                delete aux;
             }
             k++;
         }
@@ -616,6 +618,66 @@ void Grafo::dijkstra(int id)
         cout<<custoVertices[x]<<endl;
         x++;
     }
+}
+
+void Grafo::kruskal()
+{
+    vector<No> vectorArestaOrdenada = retornaListaOrdenada();
+    list<No> listaArestaOrdenada(vectorArestaOrdenada.begin(),vectorArestaOrdenada.end());
+    vector<No> solucao;
+    int *subArvores;
+    subArvores = (int *)malloc(this->ordem * sizeof(int));
+    for(int i = 0; i < this->ordem; i++)
+    {
+        subArvores[i]=i;
+    }
+    int cont = 0;
+    int menor = 0;
+    int maior = 0;
+    int tamanho = listaArestaOrdenada.size();
+    while(cont < tamanho && (!listaArestaOrdenada.empty()))
+    {
+        No *aux = new No(listaArestaOrdenada.begin()->getId());
+        aux->setAresta(listaArestaOrdenada.begin()->getAresta());
+        listaArestaOrdenada.pop_front();
+        if(aux->getAresta()->getIdAlvo() > aux->getAresta()->getIdOrigem())
+        {
+            menor = aux->getAresta()->getIdOrigem();
+            maior = aux->getAresta()->getIdAlvo();
+        }
+        else
+        {
+            menor = aux->getAresta()->getIdAlvo();
+            maior = aux->getAresta()->getIdOrigem();
+        }
+        if(subArvores[maior] != subArvores[menor])
+        {
+            solucao.push_back(*aux);
+            for(int i = 0; i < this->ordem; i++)
+            {
+                if(subArvores[i] == subArvores[maior] && (i!= maior))
+                {
+                    subArvores[i] = subArvores[menor];
+                }
+            }
+            subArvores[maior] = subArvores[menor];
+            for(int i = 0; i < this->ordem; i++)
+            {
+            }
+            cont = cont + 1;
+        }
+        delete aux;
+    }
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    for(int i = 0; i < solucao.size(); i++)
+    {
+        cout<<solucao[i].getAresta()->getIdAlvo() << " | " << solucao[i].getAresta()->getIdOrigem()<<" Peso:";
+        cout<< solucao[i].getAresta()->getPeso()<<endl;
+    }
+
+
 }
 
 vector<No>Grafo::retornaListaOrdenada()
@@ -686,6 +748,8 @@ vector<No>Grafo::retornaListaOrdenada()
     cout<<endl;
     return vetorOrdenado;
 }
+
+
 vector<No>Grafo::algoritmoPrim()
 {
     vector<No> vetArestaOrdenado = retornaListaOrdenada();
