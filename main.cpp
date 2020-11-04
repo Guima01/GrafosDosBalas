@@ -212,7 +212,10 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo de Dijkstra
     case 9:
     {
-
+        int id;
+        cout<<"digite o vertice inicial: ";
+        cin>>id;
+        grafo->dijkstra(id);
         break;
     }
 
