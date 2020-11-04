@@ -102,8 +102,10 @@ void Grafo::getFrequenciaRelativa(ofstream &arquivo_saida, int ordem)
     {
         vetorGraus[it->getGrau()] = vetorGraus[it->getGrau()] + 1;
     }
-    for(int i = 0; i < ordem; i++){
-        if(vetorGraus[i] != 0){
+    for(int i = 0; i < ordem; i++)
+    {
+        if(vetorGraus[i] != 0)
+        {
             arquivo_saida << "Frequencia Relativa de grau " << i << " : " << (float)vetorGraus[i]/this->getOrdem() << "\n";
         }
     }
@@ -462,7 +464,8 @@ vector<int> Grafo::amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, ve
                         aux->setProximoNo(nullptr);
                     }
                 }
-            } while (true);
+            }
+            while (true);
 
             bool check = false;
             while (!filaVertices->empty())
@@ -503,16 +506,19 @@ float *Grafo::dijkstra(int id)
 
 
 
-vector<No>Grafo::retornaListaOrdenada(){
+vector<No>Grafo::retornaListaOrdenada()
+{
 
     vector<No> vetorOrdenado;
     No *aux;
 
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
-     {
-        if(it->getProximoNo()!=0){
+    {
+        if(it->getProximoNo()!=0)
+        {
 
-            if(it->getProximoNo()->getAresta()->getVerificaAresta()!=true){
+            if(it->getProximoNo()->getAresta()->getVerificaAresta()!=true)
+            {
                 vetorOrdenado.push_back(*it->getProximoNo());
                 it->getProximoNo()->getAresta()->setVerificaAresta();
             }
@@ -521,18 +527,22 @@ vector<No>Grafo::retornaListaOrdenada(){
             aux->setAresta(it->getProximoNo()->getAresta());
             aux->setProximoNo(it->getProximoNo()->getProximoNo());
 
-            while(aux->getProximoNo()!= 0){
+            while(aux->getProximoNo()!= 0)
+            {
 
-                if(aux->getAresta()->getVerificaAresta()!=true){
+                if(aux->getAresta()->getVerificaAresta()!=true)
+                {
                     aux->getAresta()->setVerificaAresta();
                     vetorOrdenado.push_back(*aux);
                 }
 
                 aux->setId(aux->getProximoNo()->getId());
                 aux->setAresta(aux->getProximoNo()->getAresta());
-                if(!(aux->getProximoNo()->getProximoNo() !=0)){
+                if(!(aux->getProximoNo()->getProximoNo() !=0))
+                {
 
-                    if(aux->getProximoNo()->getAresta()->getVerificaAresta()!=true){
+                    if(aux->getProximoNo()->getAresta()->getVerificaAresta()!=true)
+                    {
                         aux->getProximoNo()->getAresta()->setVerificaAresta();
                         vetorOrdenado.push_back(*aux->getProximoNo());
                     }
@@ -543,9 +553,12 @@ vector<No>Grafo::retornaListaOrdenada(){
     }
 
     No ordenar = 0;
-    for(int i = 0 ; i< vetorOrdenado.size()-1; i++){
-        for(int j = i + 1; j < vetorOrdenado.size(); j++){
-            if(vetorOrdenado[i].getAresta()->getPeso() > vetorOrdenado[j].getAresta()->getPeso()){
+    for(int i = 0 ; i< vetorOrdenado.size()-1; i++)
+    {
+        for(int j = i + 1; j < vetorOrdenado.size(); j++)
+        {
+            if(vetorOrdenado[i].getAresta()->getPeso() > vetorOrdenado[j].getAresta()->getPeso())
+            {
                 ordenar = vetorOrdenado[i];
                 vetorOrdenado[i] = vetorOrdenado[j];
                 vetorOrdenado[j] = ordenar;
@@ -553,55 +566,57 @@ vector<No>Grafo::retornaListaOrdenada(){
         }
     }
 
-    for(int i=0; i<vetorOrdenado.size() ; i++){
+    for(int i=0; i<vetorOrdenado.size() ; i++)
+    {
         cout<<vetorOrdenado[i].getAresta()->getIdAlvo() << " | " << vetorOrdenado[i].getAresta()->getIdOrigem()<<" Peso:";
         cout<< vetorOrdenado[i].getAresta()->getPeso()<<endl;
     }
     cout<<endl;
     return vetorOrdenado;
 }
-vector<No>Grafo::algoritmoPrim(){
+vector<No>Grafo::algoritmoPrim()
+{
     vector<No> vetArestaOrdenado = retornaListaOrdenada();
     vector<No> vetPrim;
     vector<No> vetProx;
-    No *aux = new No(10);
-
+    No *flag = new No(-2);
+    int contador;
     vetPrim.push_back(vetArestaOrdenado[0]);
-    //cout<<vetPrim[0].getAresta()->getIdOrigem()<<"  "<<vetPrim[0].getAresta()->getIdAlvo()<<endl;
-    float peso1,peso2;
+
+    float peso1,peso2,peso3;
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        cout<<"ITERATOR: "<<it->getId()<<endl;
-        cout<<"Tamanho vetProx: " << vetProx.size()<<endl<<endl;
 
-
-        while(true){
+        while(true)
+        {
             peso1 = ehAdjacente(vetPrim[0].getAresta()->getIdOrigem(),it->getId());
             peso2 = ehAdjacente(vetPrim[0].getAresta()->getIdAlvo(),it->getId());
             cout<<vetPrim[0].getAresta()->getIdOrigem()<<" " << it->getId()<<" Peso1:"<<peso1<<endl;
             cout<<vetPrim[0].getAresta()->getIdAlvo()<<" " << it->getId()<<" Peso2:"<<peso2<<endl;
-            //cout<<peso1<<endl;
-            //cout<<peso2<<endl;
 
-
-            if(peso1!=0){
-                if(peso2==0){
-                    vetProx = auxAlgoritmoPrim(vetProx,vetPrim[0].getAresta()->getIdOrigem(),it->getId());
+            if(peso1!=0)
+            {
+                if(peso2==0)
+                {
+                    vetProx = auxAlgoritmoPrim(vetProx,it->getId(),vetPrim[0].getAresta()->getIdOrigem());
 
                     cout<<"Peso1M:"<<vetProx.back().getAresta()->getIdAlvo();
                     cout<<" "<<vetProx.back().getAresta()->getIdOrigem()<<endl;
                     break;
                 }
-                else{
-                    if(peso1<=peso2){
-                        vetProx = auxAlgoritmoPrim(vetProx,vetPrim[0].getAresta()->getIdOrigem(),it->getId());
+                else
+                {
+                    if(peso1<=peso2)
+                    {
+                        vetProx = auxAlgoritmoPrim(vetProx,it->getId(),vetPrim[0].getAresta()->getIdOrigem());
 
                         cout<<"Peso1MM:"<<vetProx.back().getAresta()->getIdAlvo();
                         cout<<" "<<vetProx.back().getAresta()->getIdOrigem()<<endl;
                         break;
                     }
-                    else{
-                        vetProx = auxAlgoritmoPrim(vetProx,vetPrim[0].getAresta()->getIdAlvo(),it->getId());
+                    else
+                    {
+                        vetProx = auxAlgoritmoPrim(vetProx,it->getId(),vetPrim[0].getAresta()->getIdAlvo());
 
                         cout<<"Peso2M:"<<vetProx.back().getAresta()->getIdAlvo();
                         cout<<" "<<vetProx.back().getAresta()->getIdOrigem()<<endl;
@@ -609,66 +624,322 @@ vector<No>Grafo::algoritmoPrim(){
                     }
                 }
             }
-            else{
-                if(peso2!=0){
-                    vetProx = auxAlgoritmoPrim(vetProx,vetPrim[0].getAresta()->getIdAlvo(),it->getId());
+            else
+            {
+                if(peso2!=0)
+                {
+                    vetProx = auxAlgoritmoPrim(vetProx,it->getId(),vetPrim[0].getAresta()->getIdAlvo());
 
                     cout<<"Peso2MM:"<<vetProx.back().getAresta()->getIdAlvo();
                     cout<<" "<<vetProx.back().getAresta()->getIdOrigem()<<endl;
                     break;
                 }
-                else{
-                    vetProx = auxAlgoritmoPrim(vetProx, -1 ,-1);
+                else
+                {
+                    vetProx = auxAlgoritmoPrim(vetProx, -1,-1);
                     cout<<vetProx.back().getId()<<endl;
                     break;
                 }
             }
+
         }
-    cout<<endl;
-    cout<<endl;
-    }
-    cout<<"IMPRIME SAPORA"<<endl;
-    cout<<vetProx.size()<<" tam"<<endl;
-    //cout<<vetProx.size()<<endl;
-    for(int i=0; i<vetProx.size();i++){
-        if(vetProx[i].getId() != -1)
-        cout<<vetProx[i].getAresta()->getIdAlvo() << " | " << vetProx[i].getAresta()->getIdOrigem()<<endl;
-        else
-        {
-            cout<<"Custo infinito"<<endl;
-        }
+        cout<<endl;
+        cout<<endl;
 
     }
+
+    vetProx[vetArestaOrdenado[0].getAresta()->getIdAlvo()] = *flag;
+    vetProx[vetArestaOrdenado[0].getAresta()->getIdOrigem()] = *flag;
+    contador =0;
+
+    /*  for(int i=0; i<vetProx.size(); i++)
+      {
+          if(vetProx[i].getId() != -1 && vetProx[i].getId()!= -2)
+              cout<<vetProx[i].getAresta()->getIdAlvo() << " | " << vetProx[i].getAresta()->getIdOrigem()<<endl;
+          else
+          {
+              if(vetProx[i].getId() == -1)
+              {
+                  cout<<"Custo infinito"<<endl;
+              }
+              else
+              {
+                  cout<<"Ja visitado"<<endl;
+              }
+          }
+
+      }
+    */
+    int indiceMinimo=0;
+    while(contador<getOrdem()-2)
+    {
+        cout<<endl<<"CONTADOR"<<contador<<endl;
+
+        indiceMinimo = getIndiceMin(vetProx);
+        if(indiceMinimo>=0)
+        {
+            vetPrim.push_back(vetProx[indiceMinimo]);
+            vetProx[indiceMinimo] = *flag;
+        }
+        for(int i=0; i < vetProx.size(); i++)
+        {
+
+            if(vetProx[i].getId() != -2)
+            {
+                if(vetProx[i].getId()== -1)
+                {
+
+                    peso1 = ehAdjacente(i,vetPrim.back().getAresta()->getIdAlvo());
+                    peso2 = ehAdjacente(i,vetPrim.back().getAresta()->getIdOrigem());
+                    cout<<"OK AMIGO"<<peso1<<" "<<peso2<<endl;
+
+                    if(peso1 == 0)
+                    {
+                        if(peso2!=0)
+                        {
+                            vetProx[i] = getNoListaOrdenada(vetArestaOrdenado,vetProx[i].getId(),vetPrim.back().getAresta()->getIdOrigem(),i);
+                            cout<<"ESTA1 "<< vetProx[i].getAresta()->getIdAlvo() << " " << vetProx[i].getAresta()->getIdOrigem()<<endl;
+                        }
+                    }
+                    else
+                    {
+                        if(peso2==0)
+                        {
+
+                            vetProx[i] = getNoListaOrdenada(vetArestaOrdenado,vetProx[i].getId(),vetPrim.back().getAresta()->getIdAlvo(),i);
+                            cout<<"ESTA2 "<< vetProx[i].getAresta()->getIdAlvo() << " " << vetProx[i].getAresta()->getIdOrigem()<<endl;
+                            break;
+                        }
+                        else
+                        {
+                            if(peso1<=peso2)
+                            {
+                                vetProx[i] = getNoListaOrdenada(vetArestaOrdenado,vetProx[i].getId(),vetPrim.back().getAresta()->getIdAlvo(),i);
+                                cout<<"ESTA3 "<< vetProx[i].getAresta()->getIdAlvo() << " " << vetProx[i].getAresta()->getIdOrigem()<<endl;
+                            }
+                            else{
+                                vetProx[i] = getNoListaOrdenada(vetArestaOrdenado,vetProx[i].getId(),vetPrim.back().getAresta()->getIdOrigem(),i);
+                            }
+                        }
+                    }
+
+                }
+                else
+                {
+                    cout<<"SJASIODJASODSAJDJSADIOSAJDIOJSADIOJSA ";
+                    cout<<i<<endl<<endl;
+                    cout<<"VETPROXIMO "<<vetProx[i].getAresta()->getIdAlvo()<<" "<<vetProx[i].getAresta()->getIdOrigem()<<endl;
+
+                    cout<<vetPrim.back().getAresta()->getIdAlvo()<<endl;
+                    cout<<vetPrim.back().getAresta()->getIdOrigem()<<endl;
+                    cout<<vetPrim.back().getId()<<endl<<endl;
+
+
+                    peso1 = ehAdjacente(i,vetPrim.back().getAresta()->getIdAlvo());
+                    peso2 = vetProx[i].getAresta()->getPeso();
+                    cout<<peso1<<" "<<peso2<<endl;
+                    if(peso1 == 0)
+                    {
+                        if(peso2!=0)
+                        {
+                            vetProx[i] = getNoListaOrdenada(vetArestaOrdenado,vetProx[i].getAresta()->getIdAlvo(),vetPrim.back().getAresta()->getIdOrigem(),i);
+
+                        }
+                    }
+                    else
+                    {
+                        if(peso2==0)
+                        {
+                            vetProx[i] = getNoListaOrdenada(vetArestaOrdenado,vetProx[i].getAresta()->getIdAlvo(),vetPrim.back().getAresta()->getIdAlvo(),i);
+
+                        }
+                        else
+                        {
+                            if(peso1<=peso2)
+                            {
+                                vetProx[i] = getNoListaOrdenada(vetArestaOrdenado,vetProx[i].getAresta()->getIdAlvo(),vetPrim.back().getAresta()->getIdAlvo(),i);
+
+                            }
+                            else
+                            {
+                                vetProx[i] = getNoListaOrdenada(vetArestaOrdenado,vetProx[i].getAresta()->getIdAlvo(),vetPrim.back().getAresta()->getIdOrigem(),i);
+
+                            }
+                        }
+                    }
+
+                }
+            }
+
+
+        }
+        contador = contador+1;
+    }
+    cout<<endl<<endl;
+    cout<<"IRMAO SE DEU CERTO NOIS É BALA"<<endl;
+    for(int i=0; i<vetPrim.size(); i++)
+    {
+        cout<<vetPrim[i].getAresta()->getIdAlvo() << " | " << vetPrim[i].getAresta()->getIdOrigem()<<endl;
+
+    }
+
 
 }
+//-1 = INFINITO , -2 = VISITADO
 
-vector<No>Grafo::auxAlgoritmoPrim(vector<No>Prim,No noAtual,No noAlvo){
+No Grafo::getNoListaOrdenada(vector<No>vetOrdenado,No noAtual, No noAlvo,float peso)
+{
+    cout<<"================="<<endl;
+    cout<<"NO ATUAL:"<<noAtual.getId() << " NO ALVO :"<<noAlvo.getId()<<" PESO:"<<peso<<endl;
+    cout<<"================="<<endl;
+    for(int i=0; i<vetOrdenado.size() ; i++)
+    {
+        cout<<vetOrdenado[i].getAresta()->getIdAlvo() << " | " << vetOrdenado[i].getAresta()->getIdOrigem()<<" Peso:";
+        cout<< vetOrdenado[i].getAresta()->getPeso()<<endl;
+    }
+    cout<<"===========-=-=-=--=-=-=-=-=-=-=--="<<endl;
+    for(int i=0; i< vetOrdenado.size(); i++)
+    {
+        if(noAtual.getId() == -1)
+        {
+
+            if(peso == vetOrdenado[i].getAresta()->getIdOrigem())
+            {
+                if(vetOrdenado[i].getAresta()->getIdAlvo() == noAlvo.getId())
+                {
+
+                    return vetOrdenado[i];
+                }
+            }
+
+
+        }
+        else
+        {
+
+            if(vetOrdenado[i].getAresta()->getIdOrigem() == peso )
+            {
+
+                if(vetOrdenado[i].getAresta()->getIdOrigem() == noAlvo.getId() || vetOrdenado[i].getAresta()->getIdAlvo() == noAlvo.getId())
+                {
+                    cout<<vetOrdenado[i].getAresta()->getIdAlvo() << " " << vetOrdenado[i].getAresta()->getIdOrigem()<<endl;
+                    return vetOrdenado[i];
+                }
+            }
+            else
+            {
+                if(vetOrdenado[i].getAresta()->getIdAlvo() == peso)
+                {
+                    if(vetOrdenado[i].getAresta()->getIdOrigem() == noAlvo.getId() || vetOrdenado[i].getAresta()->getIdAlvo() == noAlvo.getId())
+                    {
+                        cout<<vetOrdenado[i].getAresta()->getIdAlvo() << " " << vetOrdenado[i].getAresta()->getIdOrigem()<<endl;
+                        return vetOrdenado[i];
+                    }
+                }
+            }
+        }
+
+    }
+
+
+
+}
+int Grafo::getIndiceMin(vector<No>Prim)
+{
+
+    for(int i=0; i<Prim.size(); i++)
+    {
+        if(Prim[i].getId() != -1 && Prim[i].getId()!=-2)
+            cout<<Prim[i].getAresta()->getIdAlvo() << " | " << Prim[i].getAresta()->getIdOrigem()<<endl;
+        else
+        {
+            if(Prim[i].getId()== -2)
+            {
+                cout<<"ja visitado"<<endl;
+            }
+            else
+            {
+                cout<<"infinito"<<endl;
+            }
+        }
+
+    }
+    cout<<"------------------------------------------------------------------------"<<endl;
+
+
+
+
+    int indiceMin;
+    for(int i=0; i<Prim.size(); i++)
+    {
+        if(Prim[i].getId() != -1 && Prim[i].getId()!= -2)
+        {
+            indiceMin = i;
+        }
+
+    }
+
+    for(int i=0; i<Prim.size()-1; i++)
+    {
+
+        if(Prim[i].getId() != -1 && Prim[i].getId()!= -2)
+        {
+            for(int j=i+1; j<Prim.size(); j++)
+            {
+
+                if(Prim[j].getId() != -1 && Prim[j].getId()!= -2)
+                {
+
+                    if(Prim[i].getAresta()->getPeso() <= Prim[j].getAresta()->getPeso())
+                    {
+                        indiceMin = i;
+                    }
+                    else
+                    {
+                        indiceMin = j;
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    return indiceMin;
+}
+
+vector<No>Grafo::auxAlgoritmoPrim(vector<No>vetProx,No noAtual,No noAlvo)
+{
     No *aux;
     No *flag = new No(-1);
-    cout<<"IDNoAtual:"<<noAtual.getId()<<endl;
-    cout<<"IDNoAlvo:"<<noAlvo.getId()<<endl;
-    if(noAtual.getId() == -1 || noAlvo.getId()== -1){
-        Prim.push_back(*flag);
-        return Prim;
+
+    if(noAtual.getId() == -1 || noAlvo.getId()== -1)
+    {
+        vetProx.push_back(*flag);
+        return vetProx;
     }
 
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        if(it->getId() == noAtual.getId()){
+        if(it->getId() == noAtual.getId())
+        {
             aux = new No(it->getProximoNo()->getId());
             aux->setAresta(it->getProximoNo()->getAresta());
             aux->setProximoNo(it->getProximoNo()->getProximoNo());
 
 
-            if(it->getProximoNo()->getId() == noAlvo.getId()){
+            if(it->getProximoNo()->getId() == noAlvo.getId())
+            {
 
-                Prim.push_back(*it->getProximoNo());
-                return Prim;
+                vetProx.push_back(*it->getProximoNo());
+                return vetProx;
             }
-            while(true){
-                if(aux->getProximoNo()->getId() == noAlvo.getId()){
-                    Prim.push_back(*aux->getProximoNo());
-                    return Prim;
+            while(true)
+            {
+                if(aux->getProximoNo()->getId() == noAlvo.getId())
+                {
+                    vetProx.push_back(*aux->getProximoNo());
+                    return vetProx;
                 }
                 aux->setId(aux->getProximoNo()->getId());
                 aux->setAresta(aux->getProximoNo()->getAresta());
@@ -679,14 +950,18 @@ vector<No>Grafo::auxAlgoritmoPrim(vector<No>Prim,No noAtual,No noAlvo){
 
 }
 
-int Grafo:: ehAdjacente(int idOrigem,int idAlvo){
+int Grafo:: ehAdjacente(int idOrigem,int idAlvo)
+{
     No *aux ;
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        if(it->getId() == idOrigem){
+        if(it->getId() == idOrigem)
+        {
 
-            if(it->getProximoNo()!=0){
-                if(it->getProximoNo()->getId() == idAlvo){
+            if(it->getProximoNo()!=0)
+            {
+                if(it->getProximoNo()->getId() == idAlvo)
+                {
                     return it->getProximoNo()->getAresta()->getPeso();
                 }
                 aux = new No(it->getProximoNo()->getId());
@@ -694,18 +969,19 @@ int Grafo:: ehAdjacente(int idOrigem,int idAlvo){
                 aux->setProximoNo(it->getProximoNo()->getProximoNo());
 
             }
-            while(aux->getProximoNo()!=0){
+            while(aux->getProximoNo()!=0)
+            {
 
                 aux->setId(aux->getProximoNo()->getId());
                 aux->setAresta(aux->getProximoNo()->getAresta());
                 aux->setProximoNo(aux->getProximoNo()->getProximoNo());
 
-                if(aux->getId() == idAlvo){
+                if(aux->getId() == idAlvo)
+                {
 
                     return aux->getAresta()->getPeso();
                 }
             }
-
         }
     }
     return 0;

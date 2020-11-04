@@ -96,7 +96,7 @@
 
 1604063514 c:\users\gabriel\grafosdosbalas\aresta.h
 
-1604370080 source:c:\users\gabriel\grafosdosbalas\grafo.cpp
+1604525221 source:c:\users\gabriel\grafosdosbalas\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
@@ -113,7 +113,7 @@
 	<iomanip>
 	<queue>
 
-1604367710 c:\users\gabriel\grafosdosbalas\grafo.h
+1604450815 c:\users\gabriel\grafosdosbalas\grafo.h
 	"No.h"
 	<fstream>
 	<stack>
@@ -124,7 +124,7 @@
 1604063514 c:\users\gabriel\grafosdosbalas\no.h
 	"Aresta.h"
 
-1604370080 source:c:\users\gabriel\grafosdosbalas\main.cpp
+1604439845 source:c:\users\gabriel\grafosdosbalas\main.cpp
 	<iostream>
 	<fstream>
 	<string>
