@@ -500,10 +500,186 @@ float **Grafo::floydMarshall()
 {
 }
 
-float *Grafo::dijkstra(int id)
+void Grafo::dijkstra(int id)
 {
+    list<int> verticesVisitados;
+    bool *verticesNaoVisitados;
+    float *custoVertices;
+    custoVertices = (float *)malloc(this->ordem * sizeof(int));
+    verticesNaoVisitados = (bool *)malloc(this->ordem * sizeof(int));
+    for (int i = 0; i < this->ordem; i++)
+    {
+        if(i == id)
+        {
+            verticesNaoVisitados[i] = true;
+            custoVertices[i] = 0;
+            verticesVisitados.push_back(id);
+
+        }
+        else
+        {
+            custoVertices[i] = -1;
+            verticesNaoVisitados[i] = false;
+        }
+    }
+    for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        if(it->getId() == id)
+        {
+            No *aux = new No(it->getId());
+            aux->setProximoNo(it->getProximoNo());
+            aux->setAresta(it->getAresta());
+            while(aux->getProximoNo() !=0)
+            {
+                aux->setId(aux->getProximoNo()->getId());
+                aux->setAresta(aux->getProximoNo()->getAresta());
+                if(aux->getProximoNo()->getProximoNo() !=0 )
+                {
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
+                else
+                {
+                    aux->setProximoNo(nullptr);
+                }
+                custoVertices[aux->getId()] = aux->getAresta()->getPeso();
+            }
+            delete aux;
+        }
+    }
+
+    int i = id;
+    while(verticesVisitados.size() < this->ordem)
+    {
+        float menor = -1;
+        for(int p = 0; p < this->ordem; p++)
+        {
+            if(verticesNaoVisitados[p] == false)
+            {
+                if(menor == -1 && custoVertices[p]!= -1)
+                {
+                    menor = custoVertices[p];
+                    i = p;
+                }
+                else if(menor > custoVertices[p] && (custoVertices[p]!= -1))
+                {
+                    menor = custoVertices[p];
+                    i = p;
+                }
+            }
+        }
+        verticesNaoVisitados[i] = true;
+        verticesVisitados.push_back(i);
+        cout<<i;
+        int k = 0;
+        for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+        {
+
+            if(verticesNaoVisitados[k] == false)
+            {
+
+                No *aux = new No(it->getId());
+                aux->setProximoNo(it->getProximoNo());
+                aux->setAresta(it->getAresta());
+                while(aux->getProximoNo() !=0)
+                {
+                    aux->setId(aux->getProximoNo()->getId());
+                    aux->setAresta(aux->getProximoNo()->getAresta());
+                    if(aux->getProximoNo()->getProximoNo() !=0 )
+                    {
+                        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                    }
+                    else
+                    {
+                        aux->setProximoNo(nullptr);
+                    }
+                    if(aux->getId() == i)
+                    {
+                        if(custoVertices[it->getId()] == -1 || (custoVertices[it->getId()] > aux->getAresta()->getPeso() + custoVertices[i]))
+                        {
+                            custoVertices[it->getId()] = aux->getAresta()->getPeso() + custoVertices[i];
+
+                        }
+                        else if(custoVertices[aux->getId()] > aux->getAresta()->getPeso() + custoVertices[i])
+                        {
+                            custoVertices[aux->getId()] = aux->getAresta()->getPeso() + custoVertices[i];
+
+                        }
+                    }
+                }
+                delete aux;
+            }
+            k++;
+        }
+    }
+    int x = 0;
+    cout<<endl;
+    for(list<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
+    {
+        cout<<custoVertices[x]<<endl;
+        x++;
+    }
 }
 
+void Grafo::kruskal()
+{
+    vector<No> vectorArestaOrdenada = retornaListaOrdenada();
+    list<No> listaArestaOrdenada(vectorArestaOrdenada.begin(),vectorArestaOrdenada.end());
+    vector<No> solucao;
+    int *subArvores;
+    subArvores = (int *)malloc(this->ordem * sizeof(int));
+    for(int i = 0; i < this->ordem; i++)
+    {
+        subArvores[i]=i;
+    }
+    int cont = 0;
+    int menor = 0;
+    int maior = 0;
+    int tamanho = listaArestaOrdenada.size();
+    while(cont < tamanho && (!listaArestaOrdenada.empty()))
+    {
+        No *aux = new No(listaArestaOrdenada.begin()->getId());
+        aux->setAresta(listaArestaOrdenada.begin()->getAresta());
+        listaArestaOrdenada.pop_front();
+        if(aux->getAresta()->getIdAlvo() > aux->getAresta()->getIdOrigem())
+        {
+            menor = aux->getAresta()->getIdOrigem();
+            maior = aux->getAresta()->getIdAlvo();
+        }
+        else
+        {
+            menor = aux->getAresta()->getIdAlvo();
+            maior = aux->getAresta()->getIdOrigem();
+        }
+        if(subArvores[maior] != subArvores[menor])
+        {
+            solucao.push_back(*aux);
+            for(int i = 0; i < this->ordem; i++)
+            {
+                if(subArvores[i] == subArvores[maior] && (i!= maior))
+                {
+                    subArvores[i] = subArvores[menor];
+                }
+            }
+            subArvores[maior] = subArvores[menor];
+            for(int i = 0; i < this->ordem; i++)
+            {
+            }
+            cont = cont + 1;
+        }
+        delete aux;
+    }
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    for(int i = 0; i < solucao.size(); i++)
+    {
+        cout<<solucao[i].getAresta()->getIdAlvo() << " | " << solucao[i].getAresta()->getIdOrigem()<<" Peso:";
+        cout<< solucao[i].getAresta()->getPeso()<<endl;
+    }
+
+
+
+}
 
 
 vector<No>Grafo::retornaListaOrdenada()
@@ -574,6 +750,7 @@ vector<No>Grafo::retornaListaOrdenada()
     cout<<endl;
     return vetorOrdenado;
 }
+
 vector<No>Grafo::algoritmoPrim()
 {
     vector<No> vetArestaOrdenado = retornaListaOrdenada();
@@ -587,6 +764,7 @@ vector<No>Grafo::algoritmoPrim()
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
 
+
         while(true)
         {
             peso1 = ehAdjacente(vetPrim[0].getAresta()->getIdOrigem(),it->getId());
@@ -598,7 +776,10 @@ vector<No>Grafo::algoritmoPrim()
             {
                 if(peso2==0)
                 {
+
                     vetProx = auxAlgoritmoPrim(vetProx,it->getId(),vetPrim[0].getAresta()->getIdOrigem());
+                    vetProx = auxAlgoritmoPrim(vetProx,vetPrim[0].getAresta()->getIdOrigem(),it->getId());
+
 
                     cout<<"Peso1M:"<<vetProx.back().getAresta()->getIdAlvo();
                     cout<<" "<<vetProx.back().getAresta()->getIdOrigem()<<endl;
@@ -608,7 +789,11 @@ vector<No>Grafo::algoritmoPrim()
                 {
                     if(peso1<=peso2)
                     {
+
                         vetProx = auxAlgoritmoPrim(vetProx,it->getId(),vetPrim[0].getAresta()->getIdOrigem());
+
+                        vetProx = auxAlgoritmoPrim(vetProx,vetPrim[0].getAresta()->getIdOrigem(),it->getId());
+
 
                         cout<<"Peso1MM:"<<vetProx.back().getAresta()->getIdAlvo();
                         cout<<" "<<vetProx.back().getAresta()->getIdOrigem()<<endl;
@@ -616,7 +801,11 @@ vector<No>Grafo::algoritmoPrim()
                     }
                     else
                     {
+
                         vetProx = auxAlgoritmoPrim(vetProx,it->getId(),vetPrim[0].getAresta()->getIdAlvo());
+
+                        vetProx = auxAlgoritmoPrim(vetProx,vetPrim[0].getAresta()->getIdAlvo(),it->getId());
+
 
                         cout<<"Peso2M:"<<vetProx.back().getAresta()->getIdAlvo();
                         cout<<" "<<vetProx.back().getAresta()->getIdOrigem()<<endl;
@@ -628,7 +817,11 @@ vector<No>Grafo::algoritmoPrim()
             {
                 if(peso2!=0)
                 {
+
                     vetProx = auxAlgoritmoPrim(vetProx,it->getId(),vetPrim[0].getAresta()->getIdAlvo());
+
+                    vetProx = auxAlgoritmoPrim(vetProx,vetPrim[0].getAresta()->getIdAlvo(),it->getId());
+
 
                     cout<<"Peso2MM:"<<vetProx.back().getAresta()->getIdAlvo();
                     cout<<" "<<vetProx.back().getAresta()->getIdOrigem()<<endl;
@@ -645,6 +838,7 @@ vector<No>Grafo::algoritmoPrim()
         }
         cout<<endl;
         cout<<endl;
+
 
     }
 
@@ -814,6 +1008,16 @@ No Grafo::getNoListaOrdenada(vector<No>vetOrdenado,No noAtual, No noAlvo,float p
 
 
         }
+
+    }
+    cout<<"IMPRIME SAPORA"<<endl;
+    cout<<vetProx.size()<<" tam"<<endl;
+    //cout<<vetProx.size()<<endl;
+    for(int i=0; i<vetProx.size(); i++)
+    {
+        if(vetProx[i].getId() != -1)
+            cout<<vetProx[i].getAresta()->getIdAlvo() << " | " << vetProx[i].getAresta()->getIdOrigem()<<endl;
+
         else
         {
 
@@ -908,6 +1112,7 @@ int Grafo::getIndiceMin(vector<No>Prim)
     return indiceMin;
 }
 
+
 vector<No>Grafo::auxAlgoritmoPrim(vector<No>vetProx,No noAtual,No noAlvo)
 {
     No *aux;
@@ -917,6 +1122,18 @@ vector<No>Grafo::auxAlgoritmoPrim(vector<No>vetProx,No noAtual,No noAlvo)
     {
         vetProx.push_back(*flag);
         return vetProx;
+
+vector<No>Grafo::auxAlgoritmoPrim(vector<No>Prim,No noAtual,No noAlvo)
+{
+    No *aux;
+    No *flag = new No(-1);
+    cout<<"IDNoAtual:"<<noAtual.getId()<<endl;
+    cout<<"IDNoAlvo:"<<noAlvo.getId()<<endl;
+    if(noAtual.getId() == -1 || noAlvo.getId()== -1)
+    {
+        Prim.push_back(*flag);
+        return Prim;
+
     }
 
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
@@ -938,8 +1155,12 @@ vector<No>Grafo::auxAlgoritmoPrim(vector<No>vetProx,No noAtual,No noAlvo)
             {
                 if(aux->getProximoNo()->getId() == noAlvo.getId())
                 {
+
                     vetProx.push_back(*aux->getProximoNo());
                     return vetProx;
+                    Prim.push_back(*aux->getProximoNo());
+                    return Prim;
+
                 }
                 aux->setId(aux->getProximoNo()->getId());
                 aux->setAresta(aux->getProximoNo()->getAresta());

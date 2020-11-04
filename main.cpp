@@ -84,7 +84,7 @@ int menu()
     cout << "[1] Complementar do grafo" << endl;
     cout << "[2] Imprimir caminhamento em largura" << endl;
     cout << "[3] Busca em profundidade" << endl;
-    cout << "[4] Imprimir componentes conexas" << endl;
+    cout << "[4] Arvore Geradora minima de Kruskal" << endl;
     cout << "[5] Imprimir componentes fortemente conexas" << endl;
     cout << "[6] Imprimir ordenacao topol�gica" << endl;
     cout << "[7] Guloso Randomizado Reativo" << endl;
@@ -175,8 +175,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Componentes Conexas
     case 4:
     {
-
-
+        grafo->kruskal();
 
         break;
     }
@@ -213,7 +212,10 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo de Dijkstra
     case 9:
     {
-
+        int id;
+        cout<<"digite o vertice inicial: ";
+        cin>>id;
+        grafo->dijkstra(id);
         break;
     }
 
