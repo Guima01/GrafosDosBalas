@@ -221,6 +221,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo de Floyd
     case 10:
 
+        grafo->floydMarshall();
         break;
 
     }

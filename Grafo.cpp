@@ -496,8 +496,56 @@ bool Grafo::PossuiCiclo()
 {
 }
 
-float **Grafo::floydMarshall()
+void Grafo::floydMarshall()
 {
+    vector<No> vectorArestaOrdenada = retornaListaOrdenada();
+    int i,j;
+    int tam = this->ordem;
+    int matriz[ordem][ordem];
+    int matrizAux[ordem][ordem];
+
+    for(i = 0; i < this->ordem; i++)
+    {
+        matriz[i][i] = 0;
+        for(j = 0; j < this->ordem; j++)
+        {
+            if(i != j)
+            {
+                matriz[i][j] = 99999;
+            }
+        }
+    }
+    for(i = 0; i < vectorArestaOrdenada.size(); i++)
+    {
+        matriz[vectorArestaOrdenada[i].getAresta()->getIdAlvo()][vectorArestaOrdenada[i].getAresta()->getIdOrigem()] = vectorArestaOrdenada[i].getAresta()->getPeso();
+        matriz[vectorArestaOrdenada[i].getAresta()->getIdOrigem()][vectorArestaOrdenada[i].getAresta()->getIdAlvo()] = vectorArestaOrdenada[i].getAresta()->getPeso();
+    }
+
+    for(int k = 0; k < this->ordem; k++)
+    {
+        for(int i = 0; i < this->ordem; i++)
+        {
+            for(int j = 0; j < this->ordem; j++)
+            {
+                if(i != j && i!= k && j != k)
+                {
+                    if(matriz[i][j] > matriz[i][k] + matriz[k][j])
+                    {
+                        matriz[i][j] = matriz[i][k] + matriz[k][j];
+                    }
+                }
+            }
+        }
+
+    }
+    for(int i = 0; i < this->ordem; i++)
+    {
+        for(int j = 0; j < this->ordem; j++)
+        {
+            cout<<matriz[i][j]<<" ";
+        }
+        cout<<endl;
+    }
 }
 
 void Grafo::dijkstra(int id)
