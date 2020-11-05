@@ -81,16 +81,13 @@ int menu()
 
     cout << "MENU" << endl;
     cout << "----" << endl;
-    cout << "[1] Complementar do grafo" << endl;
-    cout << "[2] Imprimir caminhamento em largura" << endl;
-    cout << "[3] Busca em profundidade" << endl;
-    cout << "[4] Arvore Geradora minima de Kruskal" << endl;
-    cout << "[5] Imprimir componentes fortemente conexas" << endl;
-    cout << "[6] Imprimir ordenacao topol�gica" << endl;
+    cout << "[1] Imprimir caminhamento em largura" << endl;
+    cout << "[2] Busca em profundidade" << endl;
+    cout << "[3] Arvore Geradora minima de Kruskal" << endl;
+    cout << "[4] arvore Geradora Minima de Prim" << endl;
+    cout << "[5] Caminho Minimo Dijkstra" << endl;
+    cout << "[6] Caminho Minimo Floyd" << endl;
     cout << "[7] Guloso Randomizado Reativo" << endl;
-    cout << "[8] �rvore Geradora M�nima de Prim" << endl;
-    cout << "[9] Caminho M�nimo Dijkstra" << endl;
-    cout << "[10] Caminho M�nimo Floyd" << endl;
     cout << "[0] Sair" << endl;
 
     cin >> selecao;
@@ -105,15 +102,8 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     switch (selecao)
     {
 
-    //Complementar
-    case 1:
-    {
-
-        break;
-    }
-
     //BFS
-    case 2:
+    case 1:
     {
 
         queue<int>filaVertices;
@@ -142,8 +132,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         break;
     }
 
-    //DFS
-    case 3:
+    case 2:
     {
         vector<int>listaVertices(grafo->getOrdem());
         int cont=0;
@@ -172,45 +161,33 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         break;
     }
 
-    //Componentes Conexas
-    case 4:
+    //Algoritmo de Kruskal
+    case 3:
     {
         grafo->kruskal();
 
         break;
     }
 
-    //Componentes Fortementes Conexas
-    case 5:
-    {
-
-        break;
-    }
-
-    //Ordena��o Topol�gica
-    case 6:
-    {
-
-        break;
-    }
-
-    case 7:
-    {
-
-
-        break;
-    }
-
     //Algoritmo de Prim
-    case 8:
+    case 4:
     {
 
-        grafo->algoritmoPrim();
+        vector<No> Prim = grafo->algoritmoPrim();
+        int cont=0;
+        for(int i=0; i<Prim.size(); i++)
+        {
+            cout<<Prim[i].getAresta()->getIdOrigem() << " | " <<Prim[i].getAresta()->getIdAlvo();
+            cout<< " Peso:" << Prim[i].getAresta()->getPeso()<<endl;
+            cont += Prim[i].getAresta()->getPeso();
+        }
+        cout<<"PESO RESULTANTE:" << cont<<endl;
+        Prim.clear();
         break;
     }
 
-    //Algoritmo de Dijkstra
-    case 9:
+    //Caminho minimo de djikstra
+    case 5:
     {
         int id;
         cout<<"digite o vertice inicial: ";
@@ -220,11 +197,16 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     }
 
     //Algoritmo de Floyd
-    case 10:
-
+    case 6:
+    {
         grafo->floydMarshall();
         break;
+    }
 
+    case 7:
+    {
+        break;
+    }
     }
 }
 
@@ -301,7 +283,8 @@ int main(int argc, char const *argv[])
         grafo = leituraInstancia(arquivo_entrada, &arquivo_saida);
 
     }
-    else{
+    else
+    {
         cout << "Unable to open " << argv[1];
         return 0;
     }

@@ -52,18 +52,19 @@ class Grafo{
         bool buscaNo(int id);
         No* getNo(int id);
 
+
         vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
         vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
         vector<int> amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int>verticesVisitados,int *cont);
 
+        No alteraVetProx(int noAtual,int noAlvo);
         vector<No> retornaListaOrdenada();
         vector<No>algoritmoPrim();
-        vector<No>auxAlgoritmoPrim(vector<No>Prim,No noAtual,No noAlvo);
+        vector<No>addVetProx(vector<No>Prim,No noAtual,No noAlvo);
         int getIndiceMin(vector<No>vetProx);
-        No getNoListaOrdenada(vector<No> listaOrdenada,No noAtual,No noAlvo,float peso);
-
         int ehAdjacente(int idOrigem,int idAlvo);
-         Grafo* getComplemento();
+
+        Grafo* getComplemento();
         Grafo* getSubjacente();
         bool PossuiCiclo();
         bool GrafoConectado();
