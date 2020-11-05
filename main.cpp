@@ -204,6 +204,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo de Prim
     case 8:
     {
+
         grafo->algoritmoPrim();
         break;
     }
