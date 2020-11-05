@@ -57,12 +57,12 @@ class Grafo{
         vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
         vector<int> amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int>verticesVisitados,int *cont);
 
-        No alteraVetProx(int noAtual,int noAlvo);
+        No alteraVetProx(vector<No>vetProx,int noAtual,int noAlvo);
         vector<No> retornaListaOrdenada();
         vector<No>algoritmoPrim();
-        vector<No>addVetProx(vector<No>Prim,No noAtual,No noAlvo);
+        vector<No>addVetProx(vector<No>vetAdj,vector<No>Prim,No noAtual,No noAlvo);
         int getIndiceMin(vector<No>vetProx);
-        int ehAdjacente(int idOrigem,int idAlvo);
+        float ehAdjacente(vector<No>vetAdj,int idOrigem,int idAlvo);
 
         Grafo* getComplemento();
         Grafo* getSubjacente();
