@@ -739,34 +739,27 @@ void Grafo::kruskal()
 
 vector<No>Grafo::retornaListaOrdenada()
 {
-
     vector<No> vetorOrdenado;
     No *aux;
-
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         if(it->getProximoNo()!=0)
         {
-
             if(it->getProximoNo()->getAresta()->getVerificaAresta()!=true)
             {
                 vetorOrdenado.push_back(*it->getProximoNo());
                 it->getProximoNo()->getAresta()->setVerificaAresta();
             }
-
             aux = new No(it->getProximoNo()->getId());
             aux->setAresta(it->getProximoNo()->getAresta());
             aux->setProximoNo(it->getProximoNo()->getProximoNo());
-
             while(aux->getProximoNo()!= 0)
             {
-
                 if(aux->getAresta()->getVerificaAresta()!=true)
                 {
                     aux->getAresta()->setVerificaAresta();
                     vetorOrdenado.push_back(*aux);
                 }
-
                 aux->setId(aux->getProximoNo()->getId());
                 aux->setAresta(aux->getProximoNo()->getAresta());
                 if(!(aux->getProximoNo()->getProximoNo() !=0))
@@ -782,7 +775,6 @@ vector<No>Grafo::retornaListaOrdenada()
             }
         }
     }
-
     No ordenar = 0;
     for(int i = 0 ; i< vetorOrdenado.size()-1; i++)
     {
@@ -796,13 +788,6 @@ vector<No>Grafo::retornaListaOrdenada()
             }
         }
     }
-
-    for(int i=0; i<vetorOrdenado.size() ; i++)
-    {
-        cout<<vetorOrdenado[i].getAresta()->getIdAlvo() << " | " << vetorOrdenado[i].getAresta()->getIdOrigem()<<" Peso:";
-        cout<< vetorOrdenado[i].getAresta()->getPeso()<<endl;
-    }
-    cout<<endl;
     return vetorOrdenado;
 }
 
@@ -812,25 +797,13 @@ vector<No>Grafo::algoritmoPrim()
     vector<No> vetPrim,vetProx;
     vector<No> vetAdj;
     No *flag = new No(-2);
-
-    int contador;
+    int contador,indiceMinimo;
     float pesoAlvo,pesoOrigem,peso1,peso2;
     vetPrim.push_back(vetArestaOrdenado[0]);
-
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-
         vetAdj.push_back(*it);
     }
-
-/*
-
-    for(int i =0; i<vetAdj.size(); i++)
-    {
-
-        cout<< vetAdj[i].getId() << " "<< vetAdj[i].getProximoNo()->getAresta()->getPeso()<<endl;
-    }
-*/
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         while(true)
@@ -859,9 +832,7 @@ vector<No>Grafo::algoritmoPrim()
     }
     vetProx[vetArestaOrdenado[0].getAresta()->getIdAlvo()] = *flag;
     vetProx[vetArestaOrdenado[0].getAresta()->getIdOrigem()] = *flag;
-    contador =0;
-    cout<<endl<<endl;
-    int indiceMinimo=0;
+    contador = indiceMinimo = 0;
     while(contador<getOrdem()-2)
     {
         indiceMinimo = getIndiceMin(vetProx);
@@ -915,63 +886,29 @@ vector<No>Grafo::algoritmoPrim()
         }
         contador = contador+1;
     }
-    cout<<endl<<endl;
     delete flag;
     return vetPrim;
 }
 
 No Grafo::alteraVetProx(vector<No> vetAdj,int noAtual,int noAlvo)
 {
-
     No *aux = new No(vetAdj[noAlvo].getProximoNo()->getId());
     aux->setAresta(vetAdj[noAlvo].getProximoNo()->getAresta());
     aux->setProximoNo(vetAdj[noAlvo].getProximoNo()->getProximoNo());
-
     if(aux->getId() == noAtual)
     {
-
         return *aux;
     }
-
     while(true)
     {
-
         if(aux->getId() == noAtual)
         {
             return *aux;
         }
-
         aux->setId(aux->getProximoNo()->getId());
         aux->setAresta(aux->getProximoNo()->getAresta());
         aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-
-
     }
-    /*
-    No *aux;
-      for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it){
-          if(it->getId() == noAlvo)
-          {
-              aux = new No(it->getProximoNo()->getId());
-              aux->setAresta(it->getProximoNo()->getAresta());
-              aux->setProximoNo(it->getProximoNo()->getProximoNo());
-              if(it->getProximoNo()->getId() == noAtual)
-              {
-                  return *it->getProximoNo();
-              }
-              while(true)
-              {
-                  if(aux->getProximoNo()->getId() == noAtual)
-                  {
-                      return *aux->getProximoNo();
-                  }
-                  aux->setId(aux->getProximoNo()->getId());
-                  aux->setAresta(aux->getProximoNo()->getAresta());
-                  aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-              }
-          }
-      }
-    */
 }
 
 
@@ -1021,22 +958,18 @@ int Grafo::getIndiceMin(vector<No>vetProx)
 
 vector<No>Grafo::addVetProx(vector<No>vetAdj,vector<No>vetProx,No noAtual,No noAlvo)
 {
-    /*
     No *aux;
     No *flag = new No(noAtual.getId());
     flag->setAresta(nullptr);
-
     if( noAlvo.getId()== -1)
     {
         vetProx.push_back(*flag);
         delete flag;
         return vetProx;
     }
-
     aux = new No(vetAdj[noAlvo.getId()].getProximoNo()->getId());
     aux->setAresta(vetAdj[noAlvo.getId()].getProximoNo()->getAresta());
     aux->setProximoNo(vetAdj[noAlvo.getId()].getProximoNo()->getProximoNo());
-
     if(aux->getId()==noAtual.getId())
     {
         vetProx.push_back(*aux);
@@ -1055,95 +988,22 @@ vector<No>Grafo::addVetProx(vector<No>vetAdj,vector<No>vetProx,No noAtual,No noA
         aux->setAresta(aux->getProximoNo()->getAresta());
         aux->setProximoNo(aux->getProximoNo()->getProximoNo());
     }
-
-    */
-    No *aux;
-    for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
-    {
-        if(it->getId() == noAlvo.getId())
-        {
-            aux = new No(it->getProximoNo()->getId());
-            aux->setAresta(it->getProximoNo()->getAresta());
-            aux->setProximoNo(it->getProximoNo()->getProximoNo());
-            if(it->getProximoNo()->getId() == noAtual.getId())
-            {
-
-                vetProx.push_back(*it->getProximoNo());
-                return vetProx;
-            }
-            while(true)
-            {
-                if(aux->getProximoNo()->getId() == noAtual.getId())
-                {
-                    vetProx.push_back(*aux->getProximoNo());
-                    delete aux;
-                    return vetProx;
-                }
-                aux->setId(aux->getProximoNo()->getId());
-                aux->setAresta(aux->getProximoNo()->getAresta());
-                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-            }
-        }
-    }
-
 }
 
 float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
 {
-    No *aux = new No(vetAdj[idOrigem].getProximoNo()->getId()) ;
+    No *aux;
+    float peso;
+    if(vetAdj[idOrigem].getProximoNo()!=0){
+        if(vetAdj[idOrigem].getProximoNo()->getId()== idAlvo){
+            return vetAdj[idOrigem].getProximoNo()->getAresta()->getPeso();
+        }
+    }
+    aux = new No(vetAdj[idOrigem].getProximoNo()->getId()) ;
     aux->setAresta(vetAdj[idOrigem].getProximoNo()->getAresta());
     aux->setProximoNo(vetAdj[idOrigem].getProximoNo()->getProximoNo());
-    float peso;
-
-    if(aux->getId()== idAlvo)
-    {
-        peso = aux->getAresta()->getPeso();
-        delete aux;
-        return peso;
-    }
-
     while(aux->getProximoNo()!=0)
-    {
-
-
-
-
-        if(aux->getId() == idAlvo)
-        {
-
-            peso = aux->getAresta()->getPeso();
-            delete aux;
-            return peso;
-        }
-
-        aux->setId(aux->getProximoNo()->getId());
-        aux->setAresta(aux->getProximoNo()->getAresta());
-        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-
-
-    }
-
-    return -2;
-
-
-    /*
-    for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
-    {
-        if(it->getId() == idOrigem)
-        {
-            if(it->getProximoNo()!=0)
             {
-                if(it->getProximoNo()->getId() == idAlvo)
-                {
-                    return it->getProximoNo()->getAresta()->getPeso();
-                }
-                aux = new No(it->getProximoNo()->getId());
-                aux->setAresta(it->getProximoNo()->getAresta());
-                aux->setProximoNo(it->getProximoNo()->getProximoNo());
-            }
-            while(aux->getProximoNo()!=0)
-            {
-
                 aux->setId(aux->getProximoNo()->getId());
                 aux->setAresta(aux->getProximoNo()->getAresta());
                 aux->setProximoNo(aux->getProximoNo()->getProximoNo());
@@ -1155,10 +1015,8 @@ float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
                     return peso;
                 }
             }
-        }
-    }
 
     return -2;
-    */
+
 }
 
