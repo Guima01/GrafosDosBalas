@@ -64,6 +64,9 @@ class Grafo{
         int getIndiceMin(vector<No>vetProx);
         float ehAdjacente(vector<No>vetAdj,int idOrigem,int idAlvo);
 
+        void guloso();
+        vector<No> retornaListaOrdenadaGrau();
+
         Grafo* getComplemento();
         Grafo* getSubjacente();
         bool PossuiCiclo();

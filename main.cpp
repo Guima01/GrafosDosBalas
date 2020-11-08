@@ -203,8 +203,10 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         break;
     }
 
+    //Algoritmo Guloso
     case 7:
     {
+        grafo->guloso();
         break;
     }
     }

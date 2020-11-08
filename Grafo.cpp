@@ -617,7 +617,6 @@ void Grafo::dijkstra(int id)
         }
         verticesNaoVisitados[i] = true;
         verticesVisitados.push_back(i);
-        cout<<i;
         int k = 0;
         for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
         {
@@ -663,14 +662,13 @@ void Grafo::dijkstra(int id)
     cout<<endl;
     for(list<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
     {
-        cout<<custoVertices[x]<<endl;
+        cout<<id<< "  |  "<<x<<":  "<<custoVertices[x]<<endl;
         x++;
     }
 }
 
 void Grafo::kruskal()
 {
-    cout<<"teste";
     vector<No> vectorArestaOrdenada = retornaListaOrdenada();
     list<No> listaArestaOrdenada(vectorArestaOrdenada.begin(),vectorArestaOrdenada.end());
     vector<No> solucao;
@@ -994,8 +992,10 @@ float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
 {
     No *aux;
     float peso;
-    if(vetAdj[idOrigem].getProximoNo()!=0){
-        if(vetAdj[idOrigem].getProximoNo()->getId()== idAlvo){
+    if(vetAdj[idOrigem].getProximoNo()!=0)
+    {
+        if(vetAdj[idOrigem].getProximoNo()->getId()== idAlvo)
+        {
             return vetAdj[idOrigem].getProximoNo()->getAresta()->getPeso();
         }
     }
@@ -1003,20 +1003,97 @@ float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
     aux->setAresta(vetAdj[idOrigem].getProximoNo()->getAresta());
     aux->setProximoNo(vetAdj[idOrigem].getProximoNo()->getProximoNo());
     while(aux->getProximoNo()!=0)
-            {
-                aux->setId(aux->getProximoNo()->getId());
-                aux->setAresta(aux->getProximoNo()->getAresta());
-                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+    {
+        aux->setId(aux->getProximoNo()->getId());
+        aux->setAresta(aux->getProximoNo()->getAresta());
+        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
 
-                if(aux->getId() == idAlvo)
-                {
-                    peso = aux->getAresta()->getPeso();
-                    delete aux;
-                    return peso;
-                }
-            }
+        if(aux->getId() == idAlvo)
+        {
+            peso = aux->getAresta()->getPeso();
+            delete aux;
+            return peso;
+        }
+    }
 
     return -2;
 
+}
+
+void Grafo::guloso()
+{
+
+    vector<No> solucao;
+    vector<No> candidatos = retornaListaOrdenadaGrau();
+    while(!candidatos.empty())
+    {
+
+        solucao.push_back(candidatos.front());
+        No *aux = new No(candidatos.front().getId());
+        if(candidatos.front().getProximoNo() == 0)
+        {
+            aux->setProximoNo(nullptr);
+        }
+        else
+        {
+            aux->setProximoNo(candidatos.front().getProximoNo());
+        }
+        aux->setProximoNo(candidatos.front().getProximoNo());
+        candidatos.erase(candidatos.begin() + 0);
+        while(aux->getProximoNo()!=0)
+        {
+            aux->setId(aux->getProximoNo()->getId());
+            if(aux->getProximoNo()->getProximoNo() != 0)
+            {
+                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+            }
+            else
+            {
+                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+            }
+            for(int i = 0; i < candidatos.size(); i++){
+                if(candidatos[i].getId() == aux->getId())
+                {
+                    candidatos.erase(candidatos.begin() + i);
+                    break;
+                }
+            }
+        }
+        delete aux;
+    }
+    cout<<endl;
+    cout<<endl;
+    cout<<endl;
+    for(int i = 0; i < solucao.size(); i++)
+    {
+        cout<<solucao[i].getId()<<endl;
+    }
+    cout<<endl;
+}
+
+
+vector<No>Grafo::retornaListaOrdenadaGrau()
+{
+    vector<No> vetorOrdenado;
+    vector<No> idOrdenado;
+    for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        vetorOrdenado.push_back(*it);
+    }
+    No ordenar = 0;
+    cout<<endl;
+    for(int i = 0 ; i< vetorOrdenado.size()-1; i++)
+    {
+        for(int j = i + 1; j < vetorOrdenado.size(); j++)
+        {
+            if(vetorOrdenado[i].getGrau() < vetorOrdenado[j].getGrau())
+            {
+                ordenar = vetorOrdenado[i];
+                vetorOrdenado[i] = vetorOrdenado[j];
+                vetorOrdenado[j] = ordenar;
+            }
+        }
+    }
+    return vetorOrdenado;
 }
 
