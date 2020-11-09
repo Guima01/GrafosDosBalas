@@ -1025,7 +1025,14 @@ void Grafo::guloso()
 
     vector<No> solucao;
     vector<No> candidatos = retornaListaOrdenadaGrau();
-    while(!candidatos.empty())
+    vector<int> graus;
+    bool checkGrau = true;
+    for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        graus.push_back(it->getGrau());
+    }
+
+    while((!candidatos.empty()) && checkGrau)
     {
 
         solucao.push_back(candidatos.front());
@@ -1039,7 +1046,9 @@ void Grafo::guloso()
             aux->setProximoNo(candidatos.front().getProximoNo());
         }
         aux->setProximoNo(candidatos.front().getProximoNo());
+        graus[candidatos[0].getId()] = 0;
         candidatos.erase(candidatos.begin() + 0);
+
         while(aux->getProximoNo()!=0)
         {
             aux->setId(aux->getProximoNo()->getId());
@@ -1051,24 +1060,128 @@ void Grafo::guloso()
             {
                 aux->setProximoNo(aux->getProximoNo()->getProximoNo());
             }
-            for(int i = 0; i < candidatos.size(); i++){
+            for(int i = 0; i < candidatos.size(); i++)
+            {
                 if(candidatos[i].getId() == aux->getId())
                 {
-                    candidatos.erase(candidatos.begin() + i);
+                    graus[candidatos[i].getId()] = graus[candidatos[i].getId()] - 1;
+
+                    if(graus[candidatos[i].getId()] == 0)
+                    {
+                        candidatos.erase(candidatos.begin() + i);
+                    }
                     break;
                 }
             }
         }
+        for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+        {
+            checkGrau = false;
+            if(it->getGrau() == graus[it->getId()]){
+                checkGrau = true;
+                break;
+            }
+        }
+        ordenaLista(candidatos);
         delete aux;
     }
-    cout<<endl;
-    cout<<endl;
     cout<<endl;
     for(int i = 0; i < solucao.size(); i++)
     {
         cout<<solucao[i].getId()<<endl;
     }
     cout<<endl;
+
+}
+
+void Grafo::gulosoRandomizado(float alfa)
+{
+
+    vector<No> solucao;
+    vector<No> candidatos = retornaListaOrdenadaGrau();
+    vector<int> graus;
+    bool checkGrau = true;
+    for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+        graus.push_back(it->getGrau());
+    }
+    while((!candidatos.empty()) && checkGrau)
+    {
+        int value = (candidatos.size() * alfa) + 1;
+        int x = (rand()%value);
+        solucao.push_back(candidatos[x]);
+        No *aux = new No(candidatos[x].getId());
+        if(candidatos[x].getProximoNo() == 0)
+        {
+            aux->setProximoNo(nullptr);
+        }
+        else
+        {
+            aux->setProximoNo(candidatos[x].getProximoNo());
+        }
+        aux->setProximoNo(candidatos[x].getProximoNo());
+        graus[candidatos[x].getId()] = 0;
+        candidatos.erase(candidatos.begin() + x);
+        while(aux->getProximoNo()!=0)
+        {
+            aux->setId(aux->getProximoNo()->getId());
+            if(aux->getProximoNo()->getProximoNo() != 0)
+            {
+                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+            }
+            else
+            {
+                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+            }
+            for(int i = 0; i < candidatos.size(); i++)
+            {
+                if(candidatos[i].getId() == aux->getId())
+                {
+                    graus[candidatos[i].getId()] = graus[candidatos[i].getId()] - 1;
+
+                    if(graus[candidatos[i].getId()] == 0)
+                    {
+                        candidatos.erase(candidatos.begin() + i);
+                    }
+                    break;
+                }
+            }
+        }
+        for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+        {
+            checkGrau = false;
+            if(it->getGrau() == graus[it->getId()]){
+                checkGrau = true;
+                break;
+            }
+        }
+        ordenaLista(candidatos);
+        delete aux;
+    }
+
+    cout<<endl;
+    for(int i = 0; i < solucao.size(); i++)
+    {
+        cout<<solucao[i].getId()<<endl;
+    }
+    cout<<endl;
+}
+
+void Grafo::ordenaLista(vector<No> candidatos)
+{
+    No ordenar = 0;
+    for(int i = 0 ; i <= candidatos.size(); i++)
+    {
+        for(int j = i + 1; j < candidatos.size(); j++)
+        {
+            if(candidatos[i].getGrau() < candidatos[j].getGrau())
+            {
+                ordenar = candidatos[i];
+                candidatos[i] = candidatos[j];
+                candidatos[j] = ordenar;
+            }
+        }
+    }
 }
 
 

@@ -64,8 +64,8 @@ class Grafo{
         int getIndiceMin(vector<No>vetProx);
         float ehAdjacente(vector<No>vetAdj,int idOrigem,int idAlvo);
 
-        void guloso();
         vector<No> retornaListaOrdenadaGrau();
+        void ordenaLista(vector<No> candidatos);
 
         Grafo* getComplemento();
         Grafo* getSubjacente();
@@ -74,6 +74,8 @@ class Grafo{
         void floydMarshall();
         void kruskal();
         void dijkstra(int id);
+        void guloso();
+        void gulosoRandomizado(float alfa);
 
     private:
         //Auxiliar methods

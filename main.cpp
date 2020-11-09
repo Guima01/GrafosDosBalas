@@ -87,7 +87,8 @@ int menu()
     cout << "[4] arvore Geradora Minima de Prim" << endl;
     cout << "[5] Caminho Minimo Dijkstra" << endl;
     cout << "[6] Caminho Minimo Floyd" << endl;
-    cout << "[7] Guloso Randomizado Reativo" << endl;
+    cout << "[7] Guloso" << endl;
+    cout << "[8] Guloso randomizado" << endl;
     cout << "[0] Sair" << endl;
 
     cin >> selecao;
@@ -207,6 +208,19 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     case 7:
     {
         grafo->guloso();
+        break;
+    }
+    //Algoritmo Guloso Randomizado
+    case 8:
+    {
+        cout<<"digite um valor Alfa [0,1]: ";
+        float alfa;
+        cin>>alfa;
+        while(alfa <= 0 && alfa > 1){
+            cout<<"digite outro valor: ";
+            cin>>alfa;
+        }
+        grafo->gulosoRandomizado(alfa);
         break;
     }
     }
