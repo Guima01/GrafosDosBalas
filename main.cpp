@@ -143,16 +143,8 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     case 4:
     {
 
-        vector<No> Prim = grafo->algoritmoPrim();
-        int cont=0;
-        for(int i=0; i<Prim.size(); i++)
-        {
-            cout<<Prim[i].getAresta()->getIdOrigem() << " | " <<Prim[i].getAresta()->getIdAlvo();
-            cout<< " Peso:" << Prim[i].getAresta()->getPeso()<<endl;
-            cont += Prim[i].getAresta()->getPeso();
-        }
-        cout<<"PESO RESULTANTE:" << cont<<endl;
-        Prim.clear();
+        grafo->algoritmoPrim();
+
         break;
     }
 

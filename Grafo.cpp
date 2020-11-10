@@ -436,7 +436,6 @@ void Grafo::floydMarshall()
     int tam = this->ordem;
     int matriz[ordem][ordem];
 
-
     for(i = 0; i < this->ordem; i++)
     {
         matriz[i][i] = 0;
@@ -722,205 +721,111 @@ vector<No>Grafo::retornaListaOrdenada()
     return vetorOrdenado;
 }
 
-vector<No>Grafo::algoritmoPrim()
+void Grafo::algoritmoPrim()
 {
+    float pesoAtual,pesoCandidato1,pesoCandidato2,pesototal=0;
+    int contador,indiceMinimo,i=0;
     vector<No> vetArestaOrdenado = retornaListaOrdenada();
-    vector<No> vetPrim,vetProx;
     vector<No> vetAdj;
-    No *flag = new No(-2);
-    int contador,indiceMinimo;
-    float pesoAlvo,pesoOrigem,peso1,peso2;
-    vetPrim.push_back(vetArestaOrdenado[0]);
+    vector<int> vetProxId,PrimId,PrimIdAdj;
+    vector<float>vetProxPeso,PrimPeso;
+    No *aux = new No(1);
+
+    PrimId.push_back(vetArestaOrdenado[0].getAresta()->getIdOrigem());
+    PrimPeso.push_back(vetArestaOrdenado[0].getAresta()->getPeso());
+    PrimIdAdj.push_back(vetArestaOrdenado[0].getAresta()->getIdAlvo());
+    pesototal += vetArestaOrdenado[0].getAresta()->getPeso();
+
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         vetAdj.push_back(*it);
-    }
-    for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
-    {
-        while(true)
-        {
-            pesoOrigem = ehAdjacente(vetAdj,vetPrim[0].getAresta()->getIdOrigem(),it->getId());
-            pesoAlvo = ehAdjacente(vetAdj,vetPrim[0].getAresta()->getIdAlvo(),it->getId());
-            if(pesoOrigem==-2 && pesoAlvo==-2)
-            {
-                vetProx = addVetProx(vetAdj,vetProx, it->getId(),-1);
-                break;
-            }
-            else
-            {
-                if(pesoOrigem!=-2 && pesoAlvo==-2 || pesoOrigem!=-2 && pesoAlvo!=0 && pesoOrigem<=pesoAlvo )
-                {
-                    vetProx = addVetProx(vetAdj,vetProx,it->getId(),vetPrim[0].getAresta()->getIdOrigem());
-                    break;
+        pesoCandidato1 = ehAdjacente(vetAdj,i,vetArestaOrdenado[0].getAresta()->getIdOrigem());
+        pesoCandidato2 = ehAdjacente(vetAdj,i,vetArestaOrdenado[0].getAresta()->getIdAlvo());
+
+        if(pesoCandidato1!=-2 || pesoCandidato2!=-2){
+                if(pesoCandidato1!=-2 && pesoCandidato2!=-2 && pesoCandidato1<=pesoCandidato2 || pesoCandidato1!=-2 && pesoCandidato2==-2){
+                    vetProxId.push_back(vetArestaOrdenado[0].getAresta()->getIdOrigem());
+                    vetProxPeso.push_back(pesoCandidato1);
                 }
-                else
-                {
-                    vetProx = addVetProx(vetAdj,vetProx,it->getId(),vetPrim[0].getAresta()->getIdAlvo());
-                    break;
+                else{
+                    if(pesoCandidato1!=-2 && pesoCandidato2!=-2 && pesoCandidato1>pesoCandidato2 || pesoCandidato1==-2 && pesoCandidato2!=-2){
+                        vetProxId.push_back(vetArestaOrdenado[0].getAresta()->getIdAlvo());
+                        vetProxPeso.push_back(pesoCandidato2);
+                    }
                 }
-            }
         }
+        else{
+            vetProxId.push_back(-1);
+            vetProxPeso.push_back(9999999);
+        }
+        i++;
     }
-    vetProx[vetArestaOrdenado[0].getAresta()->getIdAlvo()] = *flag;
-    vetProx[vetArestaOrdenado[0].getAresta()->getIdOrigem()] = *flag;
+    delete aux;
+
+    vetProxId[vetArestaOrdenado[0].getAresta()->getIdAlvo()] = -2;
+    vetProxId[vetArestaOrdenado[0].getAresta()->getIdOrigem()] = -2;
+    vetProxPeso[vetArestaOrdenado[0].getAresta()->getIdAlvo()] = 9999999;
+    vetProxPeso[vetArestaOrdenado[0].getAresta()->getIdOrigem()] = 9999999;
+
     contador = indiceMinimo = 0;
+
     while(contador<getOrdem()-2)
     {
-        indiceMinimo = getIndiceMin(vetProx);
-        vetPrim.push_back(vetProx[indiceMinimo]);
-        vetProx[indiceMinimo] = *flag;
+        indiceMinimo = getIndiceMin(vetProxPeso);
+
+        PrimId.push_back(vetProxId[indiceMinimo]);
+        PrimIdAdj.push_back(indiceMinimo);
+        PrimPeso.push_back(vetProxPeso[indiceMinimo]);
+
+        pesototal += vetProxPeso[indiceMinimo];
+        vetProxId[indiceMinimo] = -2;
+        vetProxPeso[indiceMinimo] = 9999999;
+
         for(int i=0; i<getOrdem(); i++)
-        {
-            if(vetProx[i].getId() != -2)
+            if(vetProxId[i] != -2)
             {
-                if(!(vetProx[i].getAresta() != 0))
-                {
-                    pesoOrigem = ehAdjacente(vetAdj,vetProx[i].getId(),vetPrim.back().getAresta()->getIdOrigem());
-                    pesoAlvo = ehAdjacente(vetAdj,vetProx[i].getId(),vetPrim.back().getAresta()->getIdAlvo());
-
-                    if(pesoOrigem != -2 && pesoAlvo == -2 || pesoOrigem !=-2 && pesoAlvo!=-2 && pesoOrigem<=pesoAlvo)
+                pesoAtual = ehAdjacente(vetAdj,i,indiceMinimo);
+                if(pesoAtual != -2)
+                    if(vetProxPeso[i]>pesoAtual)
                     {
-                        vetProx[i] = alteraVetProx(vetAdj,vetProx[i].getId(),vetPrim.back().getAresta()->getIdOrigem());
+                        vetProxId[i] = indiceMinimo;
+                        vetProxPeso[i] = pesoAtual;
                     }
-                    else
-                    {
-                        if(pesoAlvo != -2 && pesoOrigem == -2 || pesoAlvo != -2 && pesoOrigem != -2 && pesoOrigem>pesoAlvo)
-                        {
-                            vetProx[i] = alteraVetProx(vetAdj,vetProx[i].getId(),vetPrim.back().getAresta()->getIdAlvo());
-                        }
-                    }
-                }
-                else
-                {
-                    pesoOrigem = vetProx[i].getAresta()->getPeso();
-                    peso1 = ehAdjacente(vetAdj,vetProx[i].getId(),vetPrim.back().getAresta()->getIdOrigem());
-                    peso2 = ehAdjacente(vetAdj,vetProx[i].getId(),vetPrim.back().getAresta()->getIdAlvo());
-                    if(peso1!=-2 && peso2==-2 || peso1!=-2 && peso2!=-2 && peso1<=peso2)
-                    {
-                        if(peso1<pesoOrigem)
-                        {
-                            vetProx[i] = alteraVetProx(vetAdj,vetProx[i].getId(),vetPrim.back().getAresta()->getIdOrigem());
-                        }
-                    }
-                    else
-                    {
-                        if(peso1==-2 &&peso2!=-2 || peso1!=-2 && peso2!=-2 && peso1>peso2)
-                        {
-                            if(peso2<pesoOrigem)
-                            {
-                                vetProx[i] = alteraVetProx(vetAdj,vetProx[i].getId(),vetPrim.back().getAresta()->getIdAlvo());
-                            }
-                        }
-                    }
-                }
             }
-        }
-        contador = contador+1;
+        contador ++;
+
     }
-    delete flag;
-    return vetPrim;
+    for(int i=0;i<PrimId.size();i++){
+        cout<<PrimId[i]<<" | "<< PrimIdAdj[i]<<" Peso: "<<PrimPeso[i]<<endl;
+    }
+    cout<<"PESO DA ARVORE GERADORA DE PRIM : "<<pesototal<<endl;
 }
 
-No Grafo::alteraVetProx(vector<No> vetAdj,int noAtual,int noAlvo)
+int Grafo::getIndiceMin(vector<float>vetProxPeso)
 {
-    No *aux = new No(vetAdj[noAlvo].getProximoNo()->getId());
-    aux->setAresta(vetAdj[noAlvo].getProximoNo()->getAresta());
-    aux->setProximoNo(vetAdj[noAlvo].getProximoNo()->getProximoNo());
-    if(aux->getId() == noAtual)
+    int indiceMin;
+    int pesoMin;
+    for(int i=0; i<vetProxPeso.size(); i++)
     {
-        return *aux;
-    }
-    while(true)
-    {
-        if(aux->getId() == noAtual)
-        {
-            return *aux;
-        }
-        aux->setId(aux->getProximoNo()->getId());
-        aux->setAresta(aux->getProximoNo()->getAresta());
-        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-    }
-}
-
-
-int Grafo::getIndiceMin(vector<No>vetProx)
-{
-    int indiceMin=-1;
-    int pesoMin=-1;
-    for(int i=0; i<vetProx.size(); i++)
-    {
-        if(vetProx[i].getAresta()!= 0 && vetProx[i].getId() != -2)
+        if(vetProxPeso[i]!= 9999999)
         {
             indiceMin = i;
-            pesoMin = vetProx[i].getAresta()->getPeso();
+            pesoMin = vetProxPeso[i];
             break;
         }
     }
-    for(int i=0; i<vetProx.size()-1; i++)
+    for(int i=indiceMin; i<vetProxPeso.size(); i++)
     {
-        if(vetProx[i].getAresta() != 0 && vetProx[i].getId()!= -2)
+        if( vetProxPeso[i]!=9999999)
         {
-            for(int j=i+1; j<vetProx.size(); j++)
-            {
-                if(vetProx[j].getAresta() != 0 && vetProx[j].getId()!= -2)
-                {
-                    if(vetProx[i].getAresta()->getPeso() <= vetProx[j].getAresta()->getPeso())
-                    {
-                        if(indiceMin!=i && pesoMin>vetProx[i].getAresta()->getPeso())
-                        {
-                            indiceMin = i;
-                            pesoMin = vetProx[i].getAresta()->getPeso();
-                        }
-                    }
-                    else
-                    {
-                        if(indiceMin!=j&& pesoMin>vetProx[j].getAresta()->getPeso())
-                        {
-                            indiceMin = j;
-                            pesoMin = vetProx[j].getAresta()->getPeso();
-                        }
-                    }
-                }
+            if(pesoMin > vetProxPeso[i]){
+                indiceMin = i;
+                pesoMin = vetProxPeso[i];
             }
         }
     }
     return indiceMin;
 }
-
-vector<No>Grafo::addVetProx(vector<No>vetAdj,vector<No>vetProx,No noAtual,No noAlvo)
-{
-    No *aux;
-    No *flag = new No(noAtual.getId());
-    flag->setAresta(nullptr);
-    if( noAlvo.getId()== -1)
-    {
-        vetProx.push_back(*flag);
-        delete flag;
-        return vetProx;
-    }
-    aux = new No(vetAdj[noAlvo.getId()].getProximoNo()->getId());
-    aux->setAresta(vetAdj[noAlvo.getId()].getProximoNo()->getAresta());
-    aux->setProximoNo(vetAdj[noAlvo.getId()].getProximoNo()->getProximoNo());
-    if(aux->getId()==noAtual.getId())
-    {
-        vetProx.push_back(*aux);
-        return vetProx;
-    }
-
-    while(true)
-    {
-        if(aux->getId() == noAtual.getId())
-        {
-            vetProx.push_back(*aux);
-            delete aux;
-            return vetProx;
-        }
-        aux->setId(aux->getProximoNo()->getId());
-        aux->setAresta(aux->getProximoNo()->getAresta());
-        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-    }
-}
-
 float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
 {
     No *aux;
@@ -948,9 +853,8 @@ float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
             return peso;
         }
     }
-
+    delete aux;
     return -2;
-
 }
 
 void Grafo::guloso()

@@ -59,10 +59,9 @@ class Grafo{
 
         No alteraVetProx(vector<No>vetProx,int noAtual,int noAlvo);
         vector<No> retornaListaOrdenada();
-        vector<No>algoritmoPrim();
-        vector<No>addVetProx(vector<No>vetAdj,vector<No>Prim,No noAtual,No noAlvo);
-        int getIndiceMin(vector<No>vetProx);
-        float ehAdjacente(vector<No>vetAdj,int idOrigem,int idAlvo);
+        void algoritmoPrim();
+        int getIndiceMin(vector<float>vetProx);
+        float ehAdjacente(vector<No>vetAdj,int noOrigem,int noAlvo);
 
         vector<No> retornaListaOrdenadaGrau();
         void ordenaLista(vector<No> candidatos);
