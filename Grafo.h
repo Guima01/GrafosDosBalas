@@ -55,7 +55,7 @@ class Grafo{
 
         vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
         vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
-        void amplitudePrimeiraBusca(int vertice);
+        void larguraPrimeiraBusca(int vertice);
 
         No alteraVetProx(vector<No>vetProx,int noAtual,int noAlvo);
         vector<No> retornaListaOrdenada();
@@ -67,9 +67,6 @@ class Grafo{
         vector<No> retornaListaOrdenadaGrau();
         void ordenaLista(vector<No> candidatos);
 
-        Grafo* getComplemento();
-        Grafo* getSubjacente();
-        bool PossuiCiclo();
         bool GrafoConectado();
         void floydMarshall();
         void kruskal();

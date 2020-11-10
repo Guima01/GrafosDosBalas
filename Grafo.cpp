@@ -282,24 +282,7 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo,float peso)
         }
     }
 }
-/*
-void Grafo::insereAresta(int id, int id_alvo, float peso)
-{
-}
-*/
-void Grafo::removeNo(int id)
-{
-}
 
-bool Grafo::buscaNo(int id)
-{
-}
-
-No *Grafo::getNo(int id)
-{
-}
-
-//Function that verifies if there is a path between two nodes
 vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices, int ordemGrafo, int posicao, int *cont)
 {
     if (posicao >= ordemGrafo)
@@ -396,14 +379,17 @@ vector<int> Grafo::auxBusca(vector<int> listaVertices, int idNo, int *cont)
     return listaVertices;
 }
 
-void Grafo::amplitudePrimeiraBusca(int vertice)
+void Grafo::larguraPrimeiraBusca(int vertice)
 {
-    bool checkVisitado=false;
     queue<int> fila;
     vector<int> resultado;
+    vector<int> verifica;
+    for(int i =0; i < this->ordem; i++)
+    {
+        verifica.push_back(-1);
+    }
     resultado.push_back(vertice);
-    cout << vertice << endl;
-
+    verifica[vertice] = 1;
     fila.push(vertice);
     while(!fila.empty())
     {
@@ -411,6 +397,7 @@ void Grafo::amplitudePrimeiraBusca(int vertice)
         {
             if(it->getId() == fila.front())
             {
+                cout<<"percorrendo os adjacentes não visitados do nó " << it->getId()<<" : ";
                 No *aux = new No(it->getId());
 
                 aux->setProximoNo(it->getProximoNo());
@@ -426,77 +413,29 @@ void Grafo::amplitudePrimeiraBusca(int vertice)
                     {
                         aux->setProximoNo(aux->getProximoNo()->getProximoNo());
                     }
-                    checkVisitado = true;
-
-                    for(int i=0; i<resultado.size(); i++)
+                    if(verifica[aux->getId()] == -1)
                     {
-                        if(aux->getId() == resultado[i])
-                        {
-                            checkVisitado = false;
-                            break;
-                        }
-                    }
-                    if(checkVisitado==true)
-                    {
-                        checkVisitado=false;
                         fila.push(aux->getId());
                         resultado.push_back(aux->getId());
-                        cout << aux->getId() << endl;
+                        verifica[aux->getId()] = 1;
+                        cout << aux->getId() << " ";
                     }
                 }
-
             }
         }
+        cout<<endl;
         fila.pop();
     }
-}
-
-//nao ter parametro,
-
-/*vector<int> Grafo::larguraPrimeiraBusca()
-{
-   escolha uma raiz s de G
-   marque s
-   insira s em F
-   enquanto F não está vazia faça
-      seja v o primeiro vértice de F
-      para cada w PERTENCE listaDeAdjacência de v faça
-         se w não está marcado então
-            visite aresta entre v e w
-            marque w
-            insira w em F
-         senao se w PERTENCE F entao
-            visite aresta entre v e w
-         fim se
-      fim para
-      retira v de F
-   fim enquanto
-}*/
-
-Grafo *Grafo::getComplemento()
-{
-}
-
-//A function that returns a subjacent of a directed Grafo, which is a Grafo which the arcs have opposite directions to the original Grafo
-Grafo *Grafo::getSubjacente()
-{
-}
-
-bool Grafo::GrafoConectado()
-{
-}
-
-bool Grafo::PossuiCiclo()
-{
 }
 
 void Grafo::floydMarshall()
 {
     vector<No> vectorArestaOrdenada = retornaListaOrdenada();
+
     int i,j;
     int tam = this->ordem;
     int matriz[ordem][ordem];
-    int matrizAux[ordem][ordem];
+
 
     for(i = 0; i < this->ordem; i++)
     {

@@ -81,7 +81,7 @@ int menu()
 
     cout << "MENU" << endl;
     cout << "----" << endl;
-    cout << "[1] Imprimir caminhamento em largura" << endl;
+    cout << "[1] caminhamento em largura" << endl;
     cout << "[2] Busca em profundidade" << endl;
     cout << "[3] Arvore Geradora minima de Kruskal" << endl;
     cout << "[4] arvore Geradora Minima de Prim" << endl;
@@ -103,16 +103,17 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     switch (selecao)
     {
 
-    //BFS
+    //Busca em largura
     case 1:
     {
         int no;
         cout<<"digite o No origem: ";
         cin>>no;
-        grafo->amplitudePrimeiraBusca(no);
+        grafo->larguraPrimeiraBusca(no);
         break;
     }
 
+    //busca em profundidade
     case 2:
     {
         vector<int>listaVertices(grafo->getOrdem());
@@ -127,18 +128,6 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         cout<<"digite o No origem: ";
         cin>>No;
         listaVertices = grafo->profundidadePrimeiraBusca(listaVertices,grafo->getOrdem(),No,&cont);
-
-        i = 0;
-
-        for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
-        {
-            cout<<"imprimindo vertices visitados na busca por profundidade: "<<listaVertices[i]<<endl;
-
-            i++;
-
-        }
-
-
         break;
     }
 
