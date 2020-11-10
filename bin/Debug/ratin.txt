@@ -1,0 +1,26 @@
+209
+1977
+18.9187
+Frequencia Relativa de grau 9 : 0.00956938
+Frequencia Relativa de grau 10 : 0.00478469
+Frequencia Relativa de grau 11 : 0.0191388
+Frequencia Relativa de grau 12 : 0.0143541
+Frequencia Relativa de grau 13 : 0.0239234
+Frequencia Relativa de grau 14 : 0.0526316
+Frequencia Relativa de grau 15 : 0.0574163
+Frequencia Relativa de grau 16 : 0.105263
+Frequencia Relativa de grau 17 : 0.119617
+Frequencia Relativa de grau 18 : 0.0813397
+Frequencia Relativa de grau 19 : 0.100478
+Frequencia Relativa de grau 20 : 0.0861244
+Frequencia Relativa de grau 21 : 0.076555
+Frequencia Relativa de grau 22 : 0.0382775
+Frequencia Relativa de grau 23 : 0.076555
+Frequencia Relativa de grau 24 : 0.0287081
+Frequencia Relativa de grau 25 : 0.0382775
+Frequencia Relativa de grau 26 : 0.0382775
+Frequencia Relativa de grau 27 : 0.0143541
+Frequencia Relativa de grau 28 : 0.00478469
+Frequencia Relativa de grau 31 : 0.00478469
+Frequencia Relativa de grau 33 : 0.00478469
+

@@ -396,88 +396,82 @@ vector<int> Grafo::auxBusca(vector<int> listaVertices, int idNo, int *cont)
     return listaVertices;
 }
 
-vector<int> Grafo::amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int> verticesVisitados, int *cont)
+void Grafo::amplitudePrimeiraBusca(int vertice)
 {
-    if (idNo >= ordem)
+    bool checkVisitado=false;
+    queue<int> fila;
+    vector<int> resultado;
+    resultado.push_back(vertice);
+    cout << vertice << endl;
+
+    fila.push(vertice);
+    while(!fila.empty())
     {
-        cout << endl;
-        cout << "No invalido" << endl
-             << endl;
-        return verticesVisitados;
-    }
-    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
-    {
-        if (it->getId() == idNo)
+        for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
         {
-            //cout<<"Visitando vertice"<<it->getId()<<endl;
-            filaVertices->pop();
-            verticesVisitados = auxBusca(verticesVisitados, it->getId(), cont);
-            No *aux;
-            if (it->getProximoNo() != 0) //existe o no;
+            if(it->getId() == fila.front())
             {
-                aux = new No(it->getProximoNo()->getId());
-                if (it->getProximoNo()->getProximoNo() != 0)
-                {
-                    aux->setProximoNo(it->getProximoNo()->getProximoNo());
-                }
-            }
-            if (*cont == ordem)
-            {
-                delete aux;
-                return verticesVisitados;
-            }
+                No *aux = new No(it->getId());
 
-            int verticeAtual = it->getId();
+                aux->setProximoNo(it->getProximoNo());
 
-            do
-            {
-                int i = 0;
-                for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
-                {
-
-                    if (aux->getId() == verticesVisitados[i])
-                    {
-                        break;
-                    }
-                    i++;
-                    if (i == verticesVisitados.size())
-                    {
-                        filaVertices->push(aux->getId());
-                        verticesVisitados = auxBusca(verticesVisitados, aux->getId(), cont);
-                        cout << "Visitando vertice " << aux->getId() << endl;
-                        break;
-                    }
-                }
-                if (aux->getProximoNo() == 0)
-                {
-                    break;
-                }
-                else
+                while(aux->getProximoNo()!= 0)
                 {
                     aux->setId(aux->getProximoNo()->getId());
-                    if (aux->getProximoNo()->getProximoNo() != 0)
-                    {
-                        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-                    }
-                    else
+                    if((aux->getProximoNo()->getProximoNo() == 0))
                     {
                         aux->setProximoNo(nullptr);
                     }
-                }
-            }
-            while (true);
+                    else
+                    {
+                        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                    }
+                    checkVisitado = true;
 
-            bool check = false;
-            while (!filaVertices->empty())
-            {
-                int atual = filaVertices->front();
-                verticesVisitados = amplitudePrimeiraBusca(filaVertices, filaVertices->front(), verticesVisitados, cont);
+                    for(int i=0; i<resultado.size(); i++)
+                    {
+                        if(aux->getId() == resultado[i])
+                        {
+                            checkVisitado = false;
+                            break;
+                        }
+                    }
+                    if(checkVisitado==true)
+                    {
+                        checkVisitado=false;
+                        fila.push(aux->getId());
+                        resultado.push_back(aux->getId());
+                        cout << aux->getId() << endl;
+                    }
+                }
+
             }
-            delete aux;
-            return verticesVisitados;
         }
+        fila.pop();
     }
 }
+
+//nao ter parametro,
+
+/*vector<int> Grafo::larguraPrimeiraBusca()
+{
+   escolha uma raiz s de G
+   marque s
+   insira s em F
+   enquanto F não está vazia faça
+      seja v o primeiro vértice de F
+      para cada w PERTENCE listaDeAdjacência de v faça
+         se w não está marcado então
+            visite aresta entre v e w
+            marque w
+            insira w em F
+         senao se w PERTENCE F entao
+            visite aresta entre v e w
+         fim se
+      fim para
+      retira v de F
+   fim enquanto
+}*/
 
 Grafo *Grafo::getComplemento()
 {
@@ -1077,7 +1071,8 @@ void Grafo::guloso()
         for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
         {
             checkGrau = false;
-            if(it->getGrau() == graus[it->getId()]){
+            if(it->getGrau() == graus[it->getId()])
+            {
                 checkGrau = true;
                 break;
             }
@@ -1150,7 +1145,8 @@ void Grafo::gulosoRandomizado(float alfa)
         for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
         {
             checkGrau = false;
-            if(it->getGrau() == graus[it->getId()]){
+            if(it->getGrau() == graus[it->getId()])
+            {
                 checkGrau = true;
                 break;
             }

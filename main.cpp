@@ -106,30 +106,10 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //BFS
     case 1:
     {
-
-        queue<int>filaVertices;
-        filaVertices.push(0);
-        vector<int>verticesVisitados(grafo->getOrdem());
-        int i = 0;
-        for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
-        {
-            verticesVisitados[i] = -1;
-            i++;
-        }
-        int cont = 0;
-        int No = 0;
+        int no;
         cout<<"digite o No origem: ";
-        cin>>No;
-        verticesVisitados = grafo->amplitudePrimeiraBusca(&filaVertices, No, verticesVisitados, &cont);
-        i = 0;
-        for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
-        {
-            cout<<"imprimindo vertices visitados na busca por amplitude: "<<verticesVisitados[i]<<endl;
-
-            i++;
-
-        }
-
+        cin>>no;
+        grafo->amplitudePrimeiraBusca(no);
         break;
     }
 

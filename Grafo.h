@@ -55,7 +55,7 @@ class Grafo{
 
         vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
         vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
-        vector<int> amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int>verticesVisitados,int *cont);
+        void amplitudePrimeiraBusca(int vertice);
 
         No alteraVetProx(vector<No>vetProx,int noAtual,int noAlvo);
         vector<No> retornaListaOrdenada();

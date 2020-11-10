@@ -202,3 +202,59 @@
 	"Grafo.h"
 	"No.h"
 
+1604942956 source:c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1604345918 c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\aresta.h
+
+1604942956 source:c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\no.cpp
+	"No.h"
+	"Aresta.h"
+	"Grafo.h"
+	<iostream>
+
+1604345918 c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\no.h
+	"Aresta.h"
+
+1604977498 c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1604977867 source:c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<math.h>
+	<list>
+	<queue>
+	<utility>
+	<tuple>
+	<iomanip>
+	<stdlib.h>
+	<chrono>
+	<string>
+	"Grafo.h"
+	"No.h"
+
+1604978058 source:c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+
