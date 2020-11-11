@@ -636,13 +636,11 @@ void Grafo::kruskal()
             {
                 if(subArvores[i] == subArvores[maior] && (i!= maior))
                 {
+                    cout<<i<<" "<<maior;
                     subArvores[i] = subArvores[menor];
                 }
             }
             subArvores[maior] = subArvores[menor];
-            for(int i = 0; i < this->ordem; i++)
-            {
-            }
             cont = cont + 1;
         }
         delete aux;
@@ -706,6 +704,9 @@ vector<No>Grafo::retornaListaOrdenada()
         }
     }
     No ordenar = 0;
+    for (int i = 0 ; i<vetorOrdenado.size();i++){
+        vetorOrdenado[i].getAresta()->setFalseAresta();
+    }
     for(int i = 0 ; i< vetorOrdenado.size()-1; i++)
     {
         for(int j = i + 1; j < vetorOrdenado.size(); j++)
@@ -742,19 +743,24 @@ void Grafo::algoritmoPrim()
         pesoCandidato1 = ehAdjacente(vetAdj,i,vetArestaOrdenado[0].getAresta()->getIdOrigem());
         pesoCandidato2 = ehAdjacente(vetAdj,i,vetArestaOrdenado[0].getAresta()->getIdAlvo());
 
-        if(pesoCandidato1!=-2 || pesoCandidato2!=-2){
-                if(pesoCandidato1!=-2 && pesoCandidato2!=-2 && pesoCandidato1<=pesoCandidato2 || pesoCandidato1!=-2 && pesoCandidato2==-2){
-                    vetProxId.push_back(vetArestaOrdenado[0].getAresta()->getIdOrigem());
-                    vetProxPeso.push_back(pesoCandidato1);
+        if(pesoCandidato1!=-2 || pesoCandidato2!=-2)
+        {
+            if(pesoCandidato1!=-2 && pesoCandidato2!=-2 && pesoCandidato1<=pesoCandidato2 || pesoCandidato1!=-2 && pesoCandidato2==-2)
+            {
+                vetProxId.push_back(vetArestaOrdenado[0].getAresta()->getIdOrigem());
+                vetProxPeso.push_back(pesoCandidato1);
+            }
+            else
+            {
+                if(pesoCandidato1!=-2 && pesoCandidato2!=-2 && pesoCandidato1>pesoCandidato2 || pesoCandidato1==-2 && pesoCandidato2!=-2)
+                {
+                    vetProxId.push_back(vetArestaOrdenado[0].getAresta()->getIdAlvo());
+                    vetProxPeso.push_back(pesoCandidato2);
                 }
-                else{
-                    if(pesoCandidato1!=-2 && pesoCandidato2!=-2 && pesoCandidato1>pesoCandidato2 || pesoCandidato1==-2 && pesoCandidato2!=-2){
-                        vetProxId.push_back(vetArestaOrdenado[0].getAresta()->getIdAlvo());
-                        vetProxPeso.push_back(pesoCandidato2);
-                    }
-                }
+            }
         }
-        else{
+        else
+        {
             vetProxId.push_back(-1);
             vetProxPeso.push_back(9999999);
         }
@@ -795,7 +801,8 @@ void Grafo::algoritmoPrim()
         contador ++;
 
     }
-    for(int i=0;i<PrimId.size();i++){
+    for(int i=0; i<PrimId.size(); i++)
+    {
         cout<<PrimId[i]<<" | "<< PrimIdAdj[i]<<" Peso: "<<PrimPeso[i]<<endl;
     }
     cout<<"PESO DA ARVORE GERADORA DE PRIM : "<<pesototal<<endl;
@@ -818,7 +825,8 @@ int Grafo::getIndiceMin(vector<float>vetProxPeso)
     {
         if( vetProxPeso[i]!=9999999)
         {
-            if(pesoMin > vetProxPeso[i]){
+            if(pesoMin > vetProxPeso[i])
+            {
                 indiceMin = i;
                 pesoMin = vetProxPeso[i];
             }
@@ -885,7 +893,11 @@ void Grafo::guloso()
         aux->setProximoNo(candidatos.front().getProximoNo());
         graus[candidatos[0].getId()] = 0;
         candidatos.erase(candidatos.begin() + 0);
-
+        for(int i = 0; i<candidatos.size(); i++)
+        {
+            cout<<candidatos[i].getId()<<" ";
+        }
+        cout<<endl;
         while(aux->getProximoNo()!=0)
         {
             aux->setId(aux->getProximoNo()->getId());
@@ -920,7 +932,12 @@ void Grafo::guloso()
                 break;
             }
         }
-        ordenaLista(candidatos);
+        for(int i = 0; i<candidatos.size(); i++)
+        {
+            cout<<candidatos[i].getId()<<" ";
+        }
+        cout<<endl;
+        ordenaLista(candidatos,graus);
         delete aux;
     }
     cout<<endl;
@@ -929,7 +946,6 @@ void Grafo::guloso()
         cout<<solucao[i].getId()<<endl;
     }
     cout<<endl;
-
 }
 
 void Grafo::gulosoRandomizado(float alfa)
@@ -994,7 +1010,7 @@ void Grafo::gulosoRandomizado(float alfa)
                 break;
             }
         }
-        ordenaLista(candidatos);
+        ordenaLista(candidatos,graus);
         delete aux;
     }
 
@@ -1006,21 +1022,42 @@ void Grafo::gulosoRandomizado(float alfa)
     cout<<endl;
 }
 
-void Grafo::ordenaLista(vector<No> candidatos)
+void Grafo::ordenaLista(vector<No> candidatos, vector<int>graus)
 {
-    No ordenar = 0;
-    for(int i = 0 ; i <= candidatos.size(); i++)
+    quickSort(candidatos,graus, 0, candidatos.size() - 1);
+    /*for(int i = 0; i<candidatos.size(); i++){
+        cout<<candidatos[i].getId()<<" ";
+    }*/
+}
+
+void Grafo::quickSort(vector<No> candidatos, vector<int> graus, int low, int high)
+{
+
+    if(low < high)
     {
-        for(int j = i + 1; j < candidatos.size(); j++)
+        int pi = separa(candidatos,graus,low,high);
+
+        quickSort(candidatos, graus, low, pi - 1);
+        quickSort(candidatos, graus, pi + 1, high);
+    }
+}
+
+int Grafo::separa(vector<No> candidatos, vector<int> graus, int low, int high)
+{
+
+    int pivot = graus[candidatos[high].getId()]; // pivô
+    int i= (low - 1);
+    No ordenar = 0;
+    for (int j = low; j < high; j++)
+    {
+        if(graus[candidatos[j].getId()] <= pivot)
         {
-            if(candidatos[i].getGrau() < candidatos[j].getGrau())
-            {
-                ordenar = candidatos[i];
-                candidatos[i] = candidatos[j];
-                candidatos[j] = ordenar;
-            }
+            i++;
+            swap(candidatos[i],candidatos[j]);
         }
     }
+    swap(candidatos[i+1],candidatos[high]);
+    return (i+1);
 }
 
 

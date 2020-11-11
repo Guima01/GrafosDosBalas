@@ -57,6 +57,10 @@ bool Aresta::getVerificaAresta(){
     return this->verificaA;
 }
 
+void Aresta::setFalseAresta(){
+    this->verificaA = false;
+}
+
 /*Aresta* Aresta::getProximaAresta(){
 
     return this->proxima_aresta;

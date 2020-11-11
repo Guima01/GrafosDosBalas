@@ -12,6 +12,7 @@
 #include <string>
 #include "Grafo.h"
 #include "No.h"
+#include "time.h"
 
 
 
@@ -161,6 +162,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo de Floyd
     case 6:
     {
+
         grafo->floydMarshall();
         break;
     }
@@ -223,7 +225,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 int main(int argc, char const *argv[])
 {
 
-
+    srand(time(NULL));
 
     //Verificando se todos os parametros do programa foram inseridos
     if (argc != 3)

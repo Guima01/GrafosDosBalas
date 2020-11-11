@@ -33,6 +33,7 @@ class Aresta{
         void setPeso(float peso);
         bool getVerificaAresta();
         void setVerificaAresta();
+        void setFalseAresta();
 
 };
 

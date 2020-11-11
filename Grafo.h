@@ -64,7 +64,10 @@ class Grafo{
         float ehAdjacente(vector<No>vetAdj,int noOrigem,int noAlvo);
 
         vector<No> retornaListaOrdenadaGrau();
-        void ordenaLista(vector<No> candidatos);
+        void ordenaLista(vector<No> candidatos, vector<int> graus);
+
+        int separa(vector<No> candidatos,vector<int>graus, int p, int r);
+        void quickSort(vector<No> candidatos,vector<int>graus, int p, int r);
 
         bool GrafoConectado();
         void floydMarshall();
