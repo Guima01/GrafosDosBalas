@@ -162,7 +162,6 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo de Floyd
     case 6:
     {
-
         grafo->floydMarshall();
         break;
     }
@@ -179,7 +178,8 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         cout<<"digite um valor Alfa [0,1]: ";
         float alfa;
         cin>>alfa;
-        while(alfa <= 0 && alfa > 1){
+        while(alfa <= 0 && alfa > 1)
+        {
             cout<<"digite outro valor: ";
             cin>>alfa;
         }

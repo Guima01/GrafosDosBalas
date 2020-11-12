@@ -2,19 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="No.cpp" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="No.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="996" topLine="45" />
-		</Cursor>
-	</File>
-	<File name="No.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1166" topLine="13" />
-		</Cursor>
-	</File>
-	<File name="Grafo.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2262" topLine="47" />
 		</Cursor>
 	</File>
 	<File name="Aresta.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -27,14 +17,24 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Grafo.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5528" topLine="247" />
+			<Cursor1 position="2271" topLine="46" />
 		</Cursor>
 	</File>
-	<File name="Grafo.cpp" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
+	<File name="Grafo.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="18682" topLine="603" />
+			<Cursor1 position="11447" topLine="366" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3485" topLine="147" />
+		</Cursor>
+	</File>
+	<File name="No.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1166" topLine="13" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

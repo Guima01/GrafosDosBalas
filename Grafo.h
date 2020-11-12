@@ -58,7 +58,6 @@ class Grafo{
         void larguraPrimeiraBusca(int vertice);
 
         No alteraVetProx(vector<No>vetProx,int noAtual,int noAlvo);
-        vector<No> retornaListaOrdenada();
         void algoritmoPrim();
         int getIndiceMin(vector<float>vetProx);
         float ehAdjacente(vector<No>vetAdj,int noOrigem,int noAlvo);
@@ -66,8 +65,9 @@ class Grafo{
         vector<No> retornaListaOrdenadaGrau();
         void ordenaLista(vector<No> candidatos, vector<int> graus);
 
-        int separa(vector<No> candidatos,vector<int>graus, int p, int r);
-        void quickSort(vector<No> candidatos,vector<int>graus, int p, int r);
+        void quickSort(vector<No> &vetorOrdenado,int menorIndice,int maiorIndice);
+        int particao(vector<No>&vetorOrdenado,int menorIndice,int maiorIndice);
+        vector<No> retornaListaOrdenada();
 
         bool GrafoConectado();
         void floydMarshall();

@@ -1,0 +1,22 @@
+125
+1147
+18.352
+Frequencia Relativa de grau 10 : 0.008
+Frequencia Relativa de grau 11 : 0.048
+Frequencia Relativa de grau 12 : 0.032
+Frequencia Relativa de grau 13 : 0.032
+Frequencia Relativa de grau 14 : 0.016
+Frequencia Relativa de grau 15 : 0.056
+Frequencia Relativa de grau 16 : 0.112
+Frequencia Relativa de grau 17 : 0.088
+Frequencia Relativa de grau 18 : 0.112
+Frequencia Relativa de grau 19 : 0.104
+Frequencia Relativa de grau 20 : 0.096
+Frequencia Relativa de grau 21 : 0.096
+Frequencia Relativa de grau 22 : 0.064
+Frequencia Relativa de grau 23 : 0.072
+Frequencia Relativa de grau 24 : 0.032
+Frequencia Relativa de grau 25 : 0.008
+Frequencia Relativa de grau 26 : 0.016
+Frequencia Relativa de grau 27 : 0.008
+
