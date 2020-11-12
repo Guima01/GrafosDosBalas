@@ -1,0 +1,39 @@
+9815
+98038
+19.9772
+Frequencia Relativa de grau 6 : 0.000509424
+Frequencia Relativa de grau 7 : 0.00020377
+Frequencia Relativa de grau 8 : 0.00142639
+Frequencia Relativa de grau 9 : 0.00213958
+Frequencia Relativa de grau 10 : 0.00631686
+Frequencia Relativa de grau 11 : 0.0109017
+Frequencia Relativa de grau 12 : 0.0163016
+Frequencia Relativa de grau 13 : 0.0273051
+Frequencia Relativa de grau 14 : 0.0396332
+Frequencia Relativa de grau 15 : 0.0517575
+Frequencia Relativa de grau 16 : 0.0654101
+Frequencia Relativa de grau 17 : 0.0765155
+Frequencia Relativa de grau 18 : 0.0843607
+Frequencia Relativa de grau 19 : 0.0903719
+Frequencia Relativa de grau 20 : 0.087621
+Frequencia Relativa de grau 21 : 0.0845644
+Frequencia Relativa de grau 22 : 0.0805909
+Frequencia Relativa de grau 23 : 0.0667346
+Frequencia Relativa de grau 24 : 0.0509424
+Frequencia Relativa de grau 25 : 0.044218
+Frequencia Relativa de grau 26 : 0.0356597
+Frequencia Relativa de grau 27 : 0.0255731
+Frequencia Relativa de grau 28 : 0.0155884
+Frequencia Relativa de grau 29 : 0.0139582
+Frequencia Relativa de grau 30 : 0.0087621
+Frequencia Relativa de grau 31 : 0.00509424
+Frequencia Relativa de grau 32 : 0.00326032
+Frequencia Relativa de grau 33 : 0.0020377
+Frequencia Relativa de grau 34 : 0.00112073
+Frequencia Relativa de grau 35 : 0.000407539
+Frequencia Relativa de grau 36 : 0.000305655
+Frequencia Relativa de grau 37 : 0.00020377
+Frequencia Relativa de grau 38 : 0.000101885
+Frequencia Relativa de grau 39 : 0.000101885
+
+
