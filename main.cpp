@@ -162,7 +162,6 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo de Floyd
     case 6:
     {
-
         grafo->floydMarshall();
         break;
     }
@@ -176,14 +175,39 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     //Algoritmo Guloso Randomizado
     case 8:
     {
-        cout<<"digite um valor Alfa [0,1]: ";
-        float alfa;
-        cin>>alfa;
-        while(alfa <= 0 && alfa > 1){
-            cout<<"digite outro valor: ";
-            cin>>alfa;
+        vector<float> alfas = {0.1,0.2,0.3,0.5,0.7};
+        for(int i = 0; i < alfas.size(); i++)
+        {
+            vector<int> solucoes;
+            vector<int> solucao;
+            double desvioPadrao = 0;
+            double mediaQualidade = 0;
+            double time = 0;
+            int mediaInteracoes = 0;
+            for(int j = 0; j < 10; j++)
+            {
+                int interacoes = 0;
+                clock_t timeStart, timeStop;
+                timeStart = clock();
+                solucao = grafo->gulosoRandomizado(alfas[i], &interacoes);
+                timeStop = clock();
+                time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) + time;
+                solucoes.push_back(solucao.size());
+                mediaQualidade = solucao.size() + mediaQualidade;
+                mediaInteracoes = mediaInteracoes + interacoes;
+            }
+            mediaInteracoes = mediaInteracoes/10;
+            mediaQualidade = mediaQualidade/10;
+            time = time/10;
+            for(int i = 0; i < solucoes.size(); i++){
+                desvioPadrao = ((pow((solucoes[i] - mediaQualidade),2)) / 10) + desvioPadrao;
+            }
+            desvioPadrao = sqrt(desvioPadrao);
+            cout<<"tempo médio de Alfa ["<<alfas[i]<<"] : "<< time<<endl;
+            cout<<"media de qualidade Alfa: ["<<alfas[i]<<"] : "<< mediaQualidade <<endl;
+            cout<<"media de Interacoes ["<<alfas[i]<<"] : "<< mediaInteracoes <<endl;
+            cout<<"Desvio padrão da qualidade ["<<alfas[i]<<"] : "<< desvioPadrao << endl;
         }
-        grafo->gulosoRandomizado(alfa);
         break;
     }
     }

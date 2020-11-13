@@ -13,6 +13,7 @@
 #include <float.h>
 #include <iomanip>
 #include <queue>
+#include <time.h>
 
 using namespace std;
 
@@ -430,16 +431,16 @@ void Grafo::larguraPrimeiraBusca(int vertice)
 
 void Grafo::floydMarshall()
 {
-    vector<No> vectorArestaOrdenada = retornaListaOrdenada();
 
+    vector<No> vectorArestaOrdenada = retornaListaOrdenada();
     int i,j;
     int tam = this->ordem;
-    int matriz[ordem][ordem];
+    float matriz[tam][tam];
 
-    for(i = 0; i < this->ordem; i++)
+    for(i = 0; i < tam; i++)
     {
         matriz[i][i] = 0;
-        for(j = 0; j < this->ordem; j++)
+        for(j = 0; j < tam; j++)
         {
             if(i != j)
             {
@@ -468,7 +469,6 @@ void Grafo::floydMarshall()
                 }
             }
         }
-
     }
     for(int i = 0; i < this->ordem; i++)
     {
@@ -636,7 +636,6 @@ void Grafo::kruskal()
             {
                 if(subArvores[i] == subArvores[maior] && (i!= maior))
                 {
-                    cout<<i<<" "<<maior;
                     subArvores[i] = subArvores[menor];
                 }
             }
@@ -655,7 +654,6 @@ void Grafo::kruskal()
         cout<< solucao[i].getAresta()->getPeso()<<endl;
         valor = valor + solucao[i].getAresta()->getPeso();
     }
-
     cout<<endl;
     cout<<endl;
     cout<<endl;
@@ -664,6 +662,49 @@ void Grafo::kruskal()
 
 }
 
+
+void Grafo::quickSort(vector<No>&vetorOrdenado,int menorIndice,int maiorIndice)
+{
+
+
+
+    if(menorIndice<maiorIndice)
+    {
+
+        int pi = particao(vetorOrdenado,menorIndice,maiorIndice);
+
+
+        quickSort(vetorOrdenado,menorIndice,pi-1);
+        quickSort(vetorOrdenado,pi+1,maiorIndice);
+    }
+
+}
+
+
+int Grafo::particao(vector<No>&vetorOrdenado,int menorIndice,int maiorIndice)
+{
+
+
+    No pivo = vetorOrdenado[maiorIndice];
+    int i = (menorIndice-1 );
+
+
+    for(int j=menorIndice; j < maiorIndice; j++)
+    {
+
+        if(vetorOrdenado[j].getAresta()->getPeso() <  pivo.getAresta()->getPeso())
+        {
+            i++;
+            swap(vetorOrdenado[i],vetorOrdenado[j]);
+        }
+
+    }
+    swap(vetorOrdenado[i+1],vetorOrdenado[maiorIndice]);
+
+    return i+1;
+
+
+}
 
 vector<No>Grafo::retornaListaOrdenada()
 {
@@ -703,22 +744,12 @@ vector<No>Grafo::retornaListaOrdenada()
             }
         }
     }
-    No ordenar = 0;
-    for (int i = 0 ; i<vetorOrdenado.size();i++){
+    quickSort(vetorOrdenado,0,vetorOrdenado.size()-1);
+    for (int i = 0 ; i<vetorOrdenado.size(); i++)
+    {
         vetorOrdenado[i].getAresta()->setFalseAresta();
     }
-    for(int i = 0 ; i< vetorOrdenado.size()-1; i++)
-    {
-        for(int j = i + 1; j < vetorOrdenado.size(); j++)
-        {
-            if(vetorOrdenado[i].getAresta()->getPeso() > vetorOrdenado[j].getAresta()->getPeso())
-            {
-                ordenar = vetorOrdenado[i];
-                vetorOrdenado[i] = vetorOrdenado[j];
-                vetorOrdenado[j] = ordenar;
-            }
-        }
-    }
+
     return vetorOrdenado;
 }
 
@@ -865,21 +896,25 @@ float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
     return -2;
 }
 
+
+
+
 void Grafo::guloso()
 {
-
+    clock_t timeStart, timeStop;
+    timeStart = clock();
     vector<No> solucao;
-    vector<No> candidatos = retornaListaOrdenadaGrau();
     vector<int> graus;
+    vector<No>candidatos;
     bool checkGrau = true;
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
+        candidatos.push_back(*it);
         graus.push_back(it->getGrau());
     }
-
-    while((!candidatos.empty()) && checkGrau)
+    quickSortGuloso(candidatos, graus, 0, graus.size() - 1);
+    while((!candidatos.empty()) && (checkGrau))
     {
-
         solucao.push_back(candidatos.front());
         No *aux = new No(candidatos.front().getId());
         if(candidatos.front().getProximoNo() == 0)
@@ -891,13 +926,8 @@ void Grafo::guloso()
             aux->setProximoNo(candidatos.front().getProximoNo());
         }
         aux->setProximoNo(candidatos.front().getProximoNo());
-        graus[candidatos[0].getId()] = 0;
         candidatos.erase(candidatos.begin() + 0);
-        for(int i = 0; i<candidatos.size(); i++)
-        {
-            cout<<candidatos[i].getId()<<" ";
-        }
-        cout<<endl;
+        graus.erase(graus.begin() + 0);
         while(aux->getProximoNo()!=0)
         {
             aux->setId(aux->getProximoNo()->getId());
@@ -909,180 +939,158 @@ void Grafo::guloso()
             {
                 aux->setProximoNo(aux->getProximoNo()->getProximoNo());
             }
+
             for(int i = 0; i < candidatos.size(); i++)
             {
                 if(candidatos[i].getId() == aux->getId())
                 {
-                    graus[candidatos[i].getId()] = graus[candidatos[i].getId()] - 1;
-
-                    if(graus[candidatos[i].getId()] == 0)
+                    graus[i] = graus[i] - 1;
+                    if(graus[i] == 0)
                     {
                         candidatos.erase(candidatos.begin() + i);
+                        graus.erase(graus.begin() + i);
+                        break;
                     }
-                    break;
                 }
             }
         }
-        for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+        for(int i = 0; i< candidatos.size(); i++)
         {
             checkGrau = false;
-            if(it->getGrau() == graus[it->getId()])
+            if(candidatos[i].getGrau() == graus[i])
             {
                 checkGrau = true;
                 break;
             }
         }
-        for(int i = 0; i<candidatos.size(); i++)
-        {
-            cout<<candidatos[i].getId()<<" ";
-        }
-        cout<<endl;
-        ordenaLista(candidatos,graus);
+        quickSortGuloso(candidatos,graus,0, graus.size() - 1);
         delete aux;
     }
-    cout<<endl;
-    for(int i = 0; i < solucao.size(); i++)
-    {
-        cout<<solucao[i].getId()<<endl;
-    }
-    cout<<endl;
+    timeStop = clock();
+    cout<<"tempo gasto: " <<((double)(timeStop - timeStart) / CLOCKS_PER_SEC)<<endl;
+    cout<<"solucao: "<<solucao.size();
+
 }
 
-void Grafo::gulosoRandomizado(float alfa)
-{
 
-    vector<No> solucao;
-    vector<No> candidatos = retornaListaOrdenadaGrau();
+vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
+{
+    vector<No> candidatos;
+    vector<int> melhorSolucao;
     vector<int> graus;
     bool checkGrau = true;
+    int interacoesSemMudanca = 0;
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         graus.push_back(it->getGrau());
+        candidatos.push_back(*it);
     }
-    while((!candidatos.empty()) && checkGrau)
+    quickSortGuloso(candidatos, graus, 0, graus.size() - 1);
+    while(*interacoes < 500 && interacoesSemMudanca < 200)
     {
-        int value = (candidatos.size() * alfa) + 1;
-        int x = (rand()%value);
-        solucao.push_back(candidatos[x]);
-        No *aux = new No(candidatos[x].getId());
-        if(candidatos[x].getProximoNo() == 0)
+        vector<int> solucao;
+        vector<No> candidato = candidatos;
+        vector<int> grausInteracao = graus;
+        checkGrau = true;
+        while((!candidato.empty()) && checkGrau)
         {
-            aux->setProximoNo(nullptr);
-        }
-        else
-        {
-            aux->setProximoNo(candidatos[x].getProximoNo());
-        }
-        aux->setProximoNo(candidatos[x].getProximoNo());
-        graus[candidatos[x].getId()] = 0;
-        candidatos.erase(candidatos.begin() + x);
-        while(aux->getProximoNo()!=0)
-        {
-            aux->setId(aux->getProximoNo()->getId());
-            if(aux->getProximoNo()->getProximoNo() != 0)
+
+            int value = ((candidato.size()) * alfa) + 1;
+            int x = (rand()%value);
+            solucao.push_back(candidato[x].getId());
+            No *aux = new No(candidato[x].getId());
+            if(candidato[x].getProximoNo() == 0)
             {
-                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                aux->setProximoNo(nullptr);
             }
             else
             {
-                aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                aux->setProximoNo(candidato[x].getProximoNo());
             }
-            for(int i = 0; i < candidatos.size(); i++)
+            aux->setProximoNo(candidato[x].getProximoNo());
+            candidato.erase(candidato.begin() + 0);
+            grausInteracao.erase(grausInteracao.begin() + 0);
+            while(aux->getProximoNo()!=0)
             {
-                if(candidatos[i].getId() == aux->getId())
+                aux->setId(aux->getProximoNo()->getId());
+                if(aux->getProximoNo()->getProximoNo() != 0)
                 {
-                    graus[candidatos[i].getId()] = graus[candidatos[i].getId()] - 1;
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
+                else
+                {
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
 
-                    if(graus[candidatos[i].getId()] == 0)
+                for(int i = 0; i < candidato.size(); i++)
+                {
+                    if(candidato[i].getId() == aux->getId())
                     {
-                        candidatos.erase(candidatos.begin() + i);
+                        grausInteracao[i] = grausInteracao[i] - 1;
+                        if(grausInteracao[i] == 0)
+                        {
+                            candidato.erase(candidato.begin() + i);
+                            grausInteracao.erase(grausInteracao.begin() + i);
+                            break;
+                        }
                     }
+                }
+            }
+            for(int i = 0; i< candidato.size(); i++)
+            {
+                checkGrau = false;
+                if(candidato[i].getGrau() == grausInteracao[i])
+                {
+                    checkGrau = true;
                     break;
                 }
             }
+            quickSortGuloso(candidato, grausInteracao, 0, grausInteracao.size() - 1);
+            delete aux;
         }
-        for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+        interacoesSemMudanca = interacoesSemMudanca + 1;
+        if((melhorSolucao.size() > solucao.size()) || melhorSolucao.size() == 0)
         {
-            checkGrau = false;
-            if(it->getGrau() == graus[it->getId()])
-            {
-                checkGrau = true;
-                break;
-            }
+            melhorSolucao = solucao;
+            interacoesSemMudanca = 0;
         }
-        ordenaLista(candidatos,graus);
-        delete aux;
+        *interacoes = *interacoes + 1;
     }
-
-    cout<<endl;
-    for(int i = 0; i < solucao.size(); i++)
-    {
-        cout<<solucao[i].getId()<<endl;
-    }
-    cout<<endl;
+    return melhorSolucao;
 }
 
-void Grafo::ordenaLista(vector<No> candidatos, vector<int>graus)
-{
-    quickSort(candidatos,graus, 0, candidatos.size() - 1);
-    /*for(int i = 0; i<candidatos.size(); i++){
-        cout<<candidatos[i].getId()<<" ";
-    }*/
-}
-
-void Grafo::quickSort(vector<No> candidatos, vector<int> graus, int low, int high)
+void Grafo::quickSortGuloso(vector<No>&candidatos, vector<int>&graus, int menorIndice, int maiorIndice)
 {
 
-    if(low < high)
+    if(menorIndice<maiorIndice)
     {
-        int pi = separa(candidatos,graus,low,high);
-
-        quickSort(candidatos, graus, low, pi - 1);
-        quickSort(candidatos, graus, pi + 1, high);
+        int pi = particaoGuloso(candidatos,graus,menorIndice,maiorIndice);
+        quickSortGuloso(candidatos,graus,menorIndice,pi-1);
+        quickSortGuloso(candidatos,graus,pi+1,maiorIndice);
     }
+
 }
 
-int Grafo::separa(vector<No> candidatos, vector<int> graus, int low, int high)
+int Grafo::particaoGuloso(vector<No>&candidatos, vector<int>&graus, int menorIndice, int maiorIndice)
 {
+    int pivo = graus[maiorIndice];
+    int i = (menorIndice -1);
 
-    int pivot = graus[candidatos[high].getId()]; // pivô
-    int i= (low - 1);
-    No ordenar = 0;
-    for (int j = low; j < high; j++)
+
+    for(int j = menorIndice; j < maiorIndice; j++)
     {
-        if(graus[candidatos[j].getId()] <= pivot)
+
+        if( graus[j] > pivo)
         {
             i++;
             swap(candidatos[i],candidatos[j]);
+            swap(graus[i],graus[j]);
         }
-    }
-    swap(candidatos[i+1],candidatos[high]);
-    return (i+1);
-}
 
+    }
+    swap(candidatos[i+1], candidatos[maiorIndice]);
+    swap(graus[i+1], graus[maiorIndice]);
 
-vector<No>Grafo::retornaListaOrdenadaGrau()
-{
-    vector<No> vetorOrdenado;
-    vector<No> idOrdenado;
-    for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
-    {
-        vetorOrdenado.push_back(*it);
-    }
-    No ordenar = 0;
-    cout<<endl;
-    for(int i = 0 ; i< vetorOrdenado.size()-1; i++)
-    {
-        for(int j = i + 1; j < vetorOrdenado.size(); j++)
-        {
-            if(vetorOrdenado[i].getGrau() < vetorOrdenado[j].getGrau())
-            {
-                ordenar = vetorOrdenado[i];
-                vetorOrdenado[i] = vetorOrdenado[j];
-                vetorOrdenado[j] = ordenar;
-            }
-        }
-    }
-    return vetorOrdenado;
+    return i+1;
 }
 
