@@ -18,7 +18,72 @@
 
 using namespace std;
 
-Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
+Grafo* leituraGulosa(ifstream& arquivo_entrada)
+{
+    int ordem;
+    string aux = "";
+    //ignora a primeira linha
+    arquivo_entrada >> aux;
+    arquivo_entrada >> ordem;
+
+    Grafo* grafo = new Grafo(ordem);
+    grafo->criaLista(ordem);
+
+    //Leitura do arquivo
+    arquivo_entrada >> aux;
+    //ignora informações desnecessárias
+    while (aux != "*****************CONNECTIONS****************")
+    {
+        arquivo_entrada >> aux;
+    }
+
+    string delimiter = " ";
+
+    size_t pos = 0;
+    string token;
+    int leitura = -1;
+    arquivo_entrada >> leitura;
+    for (int i = 0; i < ordem; i++)
+    {
+        for (int j = 0; j < ordem; j++, arquivo_entrada >> leitura)
+        {
+            if (leitura == 1 && i != j)
+            {
+                //cout << i << " - " << cont << endl;
+                grafo->insereGulosamente(i, j);
+            }
+        }
+    }
+
+    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
+    {
+        No *aux = new No(it->getId());
+        aux->setProximoNo(it->getProximoNo());
+        cout<<aux->getId();
+        cout<<" "<<endl;
+
+        while(aux->getProximoNo() !=0)
+        {
+            aux->setId(aux->getProximoNo()->getId());
+            aux->setAresta(aux->getProximoNo()->getAresta());
+            aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
+            cout<<aux->getId();
+            cout<<" ";
+
+        }
+        cout<<endl;
+        cout<<endl;
+
+    }
+
+
+    return grafo;
+}
+
+
+
+
+Grafo* leituraInstancia(ifstream& arquivo_entrada)
 {
 
     //Variaveis para auxiliar na criação dos nós no Grafo
@@ -283,7 +348,7 @@ int main(int argc, char const *argv[])
     if(arquivo_entrada.is_open())
     {
 
-        grafo = leituraInstancia(arquivo_entrada, &arquivo_saida);
+        grafo = leituraGulosa(arquivo_entrada);
 
     }
     else

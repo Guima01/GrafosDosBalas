@@ -160,6 +160,130 @@ void Grafo::criaLista(int ordem)
     }
 }
 
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+void Grafo::insereGulosamente(int idNoFonte, int idNoAlvo)
+{
+    bool checkAresta = false;
+    Aresta *aresta = new Aresta(idNoAlvo, idNoFonte);
+    int checkNo = 0;
+    bool checkNoRepetido = false;
+    for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
+    {
+
+        // insere o nó na lista de adjacência
+        if (idNoFonte == it->getId())
+        {
+            if (!it->getProximoNo())
+            {
+                No *proximoNo = new No(idNoAlvo);
+                it->setProximoNo(proximoNo);
+                it->getProximoNo()->setAresta(aresta);
+                it->setGrau();
+                if (checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
+            }
+            else if (it->getProximoNo())
+            {
+                if (it->getProximoNo()->getId() == idNoAlvo)
+                {
+                    break;
+                }
+                No *proximoNo = new No(idNoAlvo);
+                No *aux = new No(it->getId());
+                aux->setProximoNo(it->getProximoNo());
+                while (aux->getProximoNo()->getProximoNo())
+                {
+                    if (aux->getProximoNo()->getProximoNo()->getId() == idNoAlvo)
+                    {
+                        checkNoRepetido = true;
+                        break;
+                    }
+                    aux->setId(aux->getProximoNo()->getId());
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
+                if (checkNoRepetido == true)
+                {
+                    break;
+                }
+                aux->getProximoNo()->setProximoNo(proximoNo);
+                aux->getProximoNo()->getProximoNo()->setAresta(aresta);
+                checkNo = checkNo + 1;
+                it->setGrau();
+                if (checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
+                delete aux;
+            }
+        }
+
+        //também insere o nó na lista de adjacência, porém na posição do outro ID
+
+        else if (idNoAlvo == it->getId())
+        {
+            if (!it->getProximoNo())
+            {
+                No *proximoNo = new No(idNoFonte);
+                it->setProximoNo(proximoNo);
+                it->getProximoNo()->setAresta(aresta);
+                it->setGrau();
+
+                if (checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
+            }
+            else if (it->getProximoNo())
+            {
+                if (it->getProximoNo()->getId() == idNoFonte)
+                {
+                    break;
+                }
+                No *proximoNo = new No(idNoFonte);
+                No *aux = new No(it->getId());
+                aux->setProximoNo(it->getProximoNo());
+                while (aux->getProximoNo()->getProximoNo())
+                {
+                    if (aux->getProximoNo()->getProximoNo()->getId() == idNoFonte)
+                    {
+                        checkNoRepetido = true;
+                        break;
+                    }
+                    aux->setId(aux->getProximoNo()->getId());
+                    aux->setProximoNo(aux->getProximoNo()->getProximoNo());
+                }
+                if (checkNoRepetido == true)
+                {
+                    break;
+                }
+                aux->getProximoNo()->setProximoNo(proximoNo);
+                aux->getProximoNo()->getProximoNo()->setAresta(aresta);
+                checkNo = checkNo + 1;
+                it->setGrau();
+                if (checkAresta == false)
+                {
+                    numero_arestas = numero_arestas + 1;
+                    checkAresta = true;
+                }
+                delete aux;
+            }
+        }
+        else if (checkNo == 2)
+        {
+            break;
+        }
+    }
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
 // insere os nós adjacentes a lista de vértice
 void Grafo::insereNo(int idNoFonte, int idNoAlvo,float peso)
 {
@@ -968,7 +1092,7 @@ void Grafo::guloso()
     }
     timeStop = clock();
     cout<<"tempo gasto: " <<((double)(timeStop - timeStart) / CLOCKS_PER_SEC)<<endl;
-    cout<<"solucao: "<<solucao.size();
+    cout<<"solucao: "<<solucao.size()<<endl;
 
 }
 

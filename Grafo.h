@@ -52,6 +52,7 @@ class Grafo{
         bool buscaNo(int id);
         No* getNo(int id);
 
+        void insereGulosamente(int idNoFonte, int idNoAlvo);
 
         vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
         vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);

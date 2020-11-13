@@ -260,3 +260,44 @@
 	<iomanip>
 	<queue>
 
+1605119727 source:d:\git\trabgrafos\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1605119727 d:\git\trabgrafos\grafosdosbalas\aresta.h
+
+1605119727 source:d:\git\trabgrafos\grafosdosbalas\no.cpp
+	"No.h"
+	"Aresta.h"
+	"Grafo.h"
+	<iostream>
+
+1605119727 d:\git\trabgrafos\grafosdosbalas\no.h
+	"Aresta.h"
+
+1605308633 d:\git\trabgrafos\grafosdosbalas\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1605308650 source:d:\git\trabgrafos\grafosdosbalas\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+	<time.h>
+
