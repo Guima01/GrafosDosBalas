@@ -69,6 +69,9 @@ class Grafo{
         int particao(vector<No>&vetorOrdenado,int menorIndice,int maiorIndice);
         vector<No> retornaListaOrdenada();
 
+        void quickSortGuloso(vector<No>&candidatos, vector<int>&graus, int menorIndice, int maiorIndice);
+        int particaoGuloso(vector<No>&candidatos, vector<int>&graus, int menorIndice, int maiorIndice);
+
         bool GrafoConectado();
         void floydMarshall();
         void kruskal();
