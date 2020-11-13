@@ -77,7 +77,7 @@ class Grafo{
         void kruskal();
         void dijkstra(int id);
         void guloso();
-        void gulosoRandomizado(float alfa);
+        vector<int> gulosoRandomizado(float alfa, int *interacoes);
 
     private:
         //Auxiliar methods
