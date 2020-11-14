@@ -277,6 +277,8 @@ void Grafo::insereGulosamente(int idNoFonte, int idNoAlvo)
                 delete aux;
             }
         }
+
+        //se os 2 nós ja foram inseridos, retorna
         else if (checkNo == 2)
         {
             break;
@@ -408,8 +410,12 @@ void Grafo::insereNo(int idNoFonte, int idNoAlvo,float peso)
     }
 }
 
+
+//Função recursiva que percorre o grafo, começando de nó raiz e indo o mais profundo possível em cada nó adjacente
+
 vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices, int ordemGrafo, int posicao, int *cont)
 {
+    //verifica se não foi digitado um nó invalido
     if (posicao >= ordemGrafo)
     {
         cout << endl;
@@ -417,6 +423,8 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices, int orde
              << endl;
         return listaVertices;
     }
+
+
     for (list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         if (it->getId() == posicao)
@@ -432,12 +440,16 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices, int orde
                     aux->setProximoNo(it->getProximoNo()->getProximoNo());
                 }
             }
+
+            //verifica se o grafo ja foi visitado por completo
             if (*cont == ordemGrafo)
             {
                 delete aux;
                 return listaVertices;
             }
             int verticeAtual = it->getId();
+
+            //enquanto o vértice tiver um nó adjancente caminha por ele
             while (true)
             {
                 int i = 0;
@@ -464,11 +476,11 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices, int orde
                     }
                     i++;
 
+                    //chama a função recursivamente
                     if (i == listaVertices.size())
                     {
                         listaVertices = profundidadePrimeiraBusca(listaVertices, ordemGrafo, aux->getId(), cont);
                         cout << "retornou para o vertice: " << verticeAtual << endl;
-
                         if (*cont == ordemGrafo)
                         {
                             delete aux;
@@ -482,6 +494,7 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices, int orde
     }
 }
 
+//auxiliar para verificar se o nó ja foi visitado
 vector<int> Grafo::auxBusca(vector<int> listaVertices, int idNo, int *cont)
 {
 
@@ -504,6 +517,7 @@ vector<int> Grafo::auxBusca(vector<int> listaVertices, int idNo, int *cont)
     return listaVertices;
 }
 
+//função de busca em largura, começando por um vértice raiz, exploramos todos os seus vizinho, e para desses vértices mais próximos, exploramos os seus vértices vizinhos inexplorados
 void Grafo::larguraPrimeiraBusca(int vertice)
 {
     queue<int> fila;
@@ -516,6 +530,8 @@ void Grafo::larguraPrimeiraBusca(int vertice)
     resultado.push_back(vertice);
     verifica[vertice] = 1;
     fila.push(vertice);
+
+    //continua percorrendo enquanto a fila de vértices não está vazia
     while(!fila.empty())
     {
         for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
@@ -538,6 +554,7 @@ void Grafo::larguraPrimeiraBusca(int vertice)
                     {
                         aux->setProximoNo(aux->getProximoNo()->getProximoNo());
                     }
+                    //adiciona o nó a fila, caso ele ainda não tenha sido visitado
                     if(verifica[aux->getId()] == -1)
                     {
                         fila.push(aux->getId());
@@ -549,10 +566,13 @@ void Grafo::larguraPrimeiraBusca(int vertice)
             }
         }
         cout<<endl;
+
+        //remove o primeiro elemento da fila
         fila.pop();
     }
 }
 
+//o algoritmo de Floyd resolve o problema de calcular a distancia mais curta entre todos os pares de vértices em um grafo, utilizando matriz de adjacência
 void Grafo::floydMarshall()
 {
 
@@ -561,6 +581,7 @@ void Grafo::floydMarshall()
     int tam = this->ordem;
     float matriz[tam][tam];
 
+    //inicializa a matriz com peso 0 ou infinito caso não haja adjacencia entre 2 nós
     for(i = 0; i < tam; i++)
     {
         matriz[i][i] = 0;
@@ -572,12 +593,15 @@ void Grafo::floydMarshall()
             }
         }
     }
+
+    // adiciona os pesos entre na matriz
     for(i = 0; i < vectorArestaOrdenada.size(); i++)
     {
         matriz[vectorArestaOrdenada[i].getAresta()->getIdAlvo()][vectorArestaOrdenada[i].getAresta()->getIdOrigem()] = vectorArestaOrdenada[i].getAresta()->getPeso();
         matriz[vectorArestaOrdenada[i].getAresta()->getIdOrigem()][vectorArestaOrdenada[i].getAresta()->getIdAlvo()] = vectorArestaOrdenada[i].getAresta()->getPeso();
     }
 
+    //calcula o menor caminho entre os nós
     for(int k = 0; k < this->ordem; k++)
     {
         for(int i = 0; i < this->ordem; i++)
@@ -594,6 +618,8 @@ void Grafo::floydMarshall()
             }
         }
     }
+
+    //imprime a matriz
     for(int i = 0; i < this->ordem; i++)
     {
         for(int j = 0; j < this->ordem; j++)
@@ -604,6 +630,7 @@ void Grafo::floydMarshall()
     }
 }
 
+//o algoritmo de Djikstra soluciona o problema do caminho mais curto em um grafo, passamos como parametro um Nó e ele imprime o caminho mais curto deste nó a todos os outros
 void Grafo::dijkstra(int id)
 {
     list<int> verticesVisitados;
@@ -611,6 +638,7 @@ void Grafo::dijkstra(int id)
     float *custoVertices;
     custoVertices = (float *)malloc(this->ordem * sizeof(int));
     verticesNaoVisitados = (bool *)malloc(this->ordem * sizeof(int));
+    //inicializando os arrays
     for (int i = 0; i < this->ordem; i++)
     {
         if(i == id)
@@ -626,6 +654,7 @@ void Grafo::dijkstra(int id)
             verticesNaoVisitados[i] = false;
         }
     }
+    //caminhando pelas adjacências
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         if(it->getId() == id)
@@ -645,6 +674,7 @@ void Grafo::dijkstra(int id)
                 {
                     aux->setProximoNo(nullptr);
                 }
+                //custo do Nó atual até seu adjacente é adicionado no vetor
                 custoVertices[aux->getId()] = aux->getAresta()->getPeso();
             }
             delete aux;
@@ -652,11 +682,14 @@ void Grafo::dijkstra(int id)
     }
 
     int i = id;
+
+    //enquanto não visitar todos os vértices do grafo
     while(verticesVisitados.size() < this->ordem)
     {
         float menor = -1;
         for(int p = 0; p < this->ordem; p++)
         {
+            //busca pelo menor peso
             if(verticesNaoVisitados[p] == false)
             {
                 if(menor == -1 && custoVertices[p]!= -1)
@@ -674,6 +707,8 @@ void Grafo::dijkstra(int id)
         verticesNaoVisitados[i] = true;
         verticesVisitados.push_back(i);
         int k = 0;
+
+        //caminha até encontrar um nó não visitado
         for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
         {
 
@@ -695,6 +730,8 @@ void Grafo::dijkstra(int id)
                     {
                         aux->setProximoNo(nullptr);
                     }
+
+                    //calcula qual custo de peso é menor
                     if(aux->getId() == i)
                     {
                         if(custoVertices[it->getId()] == -1 || (custoVertices[it->getId()] > aux->getAresta()->getPeso() + custoVertices[i]))
@@ -716,6 +753,8 @@ void Grafo::dijkstra(int id)
     }
     int x = 0;
     cout<<endl;
+
+    //imprime o custo dos pesos do nó raiz até todos os outros
     for(list<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
     {
         cout<<id<< "  |  "<<x<<":  "<<custoVertices[x]<<endl;
@@ -723,6 +762,7 @@ void Grafo::dijkstra(int id)
     }
 }
 
+//O algoritmo de Kruskal é um algoritmo que busca uma árvore geradora mínima para um grafo conexo com pesos
 void Grafo::kruskal()
 {
     vector<No> vectorArestaOrdenada = retornaListaOrdenada();
@@ -730,6 +770,8 @@ void Grafo::kruskal()
     vector<No> solucao;
     int *subArvores;
     subArvores = (int *)malloc(this->ordem * sizeof(int));
+
+    //inicializa sub-arvores
     for(int i = 0; i < this->ordem; i++)
     {
         subArvores[i]=i;
@@ -738,8 +780,11 @@ void Grafo::kruskal()
     int menor = 0;
     int maior = 0;
     int tamanho = listaArestaOrdenada.size();
+
+    //roda enquanto não atingiu todos os vértices e a lista ordenada não estiver vazia
     while(cont < tamanho && (!listaArestaOrdenada.empty()))
     {
+        //seleciona o maior e o menor entre 2 vértices
         No *aux = new No(listaArestaOrdenada.begin()->getId());
         aux->setAresta(listaArestaOrdenada.begin()->getAresta());
         listaArestaOrdenada.pop_front();
@@ -753,6 +798,8 @@ void Grafo::kruskal()
             menor = aux->getAresta()->getIdAlvo();
             maior = aux->getAresta()->getIdOrigem();
         }
+
+        //verifica se as sub-arvores são diferentes e faz a substituição necessária
         if(subArvores[maior] != subArvores[menor])
         {
             solucao.push_back(*aux);
@@ -772,6 +819,8 @@ void Grafo::kruskal()
     cout<<endl;
     cout<<endl;
     int valor = 0;
+
+    //imprime a árvore e peso total
     for(int i = 0; i < solucao.size(); i++)
     {
         cout<<solucao[i].getAresta()->getIdAlvo() << " | " << solucao[i].getAresta()->getIdOrigem()<<" Peso:";
@@ -780,9 +829,8 @@ void Grafo::kruskal()
     }
     cout<<endl;
     cout<<endl;
-    cout<<endl;
     cout<<"o peso total foi: "<< valor<<endl;
-
+    cout<<endl;
 
 }
 

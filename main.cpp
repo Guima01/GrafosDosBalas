@@ -251,6 +251,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
                 solucao = grafo->gulosoRandomizado(alfas[i], &interacoes);
                 timeStop = clock();
                 time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) + time;
+                cout<<"oiiiiiiiiiii";
                 solucoes.push_back(solucao.size());
                 mediaQualidade = solucao.size() + mediaQualidade;
                 mediaInteracoes = mediaInteracoes + interacoes;
@@ -340,11 +341,18 @@ int main(int argc, char const *argv[])
     //criando grafo
     Grafo* grafo;
 
-    if(arquivo_entrada.is_open())
+    //verifica o formato do arquivo
+
+    if(arquivo_entrada.is_open() )
     {
-
-        grafo = leituraGulosa(arquivo_entrada);
-
+        if(nome_arquivo_entrada.find("Problem.dat") != string::npos)
+        {
+            grafo = leituraGulosa(arquivo_entrada);
+        }
+        else if(nome_arquivo_entrada.find("grafo") != string::npos)
+        {
+            grafo = leituraInstancia(arquivo_entrada);
+        }
     }
     else
     {

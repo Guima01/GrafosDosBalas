@@ -301,3 +301,61 @@
 	<queue>
 	<time.h>
 
+1605359031 source:c:\users\principal\desktop\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1605359031 c:\users\principal\desktop\grafosdosbalas\aresta.h
+
+1605359031 source:c:\users\principal\desktop\grafosdosbalas\no.cpp
+	"No.h"
+	"Aresta.h"
+	"Grafo.h"
+	<iostream>
+
+1605359031 c:\users\principal\desktop\grafosdosbalas\no.h
+	"Aresta.h"
+
+1605359031 c:\users\principal\desktop\grafosdosbalas\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1605383646 source:c:\users\principal\desktop\grafosdosbalas\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+	<time.h>
+
+1605386529 source:c:\users\principal\desktop\grafosdosbalas\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<math.h>
+	<list>
+	<queue>
+	<utility>
+	<tuple>
+	<iomanip>
+	<stdlib.h>
+	<chrono>
+	<string>
+	"Grafo.h"
+	"No.h"
+	"time.h"
+
