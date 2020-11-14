@@ -1,0 +1,2 @@
+exec.exe instanciasGulosas/Problem.dat_800_5000_0 saida.txt
+g++ *.cpp -o exec.exe

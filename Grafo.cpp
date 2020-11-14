@@ -830,6 +830,7 @@ int Grafo::particao(vector<No>&vetorOrdenado,int menorIndice,int maiorIndice)
 
 }
 
+// RETORNA DE FORMA ORDENADA E CRESCENTE , O CONJUNTO DE ARESTAS
 vector<No>Grafo::retornaListaOrdenada()
 {
     vector<No> vetorOrdenado;
@@ -868,8 +869,8 @@ vector<No>Grafo::retornaListaOrdenada()
             }
         }
     }
-    quickSort(vetorOrdenado,0,vetorOrdenado.size()-1);
-    for (int i = 0 ; i<vetorOrdenado.size(); i++)
+    quickSort(vetorOrdenado,0,vetorOrdenado.size()-1); //quickSort funcao p reordenar o vetor
+    for (int i = 0 ; i<vetorOrdenado.size(); i++) //Aqui reseta o valor da aresta para nao visitada (arestaA)
     {
         vetorOrdenado[i].getAresta()->setFalseAresta();
     }
@@ -963,6 +964,7 @@ void Grafo::algoritmoPrim()
     cout<<"PESO DA ARVORE GERADORA DE PRIM : "<<pesototal<<endl;
 }
 
+//RETORNA O ID QUE POSSUI A ARESTA DE CUSTO MINIMO
 int Grafo::getIndiceMin(vector<float>vetProxPeso)
 {
     int indiceMin;
@@ -989,6 +991,9 @@ int Grafo::getIndiceMin(vector<float>vetProxPeso)
     }
     return indiceMin;
 }
+
+//RETORNA O PESO DA ARESTA ENTRE DOIS NOS
+//CASO OS NOS NAO SEJAM ADJACENTES , RETORNA UMA FLAG (-2)
 float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
 {
     No *aux;
@@ -1160,7 +1165,7 @@ vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
                     }
                 }
             }
-            for(int i = 0; i< candidato.size(); i++)
+                for(int i = 0; i< candidato.size(); i++)
             {
                 checkGrau = false;
                 if(candidato[i].getGrau() == grausInteracao[i])

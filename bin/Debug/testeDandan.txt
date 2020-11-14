@@ -1,7 +1,49 @@
-300
-300
-2
-Frequencia Relativa de grau 1 : 0.00666667
-Frequencia Relativa de grau 2 : 0.986667
-Frequencia Relativa de grau 3 : 0.00666667
+50
+100
+4
+Frequencia Relativa de grau 2 : 0.2
+Frequencia Relativa de grau 3 : 0.24
+Frequencia Relativa de grau 4 : 0.24
+Frequencia Relativa de grau 5 : 0.12
+Frequencia Relativa de grau 6 : 0.12
+Frequencia Relativa de grau 7 : 0.04
+Frequencia Relativa de grau 8 : 0.04
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

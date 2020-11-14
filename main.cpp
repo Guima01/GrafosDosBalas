@@ -22,23 +22,17 @@ Grafo* leituraGulosa(ifstream& arquivo_entrada)
 {
     int ordem;
     string aux = "";
-    //ignora a primeira linha
     arquivo_entrada >> aux;
     arquivo_entrada >> ordem;
 
     Grafo* grafo = new Grafo(ordem);
     grafo->criaLista(ordem);
-
-    //Leitura do arquivo
     arquivo_entrada >> aux;
-    //ignora informações desnecessárias
     while (aux != "*****************CONNECTIONS****************")
     {
         arquivo_entrada >> aux;
     }
-
     string delimiter = " ";
-
     size_t pos = 0;
     string token;
     int leitura = -1;
@@ -264,7 +258,8 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
             mediaInteracoes = mediaInteracoes/10;
             mediaQualidade = mediaQualidade/10;
             time = time/10;
-            for(int i = 0; i < solucoes.size(); i++){
+            for(int i = 0; i < solucoes.size(); i++)
+            {
                 desvioPadrao = ((pow((solucoes[i] - mediaQualidade),2)) / 10) + desvioPadrao;
             }
             desvioPadrao = sqrt(desvioPadrao);
