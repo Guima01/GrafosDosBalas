@@ -65,7 +65,7 @@ int Grafo::getOrdem()
     return this->ordem;
 }
 
-//retorna o número de arestas no Grafo
+/*//retorna o número de arestas no Grafo
 int Grafo::getNumeroArestas()
 {
 
@@ -181,13 +181,7 @@ void Grafo::insereGulosamente(int idNoFonte, int idNoAlvo)
             {
                 No *proximoNo = new No(idNoAlvo);
                 it->setProximoNo(proximoNo);
-                it->getProximoNo()->setAresta(aresta);
                 it->setGrau();
-                if (checkAresta == false)
-                {
-                    numero_arestas = numero_arestas + 1;
-                    checkAresta = true;
-                }
             }
             else if (it->getProximoNo())
             {
@@ -213,14 +207,8 @@ void Grafo::insereGulosamente(int idNoFonte, int idNoAlvo)
                     break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
-                aux->getProximoNo()->getProximoNo()->setAresta(aresta);
                 checkNo = checkNo + 1;
                 it->setGrau();
-                if (checkAresta == false)
-                {
-                    numero_arestas = numero_arestas + 1;
-                    checkAresta = true;
-                }
                 delete aux;
             }
         }
@@ -233,14 +221,7 @@ void Grafo::insereGulosamente(int idNoFonte, int idNoAlvo)
             {
                 No *proximoNo = new No(idNoFonte);
                 it->setProximoNo(proximoNo);
-                it->getProximoNo()->setAresta(aresta);
                 it->setGrau();
-
-                if (checkAresta == false)
-                {
-                    numero_arestas = numero_arestas + 1;
-                    checkAresta = true;
-                }
             }
             else if (it->getProximoNo())
             {
@@ -266,14 +247,8 @@ void Grafo::insereGulosamente(int idNoFonte, int idNoAlvo)
                     break;
                 }
                 aux->getProximoNo()->setProximoNo(proximoNo);
-                aux->getProximoNo()->getProximoNo()->setAresta(aresta);
                 checkNo = checkNo + 1;
                 it->setGrau();
-                if (checkAresta == false)
-                {
-                    numero_arestas = numero_arestas + 1;
-                    checkAresta = true;
-                }
                 delete aux;
             }
         }
@@ -1075,7 +1050,7 @@ float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
 
 
 
-
+//Algoritmo guloso para o problema de subconjunto dominante Mínimo
 void Grafo::guloso()
 {
     clock_t timeStart, timeStop;
@@ -1152,6 +1127,8 @@ void Grafo::guloso()
 
 vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
 {
+    clock_t timeStart, timeStop;
+    timeStart = clock();
     vector<No> candidatos;
     vector<int> melhorSolucao;
     vector<int> graus;
@@ -1233,6 +1210,9 @@ vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
         }
         *interacoes = *interacoes + 1;
     }
+    timeStop = clock();
+    cout<<"tempo gasto: " <<((double)(timeStop - timeStart) / CLOCKS_PER_SEC)<<endl;
+    cout<<"melhor solução: "<< melhorSolucao.size();
     return melhorSolucao;
 }
 

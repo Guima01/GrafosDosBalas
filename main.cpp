@@ -251,7 +251,6 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
                 solucao = grafo->gulosoRandomizado(alfas[i], &interacoes);
                 timeStop = clock();
                 time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) + time;
-                cout<<"oiiiiiiiiiii";
                 solucoes.push_back(solucao.size());
                 mediaQualidade = solucao.size() + mediaQualidade;
                 mediaInteracoes = mediaInteracoes + interacoes;
@@ -361,10 +360,10 @@ int main(int argc, char const *argv[])
     }
 
     //chamando funções para escrever no arquivo de texto
-    arquivo_saida << grafo->getOrdem()<<"\n";
-    arquivo_saida << grafo->getNumeroArestas()<<"\n";
-    arquivo_saida << grafo->getGrauMedioGrafo()<<"\n";
-    grafo->getFrequenciaRelativa(arquivo_saida, grafo->getOrdem());
+    //arquivo_saida << grafo->getOrdem()<<"\n";
+    //arquivo_saida << grafo->getNumeroArestas()<<"\n";
+    //arquivo_saida << grafo->getGrauMedioGrafo()<<"\n";
+    //grafo->getFrequenciaRelativa(arquivo_saida, grafo->getOrdem());
 
 
     mainMenu(arquivo_saida, grafo);

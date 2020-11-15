@@ -20,5 +20,3 @@ Frequencia Relativa de grau 25 : 0.008
 Frequencia Relativa de grau 26 : 0.016
 Frequencia Relativa de grau 27 : 0.008
 
-
-

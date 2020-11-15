@@ -324,7 +324,7 @@
 	<vector>
 	<queue>
 
-1605383646 source:c:\users\principal\desktop\grafosdosbalas\grafo.cpp
+1605412081 source:c:\users\principal\desktop\grafosdosbalas\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
@@ -342,7 +342,7 @@
 	<queue>
 	<time.h>
 
-1605386529 source:c:\users\principal\desktop\grafosdosbalas\main.cpp
+1605412103 source:c:\users\principal\desktop\grafosdosbalas\main.cpp
 	<iostream>
 	<fstream>
 	<string>
