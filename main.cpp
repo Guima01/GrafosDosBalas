@@ -264,9 +264,9 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
             }
             desvioPadrao = sqrt(desvioPadrao);
             cout<<"tempo médio de Alfa ["<<alfas[i]<<"] : "<< time<<endl;
-            cout<<"media de qualidade Alfa: ["<<alfas[i]<<"] : "<< mediaQualidade <<endl;
+            cout<<"media de solucoes Alfa: ["<<alfas[i]<<"] : "<< mediaQualidade <<endl;
             cout<<"media de Interacoes ["<<alfas[i]<<"] : "<< mediaInteracoes <<endl;
-            cout<<"Desvio padrão da qualidade ["<<alfas[i]<<"] : "<< desvioPadrao << endl;
+            cout<<"Desvio padrão da qualidade ["<<alfas[i]<<"] : "<< desvioPadrao << endl<<endl;
         }
         break;
     }

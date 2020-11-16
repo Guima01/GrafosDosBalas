@@ -1059,12 +1059,18 @@ void Grafo::guloso()
     vector<int> graus;
     vector<No>candidatos;
     bool checkGrau = true;
+
+    //inicializa a lista de candidatos e lista de Graus referente aos vértices
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         candidatos.push_back(*it);
         graus.push_back(it->getGrau());
     }
+
+    //ordena o a lista de candidatos e a lista de graus
     quickSortGuloso(candidatos, graus, 0, graus.size() - 1);
+
+    //roda enquanto ainda houver candidatos e enquanto ainda nn foi encontrado um subconjunto dominante
     while((!candidatos.empty()) && (checkGrau))
     {
         solucao.push_back(candidatos.front());
@@ -1124,11 +1130,8 @@ void Grafo::guloso()
 
 }
 
-
 vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
 {
-    clock_t timeStart, timeStop;
-    timeStart = clock();
     vector<No> candidatos;
     vector<int> melhorSolucao;
     vector<int> graus;
@@ -1148,9 +1151,7 @@ vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
         checkGrau = true;
         while((!candidato.empty()) && checkGrau)
         {
-
-            int value = ((candidato.size()) * alfa) + 1;
-            int x = (rand()%value);
+            int x = randomizaValor(candidato.size(), alfa);
             solucao.push_back(candidato[x].getId());
             No *aux = new No(candidato[x].getId());
             if(candidato[x].getProximoNo() == 0)
@@ -1210,12 +1211,23 @@ vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
         }
         *interacoes = *interacoes + 1;
     }
-    timeStop = clock();
-    cout<<"tempo gasto: " <<((double)(timeStop - timeStart) / CLOCKS_PER_SEC)<<endl;
-    cout<<"melhor solução: "<< melhorSolucao.size();
     return melhorSolucao;
 }
 
+//randomiza as posições no guloso randomizado
+int Grafo::randomizaValor(int tamanho, float alfa){
+
+    int value = ((tamanho - 1) * alfa);
+    int x;
+    if(value != 0){
+        return (rand()%value);
+    }
+    else{
+        return 0;
+    }
+}
+
+//quickSort para o algoritmo guloso
 void Grafo::quickSortGuloso(vector<No>&candidatos, vector<int>&graus, int menorIndice, int maiorIndice)
 {
 
@@ -1228,6 +1240,7 @@ void Grafo::quickSortGuloso(vector<No>&candidatos, vector<int>&graus, int menorI
 
 }
 
+//auxiliar quickSortGuloso
 int Grafo::particaoGuloso(vector<No>&candidatos, vector<int>&graus, int menorIndice, int maiorIndice)
 {
     int pivo = graus[maiorIndice];
