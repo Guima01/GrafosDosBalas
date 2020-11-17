@@ -1070,7 +1070,7 @@ void Grafo::guloso()
     //ordena o a lista de candidatos e a lista de graus
     quickSortGuloso(candidatos, graus, 0, graus.size() - 1);
 
-    //roda enquanto ainda houver candidatos e enquanto ainda nn foi encontrado um subconjunto dominante
+    //roda enquanto ainda houver candidatos e enquanto ainda não foi encontrado um subconjunto dominante
     while((!candidatos.empty()) && (checkGrau))
     {
         solucao.push_back(candidatos.front());
@@ -1084,8 +1084,11 @@ void Grafo::guloso()
             aux->setProximoNo(candidatos.front().getProximoNo());
         }
         aux->setProximoNo(candidatos.front().getProximoNo());
+
+        //remove o candidato e seu grau das listas
         candidatos.erase(candidatos.begin() + 0);
         graus.erase(graus.begin() + 0);
+
         while(aux->getProximoNo()!=0)
         {
             aux->setId(aux->getProximoNo()->getId());
@@ -1098,11 +1101,15 @@ void Grafo::guloso()
                 aux->setProximoNo(aux->getProximoNo()->getProximoNo());
             }
 
+            //caminha pela lista de candidatos buscando os adjacentes do nó removido
             for(int i = 0; i < candidatos.size(); i++)
             {
                 if(candidatos[i].getId() == aux->getId())
                 {
+                    //diminui em 1 o grau do adjacente
                     graus[i] = graus[i] - 1;
+
+                    //caso o adjacente esteja com grau 0, ele é removida da lista de candidatos e da lista de graus
                     if(graus[i] == 0)
                     {
                         candidatos.erase(candidatos.begin() + i);
@@ -1112,6 +1119,8 @@ void Grafo::guloso()
                 }
             }
         }
+
+        //percorre a lista de graus para ver se ja foi encontrado algum conjunto dominante, faz isso vendo se houve alterações em todos os graus dos vértices
         for(int i = 0; i< candidatos.size(); i++)
         {
             checkGrau = false;
@@ -1121,6 +1130,8 @@ void Grafo::guloso()
                 break;
             }
         }
+
+        //ordena as listas novamente
         quickSortGuloso(candidatos,graus,0, graus.size() - 1);
         delete aux;
     }
@@ -1130,27 +1141,37 @@ void Grafo::guloso()
 
 }
 
-vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
+vector<int> Grafo::gulosoRandomizado(float alfa, int *iteracoes)
 {
     vector<No> candidatos;
     vector<int> melhorSolucao;
     vector<int> graus;
     bool checkGrau = true;
-    int interacoesSemMudanca = 0;
+    int iteracoesSemMudanca = 0;
+
+    //inicializa a lista de candidatos e lista de Graus referente aos vértices
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
         graus.push_back(it->getGrau());
         candidatos.push_back(*it);
     }
+
+    //ordena o a lista de candidatos e a lista de graus
     quickSortGuloso(candidatos, graus, 0, graus.size() - 1);
-    while(*interacoes < 500 && interacoesSemMudanca < 200)
+
+    //faz as 500 iterações maximas e até não que não haja uma melhor solução em 200 iterações
+    while(*iteracoes < 500 && iteracoesSemMudanca < 200)
     {
+        //listas para iteração atual
         vector<int> solucao;
         vector<No> candidato = candidatos;
-        vector<int> grausInteracao = graus;
+        vector<int> grausIteracao = graus;
         checkGrau = true;
+
+        //roda enquanto ainda houver candidatos e enquanto ainda não foi encontrado um subconjunto dominante
         while((!candidato.empty()) && checkGrau)
         {
+            //randomiza a posição da lista de candidate pelo parâmetro alfa
             int x = randomizaValor(candidato.size(), alfa);
             solucao.push_back(candidato[x].getId());
             No *aux = new No(candidato[x].getId());
@@ -1163,8 +1184,10 @@ vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
                 aux->setProximoNo(candidato[x].getProximoNo());
             }
             aux->setProximoNo(candidato[x].getProximoNo());
+
+            //remove o candidato e seu grau das listas
             candidato.erase(candidato.begin() + 0);
-            grausInteracao.erase(grausInteracao.begin() + 0);
+            grausIteracao.erase(grausIteracao.begin() + 0);
             while(aux->getProximoNo()!=0)
             {
                 aux->setId(aux->getProximoNo()->getId());
@@ -1177,52 +1200,65 @@ vector<int> Grafo::gulosoRandomizado(float alfa, int *interacoes)
                     aux->setProximoNo(aux->getProximoNo()->getProximoNo());
                 }
 
+                //caminha pela lista de candidatos buscando os adjacentes do nó removido
                 for(int i = 0; i < candidato.size(); i++)
                 {
                     if(candidato[i].getId() == aux->getId())
                     {
-                        grausInteracao[i] = grausInteracao[i] - 1;
-                        if(grausInteracao[i] == 0)
+                        //diminui em 1 o grau do adjacente
+                        grausIteracao[i] = grausIteracao[i] - 1;
+
+                        //caso o adjacente esteja com grau 0, ele é removida da lista de candidatos e da lista de graus
+                        if(grausIteracao[i] == 0)
                         {
                             candidato.erase(candidato.begin() + i);
-                            grausInteracao.erase(grausInteracao.begin() + i);
+                            grausIteracao.erase(grausIteracao.begin() + i);
                             break;
                         }
                     }
                 }
             }
-                for(int i = 0; i< candidato.size(); i++)
+
+            //percorre a lista de graus para ver se ja foi encontrado algum conjunto dominante, faz isso vendo se houve alterações em todos os graus dos vértices
+            for(int i = 0; i< candidato.size(); i++)
             {
                 checkGrau = false;
-                if(candidato[i].getGrau() == grausInteracao[i])
+                if(candidato[i].getGrau() == grausIteracao[i])
                 {
                     checkGrau = true;
                     break;
                 }
             }
-            quickSortGuloso(candidato, grausInteracao, 0, grausInteracao.size() - 1);
+
+            //ordena as listas novamente
+            quickSortGuloso(candidato, grausIteracao, 0, grausIteracao.size() - 1);
             delete aux;
         }
-        interacoesSemMudanca = interacoesSemMudanca + 1;
+
+        //verifica as condiçoes das iterações
+        iteracoesSemMudanca = iteracoesSemMudanca + 1;
         if((melhorSolucao.size() > solucao.size()) || melhorSolucao.size() == 0)
         {
             melhorSolucao = solucao;
-            interacoesSemMudanca = 0;
+            iteracoesSemMudanca = 0;
         }
-        *interacoes = *interacoes + 1;
+        *iteracoes = *iteracoes + 1;
     }
     return melhorSolucao;
 }
 
 //randomiza as posições no guloso randomizado
-int Grafo::randomizaValor(int tamanho, float alfa){
+int Grafo::randomizaValor(int tamanho, float alfa)
+{
 
     int value = ((tamanho - 1) * alfa);
     int x;
-    if(value != 0){
+    if(value != 0)
+    {
         return (rand()%value);
     }
-    else{
+    else
+    {
         return 0;
     }
 }

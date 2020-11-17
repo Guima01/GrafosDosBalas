@@ -316,7 +316,7 @@
 1605359031 c:\users\principal\desktop\grafosdosbalas\no.h
 	"Aresta.h"
 
-1605469587 c:\users\principal\desktop\grafosdosbalas\grafo.h
+1605632503 c:\users\principal\desktop\grafosdosbalas\grafo.h
 	"No.h"
 	<fstream>
 	<stack>
@@ -324,7 +324,7 @@
 	<vector>
 	<queue>
 
-1605533813 source:c:\users\principal\desktop\grafosdosbalas\grafo.cpp
+1605632489 source:c:\users\principal\desktop\grafosdosbalas\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
