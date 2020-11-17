@@ -244,7 +244,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
             double desvioPadraoTempo = 0;
             double mediaQualidade = 0;
             double time = 0;
-            int mediaInteracoes = 0;
+            float mediaInteracoes = 0;
             for(int j = 0; j < 10; j++)
             {
                 int interacoes = 0;
@@ -253,7 +253,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
                 solucao = grafo->gulosoRandomizado(alfas[i], &interacoes);
                 timeStop = clock();
                 time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) + time;
-                times.push_back(time);
+                times.push_back((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
                 solucoes.push_back(solucao.size());
                 mediaQualidade = solucao.size() + mediaQualidade;
                 mediaInteracoes = mediaInteracoes + interacoes;
@@ -263,10 +263,12 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
             time = time/10;
             for(int i = 0; i < solucoes.size(); i++)
             {
-                desvioPadraoTempo = ((pow((times[i] - time),2)) / 10) + desvioPadraoTempo;
-                desvioPadraoQualidade = ((pow((solucoes[i] - mediaQualidade),2)) / 10) + desvioPadraoQualidade;
+                desvioPadraoTempo = ((pow((times[i] - time),2))) + desvioPadraoTempo;
+                desvioPadraoQualidade = ((pow((solucoes[i] - mediaQualidade),2))) + desvioPadraoQualidade;
             }
+            desvioPadraoQualidade = desvioPadraoQualidade/10;
             desvioPadraoQualidade = sqrt(desvioPadraoQualidade);
+            desvioPadraoTempo = desvioPadraoTempo/10;
             desvioPadraoTempo = sqrt(desvioPadraoTempo);
             cout<<"desvio padrão do tempo de Alfa ["<<alfas[i]<<"] : "<< desvioPadraoTempo<<endl;
             cout<<"media de solucoes Alfa: ["<<alfas[i]<<"] : "<< mediaQualidade <<endl;
