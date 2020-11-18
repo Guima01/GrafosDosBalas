@@ -732,7 +732,7 @@ void Grafo::dijkstra(int id)
     //imprime o custo dos pesos do nó raiz até todos os outros
     for(list<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
     {
-        cout<<id<< "  |  "<<x<<":  "<<custoVertices[x]<<endl;
+        cout<<id<< "  |  "<<x<<":  caminho minimo: "<<custoVertices[x]<<endl;
         x++;
     }
 }
@@ -740,6 +740,8 @@ void Grafo::dijkstra(int id)
 //O algoritmo de Kruskal é um algoritmo que busca uma árvore geradora mínima para um grafo conexo com pesos
 void Grafo::kruskal()
 {
+    clock_t timeStart, timeStop;
+    timeStart = clock();
     vector<No> vectorArestaOrdenada = retornaListaOrdenada();
     list<No> listaArestaOrdenada(vectorArestaOrdenada.begin(),vectorArestaOrdenada.end());
     vector<No> solucao;
@@ -796,6 +798,7 @@ void Grafo::kruskal()
     int valor = 0;
 
     //imprime a árvore e peso total
+    timeStop = clock();
     for(int i = 0; i < solucao.size(); i++)
     {
         cout<<solucao[i].getAresta()->getIdAlvo() << " | " << solucao[i].getAresta()->getIdOrigem()<<" Peso:";
@@ -806,6 +809,8 @@ void Grafo::kruskal()
     cout<<endl;
     cout<<"o peso total foi: "<< valor<<endl;
     cout<<endl;
+    double time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
+    cout<<time;
 
 }
 
@@ -903,37 +908,50 @@ vector<No>Grafo::retornaListaOrdenada()
 
 void Grafo::algoritmoPrim()
 {
-    float pesoAtual,pesoCandidato1,pesoCandidato2,pesototal=0;
-    int contador,indiceMinimo,i=0;
-    vector<No> vetArestaOrdenado = retornaListaOrdenada();
-    vector<No> vetAdj;
-    vector<int> vetProxId,PrimId,PrimIdAdj;
-    vector<float>vetProxPeso,PrimPeso;
-    No *aux = new No(1);
+    clock_t timeStart, timeStop;
+    timeStart = clock();
+    int contador,indiceMinimo,i,j;
+    float pesoCandidato1,pesoCandidato2,pesototal=0;
 
-    PrimId.push_back(vetArestaOrdenado[0].getAresta()->getIdOrigem());
-    PrimPeso.push_back(vetArestaOrdenado[0].getAresta()->getPeso());
-    PrimIdAdj.push_back(vetArestaOrdenado[0].getAresta()->getIdAlvo());
-    pesototal += vetArestaOrdenado[0].getAresta()->getPeso();
+    vector<No> vectorArestaOrdenada = retornaListaOrdenada();
+
+    vector<Aresta>solucao;
+
+    vector<int> vetProxId;
+    vector<float>vetProxPeso;
+
+    float matriz[ordem][ordem];
+
+    for(i = 0; i < ordem; i++)
+        for(j = 0; j < ordem; j++)
+            matriz[i][j] = -1;
+
+    for(i = 0; i < vectorArestaOrdenada.size(); i++)
+    {
+        matriz[vectorArestaOrdenada[i].getAresta()->getIdAlvo()][vectorArestaOrdenada[i].getAresta()->getIdOrigem()] = vectorArestaOrdenada[i].getAresta()->getPeso();
+        matriz[vectorArestaOrdenada[i].getAresta()->getIdOrigem()][vectorArestaOrdenada[i].getAresta()->getIdAlvo()] = vectorArestaOrdenada[i].getAresta()->getPeso();
+    }
+
+    i = 0;
+    solucao.push_back(*vectorArestaOrdenada[0].getAresta());
 
     for(list<No>::iterator it = vertices->begin(); it != vertices->end(); ++it)
     {
-        vetAdj.push_back(*it);
-        pesoCandidato1 = ehAdjacente(vetAdj,i,vetArestaOrdenado[0].getAresta()->getIdOrigem());
-        pesoCandidato2 = ehAdjacente(vetAdj,i,vetArestaOrdenado[0].getAresta()->getIdAlvo());
+        pesoCandidato1 = matriz[i][solucao[0].getIdOrigem()];
+        pesoCandidato2 = matriz[i][solucao[0].getIdAlvo()];
 
-        if(pesoCandidato1!=-2 || pesoCandidato2!=-2)
+        if(pesoCandidato1!=-1 || pesoCandidato2!=-1)
         {
-            if(pesoCandidato1!=-2 && pesoCandidato2!=-2 && pesoCandidato1<=pesoCandidato2 || pesoCandidato1!=-2 && pesoCandidato2==-2)
+            if(pesoCandidato1!=-1 && pesoCandidato2!=-1 && pesoCandidato1<=pesoCandidato2 || pesoCandidato1!=-1 && pesoCandidato2==-1)
             {
-                vetProxId.push_back(vetArestaOrdenado[0].getAresta()->getIdOrigem());
+                vetProxId.push_back(solucao[0].getIdOrigem());
                 vetProxPeso.push_back(pesoCandidato1);
             }
             else
             {
-                if(pesoCandidato1!=-2 && pesoCandidato2!=-2 && pesoCandidato1>pesoCandidato2 || pesoCandidato1==-2 && pesoCandidato2!=-2)
+                if(pesoCandidato1!=-1 && pesoCandidato2!=-1 && pesoCandidato1>pesoCandidato2 || pesoCandidato1==-1 && pesoCandidato2!=-1)
                 {
-                    vetProxId.push_back(vetArestaOrdenado[0].getAresta()->getIdAlvo());
+                    vetProxId.push_back(solucao[0].getIdAlvo());
                     vetProxPeso.push_back(pesoCandidato2);
                 }
             }
@@ -945,49 +963,50 @@ void Grafo::algoritmoPrim()
         }
         i++;
     }
-    delete aux;
 
-    vetProxId[vetArestaOrdenado[0].getAresta()->getIdAlvo()] = -2;
-    vetProxId[vetArestaOrdenado[0].getAresta()->getIdOrigem()] = -2;
-    vetProxPeso[vetArestaOrdenado[0].getAresta()->getIdAlvo()] = 9999999;
-    vetProxPeso[vetArestaOrdenado[0].getAresta()->getIdOrigem()] = 9999999;
-
+    vetProxId[solucao[0].getIdAlvo()] = vetProxId[solucao[0].getIdOrigem()] = -2;
+    vetProxPeso[solucao[0].getIdAlvo()] = vetProxPeso[solucao[0].getIdOrigem()] = 9999999;
     contador = indiceMinimo = 0;
 
     while(contador<getOrdem()-2)
     {
         indiceMinimo = getIndiceMin(vetProxPeso);
 
-        PrimId.push_back(vetProxId[indiceMinimo]);
-        PrimIdAdj.push_back(indiceMinimo);
-        PrimPeso.push_back(vetProxPeso[indiceMinimo]);
+        Aresta *aresta = new Aresta(indiceMinimo,vetProxId[indiceMinimo]);
+        aresta->setPeso(vetProxPeso[indiceMinimo]);
 
-        pesototal += vetProxPeso[indiceMinimo];
+        solucao.push_back( *aresta );
+        delete aresta;
+
         vetProxId[indiceMinimo] = -2;
         vetProxPeso[indiceMinimo] = 9999999;
 
         for(int i=0; i<getOrdem(); i++)
             if(vetProxId[i] != -2)
             {
-                pesoAtual = ehAdjacente(vetAdj,i,indiceMinimo);
-                if(pesoAtual != -2)
-                    if(vetProxPeso[i]>pesoAtual)
+                pesoCandidato1 = matriz[i][indiceMinimo];
+                if(pesoCandidato1 != -1)
+                    if(vetProxPeso[i]>pesoCandidato1)
                     {
                         vetProxId[i] = indiceMinimo;
-                        vetProxPeso[i] = pesoAtual;
+                        vetProxPeso[i] = pesoCandidato1;
                     }
             }
         contador ++;
 
     }
-    for(int i=0; i<PrimId.size(); i++)
+    timeStop = clock();
+    for(int i=0; i<solucao.size(); i++)
     {
-        cout<<PrimId[i]<<" | "<< PrimIdAdj[i]<<" Peso: "<<PrimPeso[i]<<endl;
+        cout<<solucao[i].getIdOrigem() <<" | "<< solucao[i].getIdAlvo() <<" Peso:"<<solucao[i].getPeso()<<endl;
+        pesototal += solucao[i].getPeso();
     }
     cout<<"PESO DA ARVORE GERADORA DE PRIM : "<<pesototal<<endl;
+    double time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
+    cout<<time;
 }
 
-//RETORNA O ID QUE POSSUI A ARESTA DE CUSTO MINIMO
+
 int Grafo::getIndiceMin(vector<float>vetProxPeso)
 {
     int indiceMin;
@@ -1013,39 +1032,6 @@ int Grafo::getIndiceMin(vector<float>vetProxPeso)
         }
     }
     return indiceMin;
-}
-
-//RETORNA O PESO DA ARESTA ENTRE DOIS NOS
-//CASO OS NOS NAO SEJAM ADJACENTES , RETORNA UMA FLAG (-2)
-float Grafo::ehAdjacente(vector<No> vetAdj,int idOrigem,int idAlvo)
-{
-    No *aux;
-    float peso;
-    if(vetAdj[idOrigem].getProximoNo()!=0)
-    {
-        if(vetAdj[idOrigem].getProximoNo()->getId()== idAlvo)
-        {
-            return vetAdj[idOrigem].getProximoNo()->getAresta()->getPeso();
-        }
-    }
-    aux = new No(vetAdj[idOrigem].getProximoNo()->getId()) ;
-    aux->setAresta(vetAdj[idOrigem].getProximoNo()->getAresta());
-    aux->setProximoNo(vetAdj[idOrigem].getProximoNo()->getProximoNo());
-    while(aux->getProximoNo()!=0)
-    {
-        aux->setId(aux->getProximoNo()->getId());
-        aux->setAresta(aux->getProximoNo()->getAresta());
-        aux->setProximoNo(aux->getProximoNo()->getProximoNo());
-
-        if(aux->getId() == idAlvo)
-        {
-            peso = aux->getAresta()->getPeso();
-            delete aux;
-            return peso;
-        }
-    }
-    delete aux;
-    return -2;
 }
 
 

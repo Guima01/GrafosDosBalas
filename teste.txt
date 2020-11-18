@@ -1,23 +1,7 @@
-800
-5000
-12.5
-Frequencia Relativa de grau 5 : 0.0025
-Frequencia Relativa de grau 6 : 0.01
-Frequencia Relativa de grau 7 : 0.03
-Frequencia Relativa de grau 8 : 0.05375
-Frequencia Relativa de grau 9 : 0.0725
-Frequencia Relativa de grau 10 : 0.1125
-Frequencia Relativa de grau 11 : 0.10875
-Frequencia Relativa de grau 12 : 0.13375
-Frequencia Relativa de grau 13 : 0.11125
-Frequencia Relativa de grau 14 : 0.1025
-Frequencia Relativa de grau 15 : 0.1025
-Frequencia Relativa de grau 16 : 0.0625
-Frequencia Relativa de grau 17 : 0.03625
-Frequencia Relativa de grau 18 : 0.0275
-Frequencia Relativa de grau 19 : 0.0125
-Frequencia Relativa de grau 20 : 0.015
-Frequencia Relativa de grau 21 : 0.00375
-Frequencia Relativa de grau 24 : 0.00125
-Frequencia Relativa de grau 26 : 0.00125
+
+
+
+
+
+
 
