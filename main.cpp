@@ -239,11 +239,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         //percorre cada alfa
         for(int i = 0; i < alfas.size(); i++)
         {
-            vector<int> solucoes;
             vector<int> solucao;
-            vector<double> times;
-            double desvioPadraoQualidade = 0;
-            double desvioPadraoTempo = 0;
             double mediaQualidade = 0;
             double time = 0;
             float mediaInteracoes = 0;
@@ -253,14 +249,10 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
             {
                 int interacoes = 0;
                 clock_t timeStart, timeStop;
-
                 timeStart = clock();
                 solucao = grafo->gulosoRandomizado(alfas[i], &interacoes);
                 timeStop = clock();
-
                 time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) + time;
-                times.push_back((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-                solucoes.push_back(solucao.size());
                 mediaQualidade = solucao.size() + mediaQualidade;
                 mediaInteracoes = mediaInteracoes + interacoes;
             }
@@ -269,22 +261,12 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
             mediaInteracoes = mediaInteracoes/10;
             mediaQualidade = mediaQualidade/10;
             time = time/10;
-            for(int i = 0; i < solucoes.size(); i++)
-            {
-                desvioPadraoTempo = ((pow((times[i] - time),2))) + desvioPadraoTempo;
-                desvioPadraoQualidade = ((pow((solucoes[i] - mediaQualidade),2))) + desvioPadraoQualidade;
-            }
-            desvioPadraoQualidade = desvioPadraoQualidade/10;
-            desvioPadraoQualidade = sqrt(desvioPadraoQualidade);
-            desvioPadraoTempo = desvioPadraoTempo/10;
-            desvioPadraoTempo = sqrt(desvioPadraoTempo);
 
             //impressão na tela
             cout<<"tempo medio de Alfa ["<<alfas[i]<<"] : "<< time <<endl;
-            cout<<"desvio padrão do tempo de Alfa ["<<alfas[i]<<"] : "<< desvioPadraoTempo<<endl;
             cout<<"media de solucoes Alfa ["<<alfas[i]<<"] : "<< mediaQualidade <<endl;
             cout<<"media de Iteracoes ["<<alfas[i]<<"] : "<< mediaInteracoes <<endl;
-            cout<<"Desvio padrão da qualidade ["<<alfas[i]<<"] : "<< desvioPadraoQualidade << endl<<endl;
+            cout<<endl;
         }
         break;
     }

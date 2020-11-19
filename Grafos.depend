@@ -301,22 +301,22 @@
 	<queue>
 	<time.h>
 
-1605359031 source:c:\users\principal\desktop\grafosdosbalas\aresta.cpp
+1605797466 source:c:\users\principal\desktop\grafosdosbalas\aresta.cpp
 	"Aresta.h"
 	<iostream>
 
-1605359031 c:\users\principal\desktop\grafosdosbalas\aresta.h
+1605797466 c:\users\principal\desktop\grafosdosbalas\aresta.h
 
-1605359031 source:c:\users\principal\desktop\grafosdosbalas\no.cpp
+1605797466 source:c:\users\principal\desktop\grafosdosbalas\no.cpp
 	"No.h"
 	"Aresta.h"
 	"Grafo.h"
 	<iostream>
 
-1605359031 c:\users\principal\desktop\grafosdosbalas\no.h
+1605797466 c:\users\principal\desktop\grafosdosbalas\no.h
 	"Aresta.h"
 
-1605723192 c:\users\principal\desktop\grafosdosbalas\grafo.h
+1605797466 c:\users\principal\desktop\grafosdosbalas\grafo.h
 	"No.h"
 	<fstream>
 	<stack>
@@ -324,7 +324,7 @@
 	<vector>
 	<queue>
 
-1605756032 source:c:\users\principal\desktop\grafosdosbalas\grafo.cpp
+1605797466 source:c:\users\principal\desktop\grafosdosbalas\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
@@ -342,7 +342,7 @@
 	<queue>
 	<time.h>
 
-1605634767 source:c:\users\principal\desktop\grafosdosbalas\main.cpp
+1605797590 source:c:\users\principal\desktop\grafosdosbalas\main.cpp
 	<iostream>
 	<fstream>
 	<string>
