@@ -467,6 +467,7 @@ vector<int> Grafo::profundidadePrimeiraBusca(vector<int> listaVertices, int orde
             }
         }
     }
+    return listaVertices;
 }
 
 //auxiliar para verificar se o nó ja foi visitado
@@ -732,7 +733,7 @@ void Grafo::dijkstra(int id)
     //imprime o custo dos pesos do nó raiz até todos os outros
     for(list<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
     {
-        cout<<id<< "  |  "<<x<<":  caminho minimo: "<<custoVertices[x]<<endl;
+        cout<<id<< "  |  "<<x<<":  valor do caminho minimo: "<<custoVertices[x]<<endl;
         x++;
     }
 }
@@ -740,8 +741,6 @@ void Grafo::dijkstra(int id)
 //O algoritmo de Kruskal é um algoritmo que busca uma árvore geradora mínima para um grafo conexo com pesos
 void Grafo::kruskal()
 {
-    clock_t timeStart, timeStop;
-    timeStart = clock();
     vector<No> vectorArestaOrdenada = retornaListaOrdenada();
     list<No> listaArestaOrdenada(vectorArestaOrdenada.begin(),vectorArestaOrdenada.end());
     vector<No> solucao;
@@ -798,7 +797,6 @@ void Grafo::kruskal()
     int valor = 0;
 
     //imprime a árvore e peso total
-    timeStop = clock();
     for(int i = 0; i < solucao.size(); i++)
     {
         cout<<solucao[i].getAresta()->getIdAlvo() << " | " << solucao[i].getAresta()->getIdOrigem()<<" Peso:";
@@ -809,8 +807,6 @@ void Grafo::kruskal()
     cout<<endl;
     cout<<"o peso total foi: "<< valor<<endl;
     cout<<endl;
-    double time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-    cout<<time;
 
 }
 
@@ -908,8 +904,6 @@ vector<No>Grafo::retornaListaOrdenada()
 
 void Grafo::algoritmoPrim()
 {
-    clock_t timeStart, timeStop;
-    timeStart = clock();
     int contador,indiceMinimo,i,j;
     float pesoCandidato1,pesoCandidato2,pesototal=0;
 
@@ -995,15 +989,12 @@ void Grafo::algoritmoPrim()
         contador ++;
 
     }
-    timeStop = clock();
     for(int i=0; i<solucao.size(); i++)
     {
         cout<<solucao[i].getIdOrigem() <<" | "<< solucao[i].getIdAlvo() <<" Peso:"<<solucao[i].getPeso()<<endl;
         pesototal += solucao[i].getPeso();
     }
     cout<<"PESO DA ARVORE GERADORA DE PRIM : "<<pesototal<<endl;
-    double time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC);
-    cout<<time;
 }
 
 
