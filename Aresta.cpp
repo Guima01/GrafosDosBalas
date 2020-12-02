@@ -35,6 +35,12 @@ int Aresta::getIdAlvo(){
 
 }
 
+int Aresta::getIdOrigem(){
+
+    return this->id_origem;
+
+}
+
 /*Aresta* Aresta::getProximaAresta(){
 
     return this->proxima_aresta;
@@ -47,22 +53,31 @@ float Aresta::getPeso(){
 
 }
 
-// Setters
-/*void Aresta::setProximaAresta(Aresta* aresta){
+bool Aresta::getVerificaAresta(){
+    return this->verificaA;
+}
 
-    this->proxima_aresta = aresta;
+void Aresta::setFalseAresta(){
+    this->verificaA = false;
+}
+
+/*Aresta* Aresta::getProximaAresta(){
+
+    return this->proxima_aresta;
 
 }*/
+
+
+// Setters
 
 void Aresta::setPeso(float peso){
 
     this->peso = peso;
 
 }
-bool Aresta::getVerificaAresta(){
-    return this->verificaA;
-}
 
 void Aresta::setVerificaAresta(){
     this->verificaA = true;
 }
+
+

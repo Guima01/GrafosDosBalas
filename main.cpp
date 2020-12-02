@@ -12,12 +12,72 @@
 #include <string>
 #include "Grafo.h"
 #include "No.h"
+#include "time.h"
 
 
 
 using namespace std;
 
-Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
+Grafo* leituraGulosa(ifstream& arquivo_entrada)
+{
+    int ordem;
+    string aux = "";
+    arquivo_entrada >> aux;
+    arquivo_entrada >> ordem;
+
+    Grafo* grafo = new Grafo(ordem);
+    grafo->criaLista(ordem);
+    arquivo_entrada >> aux;
+    while (aux != "*****************CONNECTIONS****************")
+    {
+        arquivo_entrada >> aux;
+    }
+    string delimiter = " ";
+    size_t pos = 0;
+    string token;
+    int leitura = -1;
+    arquivo_entrada >> leitura;
+    for (int i = 0; i < ordem; i++)
+    {
+        for (int j = 0; j < ordem; j++, arquivo_entrada >> leitura)
+        {
+            if (leitura == 1 && i != j)
+            {
+                //cout << i << " - " << cont << endl;
+                grafo->insereGulosamente(i, j);
+            }
+        }
+    }
+
+    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
+    {
+        No *aux = new No(it->getId());
+        aux->setProximoNo(it->getProximoNo());
+        cout<<aux->getId();
+        cout<<" "<<endl;
+
+        while(aux->getProximoNo() !=0)
+        {
+            aux->setId(aux->getProximoNo()->getId());
+            aux->setAresta(aux->getProximoNo()->getAresta());
+            aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
+            cout<<aux->getId();
+            cout<<" ";
+
+        }
+        cout<<endl;
+        cout<<endl;
+
+    }
+
+
+    return grafo;
+}
+
+
+
+
+Grafo* leituraInstancia(ifstream& arquivo_entrada)
 {
 
     //Variaveis para auxiliar na criação dos nós no Grafo
@@ -39,16 +99,17 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
     //Leitura dos nós
     while(arquivo_entrada >> idNoFonte >> idNoAlvo >> peso)
     {
+        //verifica se é um self-loop
         if(idNoFonte != idNoAlvo)
         {
-            grafo->insereNo(idNoFonte,idNoAlvo);
+            grafo->insereNo(idNoFonte,idNoAlvo,peso);
         }
 
     }
 
     //impressão do grafo
 
-    /*for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
+    for(list<No>::iterator it = grafo->vertices->begin(); it != grafo->vertices->end(); ++it)
     {
         No *aux = new No(it->getId());
         aux->setProximoNo(it->getProximoNo());
@@ -58,19 +119,21 @@ Grafo* leituraInstancia(ifstream& arquivo_entrada,ofstream *arquivo_saida)
         while(aux->getProximoNo() !=0)
         {
             aux->setId(aux->getProximoNo()->getId());
+            aux->setAresta(aux->getProximoNo()->getAresta());
             aux->setProximoNo((aux->getProximoNo()->getProximoNo()));
             cout<<aux->getId();
             cout<<" ";
+
         }
         cout<<endl;
         cout<<endl;
 
-    }*/
+    }
 
     return grafo;
 }
 
-/*
+
 int menu()
 {
 
@@ -78,16 +141,14 @@ int menu()
 
     cout << "MENU" << endl;
     cout << "----" << endl;
-    cout << "[1] Complementar do grafo" << endl;
-    cout << "[2] Imprimir caminhamento em largura" << endl;
-    cout << "[3] Busca em profundidade" << endl;
-    cout << "[4] Imprimir componentes conexas" << endl;
-    cout << "[5] Imprimir componentes fortemente conexas" << endl;
-    cout << "[6] Imprimir ordenacao topol�gica" << endl;
-    cout << "[7] Guloso Randomizado Reativo" << endl;
-    cout << "[8] �rvore Geradora M�nima de Prim" << endl;
-    cout << "[9] Caminho M�nimo Dijkstra" << endl;
-    cout << "[10] Caminho M�nimo Floyd" << endl;
+    cout << "[1] caminhamento em largura" << endl;
+    cout << "[2] Busca em profundidade" << endl;
+    cout << "[3] Arvore Geradora minima de Kruskal" << endl;
+    cout << "[4] arvore Geradora Minima de Prim" << endl;
+    cout << "[5] Caminho Minimo Dijkstra" << endl;
+    cout << "[6] Caminho Minimo Floyd" << endl;
+    cout << "[7] Guloso" << endl;
+    cout << "[8] Guloso randomizado" << endl;
     cout << "[0] Sair" << endl;
 
     cin >> selecao;
@@ -102,45 +163,18 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     switch (selecao)
     {
 
-    //Complementar
+    //Busca em largura
     case 1:
     {
-
-        break;
-    }
-
-    //BFS
-    case 2:
-    {
-
-        queue<int>filaVertices;
-        filaVertices.push(0);
-        vector<int>verticesVisitados(grafo->getOrdem());
-        int i = 0;
-        for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
-        {
-            verticesVisitados[i] = -1;
-            i++;
-        }
-        int cont = 0;
-        int No = 0;
+        int no;
         cout<<"digite o No origem: ";
-        cin>>No;
-        verticesVisitados = grafo->amplitudePrimeiraBusca(&filaVertices, No, verticesVisitados, &cont);
-        i = 0;
-        ==for (vector<int>::iterator it = verticesVisitados.begin(); it != verticesVisitados.end(); ++it)
-        {
-            cout<<"imprimindo vertices visitados na busca por amplitude: "<<verticesVisitados[i]<<endl;
-
-            i++;
-
-        }
-
+        cin>>no;
+        grafo->larguraPrimeiraBusca(no);
         break;
     }
 
-    //DFS
-    case 3:
+    //busca em profundidade
+    case 2:
     {
         vector<int>listaVertices(grafo->getOrdem());
         int cont=0;
@@ -154,74 +188,92 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
         cout<<"digite o No origem: ";
         cin>>No;
         listaVertices = grafo->profundidadePrimeiraBusca(listaVertices,grafo->getOrdem(),No,&cont);
-
-        i = 0;
-
-        for (vector<int>::iterator it = listaVertices.begin(); it != listaVertices.end(); ++it)
-        {
-            cout<<"imprimindo vertices visitados na busca por profundidade: "<<listaVertices[i]<<endl;
-
-            i++;
-
-        }
-
-
         break;
     }
 
-    //Componentes Conexas
-    case 4:
+    //Algoritmo de Kruskal
+    case 3:
     {
-
-
-
-        break;
-    }
-
-    //Componentes Fortementes Conexas
-    case 5:
-    {
-
-        break;
-    }
-
-    //Ordena��o Topol�gica
-    case 6:
-    {
-
-        break;
-    }
-
-    case 7:
-    {
-
+        grafo->kruskal();
 
         break;
     }
 
     //Algoritmo de Prim
-    case 8:
+    case 4:
     {
+
+        grafo->algoritmoPrim();
 
         break;
     }
 
-    //Algoritmo de Dijkstra
-    case 9:
+    //Caminho minimo de djikstra
+    case 5:
     {
-
+        int id;
+        cout<<"digite o vertice inicial: ";
+        cin>>id;
+        grafo->dijkstra(id);
         break;
     }
 
     //Algoritmo de Floyd
-    case 10:
-
+    case 6:
+    {
+        grafo->floydMarshall();
         break;
-
     }
-}*/
 
-/*int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
+    //Algoritmo Guloso
+    case 7:
+    {
+        grafo->guloso();
+        break;
+    }
+    //Algoritmo Guloso Randomizado
+    case 8:
+    {
+        vector<float> alfas = {0.1,0.2,0.3,0.5,0.7};
+
+        //percorre cada alfa
+        for(int i = 0; i < alfas.size(); i++)
+        {
+            vector<int> solucao;
+            double mediaQualidade = 0;
+            double time = 0;
+            float mediaInteracoes = 0;
+
+            //10 interações para cada alfa
+            for(int j = 0; j < 10; j++)
+            {
+                int interacoes = 0;
+                clock_t timeStart, timeStop;
+                timeStart = clock();
+                solucao = grafo->gulosoRandomizado(alfas[i], &interacoes);
+                timeStop = clock();
+                time = ((double)(timeStop - timeStart) / CLOCKS_PER_SEC) + time;
+                mediaQualidade = solucao.size() + mediaQualidade;
+                mediaInteracoes = mediaInteracoes + interacoes;
+            }
+
+            //faz os cálculos necessários
+            mediaInteracoes = mediaInteracoes/10;
+            mediaQualidade = mediaQualidade/10;
+            time = time/10;
+
+            //impressão na tela
+            cout<<"tempo medio de Alfa ["<<alfas[i]<<"] : "<< time <<endl;
+            cout<<"media de solucoes Alfa ["<<alfas[i]<<"] : "<< mediaQualidade <<endl;
+            cout<<"media de Iteracoes ["<<alfas[i]<<"] : "<< mediaInteracoes <<endl;
+            cout<<endl;
+        }
+        break;
+    }
+    }
+}
+
+int mainMenu(ofstream& arquivo_saida, Grafo* grafo)
 {
 
     int selecao = 1;
@@ -242,7 +294,7 @@ void selecionar(int selecao, Grafo* grafo, ofstream& arquivo_saida)
     }
 
     return 0;
-}*/
+}
 
 
 /*
@@ -257,7 +309,7 @@ XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 int main(int argc, char const *argv[])
 {
 
-
+    srand(time(NULL));
 
     //Verificando se todos os parametros do programa foram inseridos
     if (argc != 3)
@@ -288,25 +340,33 @@ int main(int argc, char const *argv[])
     //criando grafo
     Grafo* grafo;
 
-    if(arquivo_entrada.is_open())
+    //verifica o formato do arquivo
+
+    if(arquivo_entrada.is_open() )
     {
-
-        grafo = leituraInstancia(arquivo_entrada, &arquivo_saida);
-
+        if(nome_arquivo_entrada.find("Problem.dat") != string::npos)
+        {
+            grafo = leituraGulosa(arquivo_entrada);
+        }
+        else if(nome_arquivo_entrada.find("grafo") != string::npos)
+        {
+            grafo = leituraInstancia(arquivo_entrada);
+        }
     }
-    else{
+    else
+    {
         cout << "Unable to open " << argv[1];
         return 0;
     }
 
     //chamando funções para escrever no arquivo de texto
-    arquivo_saida << grafo->getOrdem()<<"\n";
-    arquivo_saida << grafo->getNumeroArestas()<<"\n";
-    arquivo_saida << grafo->getGrauMedioGrafo()<<"\n";
-    grafo->getFrequenciaRelativa(arquivo_saida, grafo->getOrdem());
+    //arquivo_saida << grafo->getOrdem()<<"\n";
+    //arquivo_saida << grafo->getNumeroArestas()<<"\n";
+    //arquivo_saida << grafo->getGrauMedioGrafo()<<"\n";
+    //grafo->getFrequenciaRelativa(arquivo_saida, grafo->getOrdem());
 
 
-    //mainMenu(arquivo_saida, grafo);
+    mainMenu(arquivo_saida, grafo);
 
 
 

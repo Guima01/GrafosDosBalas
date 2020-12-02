@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1603667503 source:c:\users\principal\desktop\grafos\main.cpp
+1605293947 source:c:\users\principal\desktop\grafos\main.cpp
 	<iostream>
 	<fstream>
 	<string>
@@ -14,6 +14,7 @@
 	<string>
 	"Grafo.h"
 	"No.h"
+	"time.h"
 
 1602081704 source:c:\users\principal\desktop\grafos\edge.cpp
 	"Edge.h"
@@ -50,22 +51,54 @@
 	"Edge.h"
 	<iostream>
 
-1602463779 source:c:\users\principal\desktop\grafos\aresta.cpp
+1605058632 source:c:\users\principal\desktop\grafos\aresta.cpp
 	"Aresta.h"
 	<iostream>
 
-1602463779 c:\users\principal\desktop\grafos\aresta.h
+1605058628 c:\users\principal\desktop\grafos\aresta.h
 
-1602440193 source:c:\users\principal\desktop\grafos\no.cpp
+1604933142 source:c:\users\principal\desktop\grafos\no.cpp
 	"No.h"
 	"Aresta.h"
 	"Grafo.h"
 	<iostream>
 
-1602440193 c:\users\principal\desktop\grafos\no.h
+1604934096 c:\users\principal\desktop\grafos\no.h
 	"Aresta.h"
 
-1603474111 source:c:\users\principal\desktop\grafos\grafo.cpp
+1605293067 source:c:\users\principal\desktop\grafos\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+	<time.h>
+
+1605292868 c:\users\principal\desktop\grafos\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1604367477 source:c:\users\gabriel\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1604063514 c:\users\gabriel\grafosdosbalas\aresta.h
+
+1604641130 source:c:\users\gabriel\grafosdosbalas\grafo.cpp
 	"Grafo.h"
 	"No.h"
 	"Aresta.h"
@@ -82,7 +115,7 @@
 	<iomanip>
 	<queue>
 
-1603470525 c:\users\principal\desktop\grafos\grafo.h
+1604607942 c:\users\gabriel\grafosdosbalas\grafo.h
 	"No.h"
 	<fstream>
 	<stack>
@@ -90,55 +123,239 @@
 	<vector>
 	<queue>
 
-1602716082 source:c:\users\gabriel\grafosdosbalas\aresta.cpp
-	"Aresta.h"
-	<iostream>
-
-1602716082 c:\users\gabriel\grafosdosbalas\aresta.h
-
-1602807485 source:c:\users\gabriel\grafosdosbalas\grafo.cpp
-	"Grafo.h"
-	"No.h"
-	"Aresta.h"
-	<iostream>
-	<fstream>
-	<stack>
-	<queue>
-	<list>
-	<vector>
-	<math.h>
-	<cstdlib>
-	<ctime>
-	<float.h>
-	<iomanip>
-
-1602802835 c:\users\gabriel\grafosdosbalas\grafo.h
-	"No.h"
-	<fstream>
-	<stack>
-	<list>
-	<vector>
-
-1602438229 c:\users\gabriel\grafosdosbalas\no.h
+1604063514 c:\users\gabriel\grafosdosbalas\no.h
 	"Aresta.h"
 
-1602809599 source:c:\users\gabriel\grafosdosbalas\main.cpp
+1604638800 source:c:\users\gabriel\grafosdosbalas\main.cpp
 	<iostream>
 	<fstream>
 	<string>
 	<math.h>
 	<list>
+	<queue>
 	<utility>
 	<tuple>
 	<iomanip>
 	<stdlib.h>
 	<chrono>
+	<string>
 	"Grafo.h"
 	"No.h"
 
-1602439470 source:c:\users\gabriel\grafosdosbalas\no.cpp
+1604367477 source:c:\users\gabriel\grafosdosbalas\no.cpp
 	"No.h"
 	"Aresta.h"
 	"Grafo.h"
 	<iostream>
+
+1604595359 source:c:\users\marcos\c++\grafos\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1604595359 c:\users\marcos\c++\grafos\grafosdosbalas\aresta.h
+
+1604438571 source:c:\users\marcos\c++\grafos\grafosdosbalas\no.cpp
+	"No.h"
+	"Aresta.h"
+	"Grafo.h"
+	<iostream>
+
+1603897204 c:\users\marcos\c++\grafos\grafosdosbalas\no.h
+	"Aresta.h"
+
+1604606452 c:\users\marcos\c++\grafos\grafosdosbalas\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1604607277 source:c:\users\marcos\c++\grafos\grafosdosbalas\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+
+1604595367 source:c:\users\marcos\c++\grafos\grafosdosbalas\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<math.h>
+	<list>
+	<queue>
+	<utility>
+	<tuple>
+	<iomanip>
+	<stdlib.h>
+	<chrono>
+	<string>
+	"Grafo.h"
+	"No.h"
+
+1604942956 source:c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1604345918 c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\aresta.h
+
+1604942956 source:c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\no.cpp
+	"No.h"
+	"Aresta.h"
+	"Grafo.h"
+	<iostream>
+
+1604345918 c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\no.h
+	"Aresta.h"
+
+1604977498 c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1604977867 source:c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<math.h>
+	<list>
+	<queue>
+	<utility>
+	<tuple>
+	<iomanip>
+	<stdlib.h>
+	<chrono>
+	<string>
+	"Grafo.h"
+	"No.h"
+
+1604978058 source:c:\users\giovane\desktop\gitzada\grafozera\grafoooo\grafosdosbalas\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+
+1605119727 source:d:\git\trabgrafos\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1605119727 d:\git\trabgrafos\grafosdosbalas\aresta.h
+
+1605119727 source:d:\git\trabgrafos\grafosdosbalas\no.cpp
+	"No.h"
+	"Aresta.h"
+	"Grafo.h"
+	<iostream>
+
+1605119727 d:\git\trabgrafos\grafosdosbalas\no.h
+	"Aresta.h"
+
+1605308633 d:\git\trabgrafos\grafosdosbalas\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1605308650 source:d:\git\trabgrafos\grafosdosbalas\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+	<time.h>
+
+1605797466 source:c:\users\principal\desktop\grafosdosbalas\aresta.cpp
+	"Aresta.h"
+	<iostream>
+
+1605797466 c:\users\principal\desktop\grafosdosbalas\aresta.h
+
+1605797466 source:c:\users\principal\desktop\grafosdosbalas\no.cpp
+	"No.h"
+	"Aresta.h"
+	"Grafo.h"
+	<iostream>
+
+1605797466 c:\users\principal\desktop\grafosdosbalas\no.h
+	"Aresta.h"
+
+1605797466 c:\users\principal\desktop\grafosdosbalas\grafo.h
+	"No.h"
+	<fstream>
+	<stack>
+	<list>
+	<vector>
+	<queue>
+
+1605797466 source:c:\users\principal\desktop\grafosdosbalas\grafo.cpp
+	"Grafo.h"
+	"No.h"
+	"Aresta.h"
+	<iostream>
+	<fstream>
+	<stack>
+	<queue>
+	<list>
+	<vector>
+	<math.h>
+	<cstdlib>
+	<ctime>
+	<float.h>
+	<iomanip>
+	<queue>
+	<time.h>
+
+1605797590 source:c:\users\principal\desktop\grafosdosbalas\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<math.h>
+	<list>
+	<queue>
+	<utility>
+	<tuple>
+	<iomanip>
+	<stdlib.h>
+	<chrono>
+	<string>
+	"Grafo.h"
+	"No.h"
+	"time.h"
 

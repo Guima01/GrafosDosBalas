@@ -46,21 +46,40 @@ class Grafo{
         void getFrequenciaRelativa(ofstream &arquivo_saida, int ordem);
         //Other methods
         void criaLista(int ordem);
-        void insereNo(int idNoFonte, int idNoAlvo);
+        void insereNo(int idNoFonte, int idNoAlvo, float peso);
         void insereAresta(int id, int id_alvo, float peso);
         void removeNo(int id);
         bool buscaNo(int id);
         No* getNo(int id);
 
+        void insereGulosamente(int idNoFonte, int idNoAlvo);
+
         vector<int> profundidadePrimeiraBusca(vector<int> listaVertices ,int ordemGrafo,int posicao,int *cont);
         vector<int> auxBusca(vector<int> listaVertices,int idNo,int *cont);
-        vector<int> amplitudePrimeiraBusca(queue<int> *filaVertices, int idNo, vector<int>verticesVisitados,int *cont);
-        Grafo* getComplemento();
-        Grafo* getSubjacente();
-        bool PossuiCiclo();
+        void larguraPrimeiraBusca(int vertice);
+
+        No alteraVetProx(vector<No>vetProx,int noAtual,int noAlvo);
+        void algoritmoPrim();
+        int getIndiceMin(vector<float>vetProx);
+
+        vector<No> retornaListaOrdenadaGrau();
+        void ordenaLista(vector<No> candidatos, vector<int> graus);
+
+        void quickSort(vector<No> &vetorOrdenado,int menorIndice,int maiorIndice);
+        int particao(vector<No>&vetorOrdenado,int menorIndice,int maiorIndice);
+        vector<No> retornaListaOrdenada();
+
+        void quickSortGuloso(vector<No>&candidatos, vector<int>&graus, int menorIndice, int maiorIndice);
+        int particaoGuloso(vector<No>&candidatos, vector<int>&graus, int menorIndice, int maiorIndice);
+
+        int randomizaValor(int tamanho, float alfa);
+
         bool GrafoConectado();
-        float** floydMarshall();
-        float* dijkstra(int id);
+        void floydMarshall();
+        void kruskal();
+        void dijkstra(int id);
+        void guloso();
+        vector<int> gulosoRandomizado(float alfa, int *iteracoes);
 
     private:
         //Auxiliar methods
